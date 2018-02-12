@@ -250,11 +250,11 @@ function FarmBuddy:UpdateGUI()
 
   -- TODO: Loop and remove old items from list
 
-  local itemGap = 66;
   local curFrame;
   local lastFrame = FarmBuddyFrame;
+  local totalHeight = 0;
 
-  for _, itemStorage in pairs(ITEM_STORAGE) do
+  for index, itemStorage in pairs(ITEM_STORAGE) do
     local itemInfo = self:GetItemInfo(itemStorage.name);
     if itemInfo ~= nil then
       local r, g, b = GetItemQualityColor(itemInfo.Rarity);
@@ -262,11 +262,17 @@ function FarmBuddy:UpdateGUI()
       curFrame = CreateFrame('Frame', FARM_BUDDY_ID .. 'Item' .. tostring(itemInfo.ItemID), FarmBuddyFrame, 'FarmBuddyItemTemplate');
       curFrame.Title:SetText(itemInfo.Name);
       curFrame.Title:SetTextColor(r, g, b, 1);
+      curFrame.Texture:SetTexture(itemInfo.IconFileDataID);
       curFrame.Subline:SetText(FarmBuddy:GetCount(itemInfo, itemStorage.quantity));
-      curFrame:SetPoint('BOTTOM', lastFrame, 0, itemGap);
+      if (index > 1) then
+        curFrame:SetPoint('TOPLEFT', lastFrame, 0, -36);
+      end
+      totalHeight = (totalHeight + curFrame:GetHeight());
       lastFrame = curFrame;
     end
   end
+
+  FarmBuddyFrame:SetHeight(totalHeight);
 end
 
 -- **************************************************************************

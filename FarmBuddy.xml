@@ -17,7 +17,7 @@
     <Layers>
       <Layer level="ARTWORK">
         <!-- Placeholder icon -->
-        <Texture name="$parentTexture" file="INTERFACE\ICONS\Inv_misc_coin_01">
+        <Texture name="$parentTexture" parentKey="Texture" file="INTERFACE\ICONS\Inv_misc_coin_01">
           <Anchors>
             <Anchor point="CENTER">
               <Offset>
