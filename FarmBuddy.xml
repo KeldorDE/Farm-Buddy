@@ -58,9 +58,6 @@
     </Anchors>
 
     <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" tile="true">
-      <TileSize>
-        <AbsValue val="16"/>
-      </TileSize>
       <Color r="0" g="0" b="0" a="0.3"/>
     </Backdrop>
 

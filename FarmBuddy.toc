@@ -2,7 +2,7 @@
 ## Title: Farm Buddy |cff00aa001.0.0.70300|r
 ## Notes: Adds the functionality to track farmed items.
 ## Author: Keldor (https://www.devil-coding.de)
-## SavedVariables: FarmBuddyDB
+## SavedVariables: FarmBuddyStandaloneDB
 ## Version: 1.0.0.70300
 
 embeds.xml
