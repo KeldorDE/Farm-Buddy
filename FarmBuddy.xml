@@ -29,7 +29,7 @@
             <AbsDimension x="28" y="28" />
           </Size>
         </Texture>
-        <FontString name="$parentTitle" relativeTo="$parentTexture" inherits="GameFontNormal" text="Seidenstoff" parentKey="Title">
+        <FontString name="$parentTitle" relativeTo="$parentTexture" inherits="GameFontNormal" parentKey="Title">
           <Anchors>
             <Anchor point="LEFT">
               <Offset x="36" y="11" />
@@ -38,7 +38,7 @@
           <Color r="255" g="255" b="255" a="1"/>
           <FontHeight val="12"/>
         </FontString>
-        <FontString name="$parentSubline" relativeTo="$parentTitle" inherits="GameFontNormalSmall" text="16 / 200" parentKey="Subline">
+        <FontString name="$parentSubline" relativeTo="$parentTitle" inherits="GameFontNormalSmall" parentKey="Subline">
           <Anchors>
             <Anchor point="LEFT">
               <Offset x="36" y="-3" />
@@ -61,6 +61,7 @@
       <TileSize>
         <AbsValue val="16"/>
       </TileSize>
+      <Color r="0" g="0" b="0" a="0.3"/>
     </Backdrop>
 
     <Layers>
@@ -82,7 +83,6 @@
 
     <Scripts>
       <OnLoad>
-          self:SetBackdropColor(0, 0, 0, 0.3);
           self:RegisterForDrag('LeftButton');
       </OnLoad>
       <OnDragStart>
