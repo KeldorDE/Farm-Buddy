@@ -1,0 +1,18 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+  <Script file="FarmBuddy.lua"/>
+
+  <Frame name="MyFrame">
+    <Size x="200" y="200"/>
+    <Layers>
+      <Layer>
+        <FontString text="Bob">
+          <Size x="100" y="100"/>
+          <Anchors>
+            <Anchor point="TOP"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+  </Frame>
+</Ui>

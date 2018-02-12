@@ -1,0 +1,24 @@
+## Interface: 70300
+## Title: Farm Buddy |cff00aa001.0.0.70300|r
+## Notes: Adds the functionality to track farmed items.
+## Author: Keldor (https://www.devil-coding.de)
+## SavedVariables: FarmBuddyDB
+## Version: 1.0.0.70300
+
+embeds.xml
+
+locale\Localization.deDE.lua
+locale\Localization.enUS.lua
+locale\Localization.esES.lua
+locale\Localization.esMX.lua
+locale\Localization.frFR.lua
+locale\Localization.itIT.lua
+locale\Localization.koKR.lua
+locale\Localization.ptBR.lua
+locale\Localization.ruRU.lua
+locale\Localization.zhCN.lua
+locale\Localization.zhTW.lua
+
+FarmBuddy.xml
+Notification/Notification.xml
+Notification/Notification.lua
