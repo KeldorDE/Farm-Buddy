@@ -48,32 +48,6 @@ function FarmBuddy:OnInitialize()
     name = 'Saftiges Maisbrot',
     quantity = 200
   });
-
-
-  local itemGap = -66;
-
-  local FRAME = CreateFrame('Frame', 'Item1', FarmBuddyFrame, 'FarmBuddyItemTemplate');
-  FRAME.Title:SetText('Ruhestein');
-  FRAME.Title:SetTextColor(255, 255, 255, 1);
-  FRAME.Subline:SetText('0 / 1');
-
-  local FRAME2 = CreateFrame('Frame', 'Item2', FarmBuddyFrame, 'FarmBuddyItemTemplate');
-  FRAME2.Title:SetText('Seidenstoff');
-  FRAME2.Title:SetTextColor(255, 255, 255, 1);
-  FRAME2.Subline:SetText('132 / 200');
-  FRAME2:SetPoint("BOTTOM", FRAME, 0, itemGap);
-
-  local FRAME3 = CreateFrame('Frame', 'Item3', FarmBuddyFrame, 'FarmBuddyItemTemplate');
-  FRAME3.Title:SetText('Wollstoff');
-  FRAME3.Title:SetTextColor(255, 255, 255, 1);
-  FRAME3.Subline:SetText('48 / 200');
-  FRAME3:SetPoint("BOTTOM", FRAME2, 0, itemGap);
-
-  local FRAME4 = CreateFrame('Frame', 'Item4', FarmBuddyFrame, 'FarmBuddyItemTemplate');
-  FRAME4.Title:SetText('Luftpartikel');
-  FRAME4.Title:SetTextColor(0, 255, 0, 1);
-  FRAME4.Subline:SetText('0 / 50');
-  FRAME4:SetPoint("BOTTOM", FRAME3, 0, itemGap);
   --]]
 end
 
@@ -246,9 +220,23 @@ function FarmBuddy:GetCount(itemInfo, quantity)
   return count;
 end
 
+-- **************************************************************************
+-- NAME : FarmBuddy:UpdateGUI()
+-- DESC : Updates the GUI elements.
+-- **************************************************************************
 function FarmBuddy:UpdateGUI()
 
   -- TODO: Loop and remove old items from list
+  local frames = FarmBuddyFrame:GetChildren();
+  if (frames ~= nil) then
+    frames = { frames };
+    for _, child in ipairs(frames) do
+      if (child.Title ~= nil) then
+        -- TODO: Check if item is still selected by the user otherwise remove it
+        -- print(child.Title:GetText())
+      end
+    end
+  end
 
   local curFrame;
   local lastFrame = FarmBuddyFrame;
@@ -273,14 +261,6 @@ function FarmBuddy:UpdateGUI()
   end
 
   FarmBuddyFrame:SetHeight(totalHeight);
-end
-
--- **************************************************************************
--- NAME : FarmBuddy_GetID()
--- DESC : Gets the Plugin ID.
--- **************************************************************************
-function FarmBuddy_GetID()
-  return FARM_BUDDY_ID;
 end
 
 -- **************************************************************************
