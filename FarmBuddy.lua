@@ -18,7 +18,30 @@ function FarmBuddy:OnInitialize()
 
   -- Register events
   self:RegisterEvent('BAG_UPDATE', 'BagUpdate');
-  MyFrame:Show();
+
+  local FRAME = CreateFrame('Frame', 'Item1', FarmBuddyFrame, 'FarmBuddyTrackTemplate');
+  FRAME.Title:SetText('Ruhestein');
+  FRAME.Title:SetTextColor(255, 255, 255, 1);
+  FRAME.Subline:SetText('0 / 1');
+
+  local FRAME2 = CreateFrame('Frame', 'Item2', FarmBuddyFrame, 'FarmBuddyTrackTemplate');
+  FRAME2.Title:SetText('Seidenstoff');
+  FRAME2.Title:SetTextColor(255, 255, 255, 1);
+  FRAME2.Subline:SetText('132 / 200');
+  FRAME2:SetPoint("TOPLEFT", 0, -20)
+
+  local FRAME3 = CreateFrame('Frame', 'Item3', FarmBuddyFrame, 'FarmBuddyTrackTemplate');
+  FRAME3.Title:SetText('Wollstoff');
+  FRAME3.Title:SetTextColor(255, 255, 255, 1);
+  FRAME3.Subline:SetText('48 / 200');
+  FRAME3:SetPoint("TOPLEFT", 0, -58)
+
+  local FRAME4 = CreateFrame('Frame', 'Item4', FarmBuddyFrame, 'FarmBuddyTrackTemplate');
+  FRAME4.Title:SetText('Luftpartikel');
+  FRAME4.Title:SetTextColor(0, 255, 0, 1);
+  FRAME4.Subline:SetText('0 / 50');
+  FRAME4:SetPoint("TOPLEFT", 0, -96)
+
 end
 
 -- **************************************************************************
