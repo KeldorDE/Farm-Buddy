@@ -3,7 +3,7 @@
   <Script file="FarmBuddy.lua"/>
 
   <!-- Template for a single option "box" containing a checkbox -->
-  <Frame name="FarmBuddyTrackTemplate" virtual="true">
+  <Frame name="FarmBuddyItemTemplate" virtual="true">
     <Size>
       <AbsDimension x="36" y="82" />
     </Size>
