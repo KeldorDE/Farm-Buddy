@@ -2,7 +2,7 @@
 ..\FrameXML\UI.xsd">
   <Script file="FarmBuddy.lua"/>
 
-  <!-- Template for a single option "box" containing a checkbox -->
+  <!-- Template for a tracked item -->
   <Frame name="FarmBuddyItemTemplate" virtual="true">
     <Size>
       <AbsDimension x="36" y="82" />
@@ -16,6 +16,7 @@
     </Anchors>
     <Layers>
       <Layer level="ARTWORK">
+        <!-- Placeholder icon -->
         <Texture name="$parentTexture" file="INTERFACE\ICONS\Inv_misc_coin_01">
           <Anchors>
             <Anchor point="CENTER">
