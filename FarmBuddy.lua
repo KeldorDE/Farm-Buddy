@@ -172,7 +172,7 @@ function FarmBuddy:GetItemInfo(name)
 
   if name then
 
-    local itemName, itemLink = GetItemInfo(name);
+    local itemName, itemLink, itemRarity = GetItemInfo(name);
 
     if itemLink == nil then
       return nil;
@@ -180,7 +180,6 @@ function FarmBuddy:GetItemInfo(name)
 
       local countBags = GetItemCount(itemLink);
       local countTotal = GetItemCount(itemLink, true);
-      local _, _, itemRarity = GetItemInfo(itemLink);
       local _, itemID = strsplit(':', itemLink);
       local info = {
         ItemID = itemID,
