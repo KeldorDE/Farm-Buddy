@@ -36,8 +36,8 @@ function FarmBuddy:OnInitialize()
 
   self.db = LibStub("AceDB-3.0"):New(FARM_BUDDY_ID .. 'DB', DEFAULTS);
   self:RegisterEvent('BAG_UPDATE', 'BagUpdate');
+  self:RegisterEvent('GET_ITEM_INFO_RECEIVED', 'BagUpdate');
   self:InitItems();
-  self:UpdateGUI();
 
   --[[
   tinsert(self.db.profile.items, {
@@ -104,6 +104,8 @@ function FarmBuddy:BagUpdate()
       end
     end
   end
+
+  self:UpdateGUI();
 end
 
 -- **************************************************************************

@@ -51,7 +51,7 @@
     </Layers>
   </Frame>
 
-  <Frame name="FarmBuddyFrame" parent="UIParent" toplevel="true" enableMouse="true" movable="true" hidden="false">
+  <Frame name="FarmBuddyFrame" parent="UIParent" toplevel="true" enableMouse="false" movable="true" hidden="false">
     <Size x="320" y="156"/>
     <Anchors>
       <Anchor point="CENTER"/>
@@ -81,6 +81,7 @@
     <Scripts>
       <OnLoad>
           self:RegisterForDrag('LeftButton');
+          self:SetUserPlaced(true);
       </OnLoad>
       <OnDragStart>
           self:StartMoving();
