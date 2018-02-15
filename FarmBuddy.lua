@@ -243,6 +243,7 @@ function FarmBuddy:UpdateGUI()
   local curFrame;
   local lastFrame = FarmBuddyFrame;
   local totalHeight = 0;
+  local count = 0;
 
   for index, itemStorage in pairs(ITEM_STORAGE) do
     local itemInfo = self:GetItemInfo(itemStorage.name);
@@ -274,6 +275,7 @@ function FarmBuddy:UpdateGUI()
       end
 
       totalHeight = (totalHeight + curFrame:GetHeight());
+      count = count + 1;
     end
   end
 
@@ -281,6 +283,13 @@ function FarmBuddy:UpdateGUI()
   totalHeight = totalHeight + FarmBuddyFrame.Title:GetHeight();
   if (totalHeight > 0) then
     FarmBuddyFrame:SetHeight(totalHeight);
+  end
+
+  if (count == 0) then
+    FarmBuddyFrame.EmptyText:SetText('- ' .. L['FARM_BUDDY_NO_TRACKED_ITEMS'] .. ' -');
+    FarmBuddyFrame.EmptyText:Show();
+  else
+    FarmBuddyFrame.EmptyText:Hide();
   end
 end
 

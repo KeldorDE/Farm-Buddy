@@ -63,8 +63,7 @@
 
     <Layers>
       <Layer level="BACKGROUND">
-        <FontString name="$parentTitle" inherits="GameFontNormal" text="Farm Buddy" parentKey="Title">
-          <Size x="320" y="20"/>
+        <FontString name="$parentTitle" inherits="GameFontNormal" parentKey="Title" text="Farm Buddy">
           <Anchors>
             <Anchor point="TOPLEFT">
               <Offset x="5" y="19" />
@@ -73,7 +72,18 @@
               <Offset x="5" y="19" />
             </Anchor>
           </Anchors>
+          <Size x="320" y="20"/>
           <Color r="255" g="215" b="0" a="1"/>
+          <FontHeight val="12"/>
+        </FontString>
+        <FontString name="$parentEmptyText" inherits="GameFontNormal" parentKey="EmptyText" hidden="true" text="">
+          <Anchors>
+            <Anchor point="TOPCENTER">
+              <Offset x="5" y="0" />
+            </Anchor>
+          </Anchors>
+          <Size x="320" y="20"/>
+          <Color r="255" g="215" b="255" a="1"/>
           <FontHeight val="12"/>
         </FontString>
       </Layer>
