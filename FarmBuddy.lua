@@ -258,19 +258,27 @@ function FarmBuddy:UpdateGUI()
         curFrame.Title:SetTextColor(r, g, b, 1);
         curFrame.Texture:SetTexture(itemInfo.IconFileDataID);
         curFrame.Subline:SetText(FarmBuddy:GetCount(itemInfo, itemStorage.quantity));
+
+        -- Set frame position
         if (index > 1) then
           curFrame:SetPoint('TOPLEFT', lastFrame, 0, -36);
+        else
+          curFrame:SetPoint('TOPLEFT', FarmBuddyFrame, 0, -6);
         end
 
-        totalHeight = (totalHeight + curFrame:GetHeight());
         lastFrame = curFrame;
         ITEM_FRAMES[frameName] = curFrame;
       else
-        ITEM_FRAMES[frameName].Subline:SetText(FarmBuddy:GetCount(itemInfo, itemStorage.quantity));
+        curFrame = ITEM_FRAMES[frameName];
+        curFrame.Subline:SetText(FarmBuddy:GetCount(itemInfo, itemStorage.quantity));
       end
+
+      totalHeight = (totalHeight + curFrame:GetHeight());
     end
   end
 
+  -- Set parent main frame height
+  totalHeight = totalHeight + FarmBuddyFrame.Title:GetHeight();
   if (totalHeight > 0) then
     FarmBuddyFrame:SetHeight(totalHeight);
   end

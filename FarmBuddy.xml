@@ -5,7 +5,7 @@
   <!-- Template for a tracked item -->
   <Frame name="FarmBuddyItemTemplate" virtual="true">
     <Size>
-      <AbsDimension x="36" y="82" />
+      <AbsDimension x="36" y="31" />
     </Size>
     <Anchors>
       <Anchor point="TOPLEFT">
@@ -64,6 +64,7 @@
     <Layers>
       <Layer level="BACKGROUND">
         <FontString name="$parentTitle" inherits="GameFontNormal" text="Farm Buddy" parentKey="Title">
+          <Size x="320" y="20"/>
           <Anchors>
             <Anchor point="TOPLEFT">
               <Offset x="5" y="16" />
