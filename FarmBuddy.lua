@@ -25,6 +25,7 @@ local DEFAULTS = {
       notificationGlow = true,
       notificationShine = true,
       notificationSound = SOUNDKIT.UI_WORLDQUEST_COMPLETE,
+      showQuantity = true,
     }
   }
 }
@@ -97,7 +98,6 @@ function FarmBuddy:BagUpdate()
     local itemInfo = self:GetItemInfo(itemStorage.name);
     if itemInfo ~= nil then
       local count = FarmBuddy:GetCount(itemInfo);
-      -- TODO: Update GUI
       if(itemStorage.quantity > 0 and count >= itemStorage.quantity) then
         FarmBuddy:QueueNotification(itemStorage.name, itemStorage.name, itemStorage.quantity);
       else
@@ -215,7 +215,7 @@ function FarmBuddy:GetCount(itemInfo, quantity)
     count = itemInfo.CountTotal;
   end
 
-  if(quantity ~= nil) then
+  if(self.db.profile.settings.showQuantity == true and quantity ~= nil and quantity > 0) then
     count = count .. ' / ' .. quantity;
   end
 
