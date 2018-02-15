@@ -13,6 +13,7 @@ local NOTIFICATION_COUNT = 0;
 local NOTIFICATION_QUEUE = {};
 local NOTIFICATION_TRIGGERED = {};
 local ITEM_STORAGE = {};
+local ITEM_FRAMES = {};
 local DEFAULTS = {
   profile = {
     items = {},
@@ -227,17 +228,17 @@ end
 -- **************************************************************************
 function FarmBuddy:UpdateGUI()
 
-  -- TODO: Loop and remove old items from list
-  local frames = FarmBuddyFrame:GetChildren();
+  --[[ Get names of existing frames
+  local frameItems = {};
+  local frames = { FarmBuddyFrame:GetChildren() };
   if (frames ~= nil) then
-    frames = { frames };
     for _, child in ipairs(frames) do
       if (child.Title ~= nil) then
-        -- TODO: Check if item is still selected by the user otherwise remove it
-        -- print(child.Title:GetText())
+        frameItems[child:GetName()] = true;
       end
     end
   end
+  --]]
 
   local curFrame;
   local lastFrame = FarmBuddyFrame;
@@ -246,22 +247,33 @@ function FarmBuddy:UpdateGUI()
   for index, itemStorage in pairs(ITEM_STORAGE) do
     local itemInfo = self:GetItemInfo(itemStorage.name);
     if itemInfo ~= nil then
-      local r, g, b = GetItemQualityColor(itemInfo.Rarity);
+      local frameName = FARM_BUDDY_ID .. 'Item' .. tostring(itemInfo.ItemID);
 
-      curFrame = CreateFrame('Frame', FARM_BUDDY_ID .. 'Item' .. tostring(itemInfo.ItemID), FarmBuddyFrame, 'FarmBuddyItemTemplate');
-      curFrame.Title:SetText(itemInfo.Name);
-      curFrame.Title:SetTextColor(r, g, b, 1);
-      curFrame.Texture:SetTexture(itemInfo.IconFileDataID);
-      curFrame.Subline:SetText(FarmBuddy:GetCount(itemInfo, itemStorage.quantity));
-      if (index > 1) then
-        curFrame:SetPoint('TOPLEFT', lastFrame, 0, -36);
+      -- Only add new frame if the frame does not already exists
+      if (ITEM_FRAMES[frameName] == nil) then
+        local r, g, b = GetItemQualityColor(itemInfo.Rarity);
+
+        curFrame = CreateFrame('Frame', frameName, FarmBuddyFrame, 'FarmBuddyItemTemplate');
+        curFrame.Title:SetText(itemInfo.Name);
+        curFrame.Title:SetTextColor(r, g, b, 1);
+        curFrame.Texture:SetTexture(itemInfo.IconFileDataID);
+        curFrame.Subline:SetText(FarmBuddy:GetCount(itemInfo, itemStorage.quantity));
+        if (index > 1) then
+          curFrame:SetPoint('TOPLEFT', lastFrame, 0, -36);
+        end
+
+        totalHeight = (totalHeight + curFrame:GetHeight());
+        lastFrame = curFrame;
+        ITEM_FRAMES[frameName] = curFrame;
+      else
+        ITEM_FRAMES[frameName].Subline:SetText(FarmBuddy:GetCount(itemInfo, itemStorage.quantity));
       end
-      totalHeight = (totalHeight + curFrame:GetHeight());
-      lastFrame = curFrame;
     end
   end
 
-  FarmBuddyFrame:SetHeight(totalHeight);
+  if (totalHeight > 0) then
+    FarmBuddyFrame:SetHeight(totalHeight);
+  end
 end
 
 -- **************************************************************************
