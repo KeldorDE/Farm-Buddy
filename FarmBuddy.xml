@@ -67,10 +67,10 @@
           <Size x="320" y="20"/>
           <Anchors>
             <Anchor point="TOPLEFT">
-              <Offset x="5" y="16" />
+              <Offset x="5" y="19" />
             </Anchor>
             <Anchor point="TOPRIGHT">
-              <Offset x="5" y="16" />
+              <Offset x="5" y="19" />
             </Anchor>
           </Anchors>
           <Color r="255" g="215" b="0" a="1"/>
