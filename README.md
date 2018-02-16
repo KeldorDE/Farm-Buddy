@@ -1,7 +1,7 @@
 # Farm Buddy
 
 
-An World of Warcraft AddOn that adds the functionality to Track multiple farmed items. An notification will appear if the defined goal quantity for an item has reached.
+A World of Warcraft AddOn that adds the functionality to Track multiple farmed items. An notification will appear if the defined goal quantity for an item has reached.
 
 **Quickstart**  
 Alt + Right click on an Item in your Bags or Bank to start tracking.
