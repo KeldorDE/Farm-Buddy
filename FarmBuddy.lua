@@ -231,18 +231,6 @@ end
 -- **************************************************************************
 function FarmBuddy:UpdateGUI()
 
-  --[[ Get names of existing frames
-  local frameItems = {};
-  local frames = { FarmBuddyFrame:GetChildren() };
-  if (frames ~= nil) then
-    for _, child in ipairs(frames) do
-      if (child.Title ~= nil) then
-        frameItems[child:GetName()] = true;
-      end
-    end
-  end
-  --]]
-
   local curFrame;
   local lastFrame = FarmBuddyFrame;
   local totalHeight = 0;
@@ -251,7 +239,7 @@ function FarmBuddy:UpdateGUI()
   for index, itemStorage in pairs(ITEM_STORAGE) do
     local itemInfo = self:GetItemInfo(itemStorage.name);
     if itemInfo ~= nil then
-      local frameName = FARM_BUDDY_ID .. 'Item' .. tostring(itemInfo.ItemID);
+      local frameName = FARM_BUDDY_ID .. 'Item' .. itemStorage.id;
 
       -- Only add new frame if the frame does not already exists
       if (ITEM_FRAMES[frameName] == nil) then
@@ -270,13 +258,13 @@ function FarmBuddy:UpdateGUI()
           curFrame:SetPoint('TOPLEFT', FarmBuddyFrame, 0, -6);
         end
 
-        lastFrame = curFrame;
         ITEM_FRAMES[frameName] = curFrame;
       else
         curFrame = ITEM_FRAMES[frameName];
         curFrame.Subline:SetText(FarmBuddy:GetCount(itemInfo, itemStorage.quantity));
       end
 
+      lastFrame = curFrame;
       totalHeight = (totalHeight + curFrame:GetHeight());
       count = count + 1;
     end
