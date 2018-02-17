@@ -43,17 +43,6 @@ function FarmBuddy:OnInitialize()
 
   --InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
   --InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
-
-  --[[
-  tinsert(self.db.profile.items, {
-    name = 'Einfaches Holz',
-    quantity = 200
-  });
-  tinsert(self.db.profile.items, {
-    name = 'Saftiges Maisbrot',
-    quantity = 200
-  });
-  --]]
 end
 
 -- **************************************************************************
@@ -281,6 +270,19 @@ function FarmBuddy:UpdateGUI()
     FarmBuddyFrame.EmptyText:Show();
   else
     FarmBuddyFrame.EmptyText:Hide();
+  end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:RemoveItemFrame()
+-- DESC : Removes the item frame with the given ID.
+-- **************************************************************************
+function FarmBuddy:RemoveItemFrame(id)
+
+  local frameName = FARM_BUDDY_ID .. 'Item' .. id;
+  if (ITEM_FRAMES[frameName] ~= nil) then
+    ITEM_FRAMES[frameName]:Hide();
+    ITEM_FRAMES[frameName] = nil;
   end
 end
 
