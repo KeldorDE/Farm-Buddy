@@ -21,6 +21,10 @@ L["FARM_BUDDY_COMMAND_GOAL_DESC"] = "Sets the goal quantity."
 --Translation missing 
 L["FARM_BUDDY_GERMAN"] = "German"
 --Translation missing 
+L["FARM_BUDDY_INCLUDE_BANK"] = "Include items in your bank"
+--Translation missing 
+L["FARM_BUDDY_INCLUDE_BANK_DESC"] = "If enabled items in your bank are included when counting the farmed item."
+--Translation missing 
 L["FARM_BUDDY_INVALID_NUMBER"] = "Shows a notification if the item quantity has reached."
 --Translation missing 
 L["FARM_BUDDY_ITEM"] = "Item"
@@ -78,6 +82,8 @@ L["FARM_BUDDY_RESET_ALL_ITEMS_DESC"] = "Resets all tracked items."
 L["FARM_BUDDY_RESET_DESC"] = "Resets the tracked item."
 --Translation missing 
 L["FARM_BUDDY_SETTINGS"] = "Common"
+--Translation missing 
+L["FARM_BUDDY_SHOW_GOAL"] = "Show Goal next to the item count"
 --Translation missing 
 L["FARM_BUDDY_SHOW_TITLE"] = "Show title"
 --Translation missing 

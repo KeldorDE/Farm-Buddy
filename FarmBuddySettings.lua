@@ -56,7 +56,7 @@ function FarmBuddy:GetConfigOptions()
           general_space_1 = {
             type = 'description',
             name = '',
-            order = self:GetOptionOrder('main'),
+            order = self:GetOptionOrder('general'),
           },
           general_show_title = {
             type = 'toggle',
@@ -64,7 +64,34 @@ function FarmBuddy:GetConfigOptions()
             desc = L['FARM_BUDDY_SHOW_TITLE_DESC'],
             get = 'GetShowTitle',
             set = 'SetShowTitle',
-            order = self:GetOptionOrder('main'),
+            order = self:GetOptionOrder('general'),
+          },
+          general_space_2 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('general'),
+          },
+          general_show_quantity = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_SHOW_GOAL'],
+            get = function() return self:GetSetting('showQuantity', 'bool'); end,
+            set = function(info, input) self:SetSetting('showQuantity', 'bool', input, true); end,
+            width = 'full',
+            order = self:GetOptionOrder('general'),
+          },
+          general_space_3 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('general'),
+          },
+          general_include_bank = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_INCLUDE_BANK'],
+            desc = L['FARM_BUDDY_INCLUDE_BANK_DESC'],
+            get = function() return self:GetSetting('includeBank', 'bool'); end,
+            set = function(info, input) self:SetSetting('includeBank', 'bool', input, true); end,
+            width = 'full',
+            order = self:GetOptionOrder('general'),
           },
         },
       },
@@ -108,7 +135,7 @@ function FarmBuddy:GetConfigOptions()
             name = L['FARM_BUDDY_NOTIFICATION'],
             desc = L['FARM_BUDDY_NOTIFICATION_DESC'],
             get = function() return self:GetSetting('goalNotification', 'bool'); end,
-            set = function(info, input) return self:SetSetting('goalNotification', 'bool', input); end,
+            set = function(info, input) self:SetSetting('goalNotification', 'bool', input, false); end,
             width = 'full',
             order = self:GetOptionOrder('notifications'),
           },
@@ -122,7 +149,7 @@ function FarmBuddy:GetConfigOptions()
             name = L['FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION'],
             desc = L['FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION_DESC'],
             get = function() return self:GetSetting('notificationDisplayDuration', 'string'); end,
-            set = function(info, input) return self:SetSetting('notificationDisplayDuration', 'number', input); end,
+            set = function(info, input) self:SetSetting('notificationDisplayDuration', 'number', input, false); end,
             validate = 'ValidateNumber',
             width = 'double',
             order = self:GetOptionOrder('notifications'),
@@ -137,7 +164,7 @@ function FarmBuddy:GetConfigOptions()
             name = L['FARM_BUDDY_NOTIFICATION_GLOW'],
             desc = L['FARM_BUDDY_NOTIFICATION_GLOW_DESC'],
             get = function() return self:GetSetting('notificationGlow', 'bool'); end,
-            set = function(info, input) return self:SetSetting('notificationGlow', 'bool', input); end,
+            set = function(info, input) self:SetSetting('notificationGlow', 'bool', input, false); end,
             width = 'full',
             order = self:GetOptionOrder('notifications'),
           },
@@ -151,7 +178,7 @@ function FarmBuddy:GetConfigOptions()
             name = L['FARM_BUDDY_NOTIFICATION_SHINE'],
             desc = L['FARM_BUDDY_NOTIFICATION_SHINE_DESC'],
             get = function() return self:GetSetting('notificationShine', 'bool'); end,
-            set = function(info, input) return self:SetSetting('notificationShine', 'bool', input); end,
+            set = function(info, input) self:SetSetting('notificationShine', 'bool', input, false); end,
             width = 'full',
             order = self:GetOptionOrder('notifications'),
           },
@@ -165,7 +192,7 @@ function FarmBuddy:GetConfigOptions()
             name = L['FARM_BUDDY_PLAY_NOTIFICATION_SOUND'],
             desc = L['FARM_BUDDY_PLAY_NOTIFICATION_SOUND_DESC'],
             get = function() return self:GetSetting('notificationSound', 'bool'); end,
-            set = function(info, input) return self:SetSetting('notificationSound', 'bool', input); end,
+            set = function(info, input) self:SetSetting('notificationSound', 'bool', input, false); end,
             width = 'full',
             order = self:GetOptionOrder('notifications'),
           },
@@ -180,7 +207,7 @@ function FarmBuddy:GetConfigOptions()
             style = 'dropdown',
             values = self:GetSounds(),
             get = function() return self:GetSetting('notificationSound', 'number'); end,
-            set = function(info, input) PlaySound(input, 'master'); return self:SetSetting('notificationSound', 'number', input); end,
+            set = function(info, input) PlaySound(input, 'master'); self:SetSetting('notificationSound', 'number', input, false); end,
             width = 'double',
             order = self:GetOptionOrder('notifications'),
           },
@@ -566,7 +593,7 @@ end
 -- NAME : FarmBuddy:SetSetting()
 -- DESC : Sets the setting value.
 -- **************************************************************************
-function FarmBuddy:SetSetting(name, type, input)
+function FarmBuddy:SetSetting(name, type, input, updateGUI)
 
   if (self.db.profile.settings ~= nil) then
     if (self.db.profile.settings[name] ~= nil) then
@@ -576,6 +603,10 @@ function FarmBuddy:SetSetting(name, type, input)
       end
 
       self.db.profile.settings[name] = input;
+
+      if (updateGUI == true) then
+        FarmBuddy:UpdateGUI();
+      end
     end
   end
 end

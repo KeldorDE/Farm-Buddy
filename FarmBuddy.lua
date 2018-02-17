@@ -18,6 +18,7 @@ local DEFAULTS = {
     items = {},
     settings = {
       showTitle = true,
+      showQuantity = true,
       includeBank = false,
       goalNotification = true,
       notificationDisplayDuration = 5,
@@ -25,7 +26,6 @@ local DEFAULTS = {
       notificationShine = true,
       playNotificationSound = true,
       notificationSound = SOUNDKIT.UI_WORLDQUEST_COMPLETE,
-      showQuantity = true,
     }
   }
 }
