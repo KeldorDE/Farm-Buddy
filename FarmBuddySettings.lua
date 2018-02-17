@@ -340,6 +340,12 @@ function FarmBuddy:RemoveItem(info)
     self.db.profile.items[index] = nil;
   end
 
+  -- Remove frame and redraw
+  self:RemoveItemFrame(info.option.unique_index);
+  self:InitItems();
+  self:UpdateGUI();
+
+  -- Update settings GUI
   self:ReindexConfigItems();
   CONFIG_REG:NotifyChange(ADDON_NAME);
 end
