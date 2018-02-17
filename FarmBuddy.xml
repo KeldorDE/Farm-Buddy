@@ -6,7 +6,7 @@
   <!-- Template for a tracked item -->
   <Frame name="FarmBuddyItemTemplate" virtual="true">
     <Size>
-      <AbsDimension x="36" y="31" />
+      <AbsDimension x="36" y="32" />
     </Size>
     <Anchors>
       <Anchor point="TOPLEFT">
@@ -22,7 +22,7 @@
           <Anchors>
             <Anchor point="CENTER">
               <Offset>
-                <AbsDimension x="0" y="3" />
+                <AbsDimension x="0" y="-2" />
               </Offset>
             </Anchor>
           </Anchors>
@@ -33,7 +33,7 @@
         <FontString name="$parentTitle" relativeTo="$parentTexture" inherits="GameFontNormal" parentKey="Title">
           <Anchors>
             <Anchor point="LEFT">
-              <Offset x="36" y="11" />
+              <Offset x="36" y="6" />
             </Anchor>
           </Anchors>
           <Color r="255" g="255" b="255" a="1"/>
@@ -42,7 +42,7 @@
         <FontString name="$parentSubline" relativeTo="$parentTitle" inherits="GameFontNormalSmall" parentKey="Subline">
           <Anchors>
             <Anchor point="LEFT">
-              <Offset x="36" y="-3" />
+              <Offset x="36" y="-7" />
             </Anchor>
           </Anchors>
           <Color r="255" g="216" b="0" a="1"/>

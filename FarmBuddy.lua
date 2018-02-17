@@ -242,9 +242,9 @@ function FarmBuddy:UpdateGUI()
 
         -- Set frame position
         if (index > 1) then
-          curFrame:SetPoint('TOPLEFT', lastFrame, 0, -36);
+          curFrame:SetPoint('TOPLEFT', lastFrame, 0, -curFrame:GetHeight());
         else
-          curFrame:SetPoint('TOPLEFT', FarmBuddyFrame, 0, -6);
+          curFrame:SetPoint('TOPLEFT', FarmBuddyFrame, 0, 0);
         end
 
         ITEM_FRAMES[frameName] = curFrame;
@@ -260,7 +260,7 @@ function FarmBuddy:UpdateGUI()
   end
 
   -- Set parent main frame height
-  totalHeight = totalHeight + FarmBuddyFrame.Title:GetHeight();
+  totalHeight = totalHeight + 4; -- Add footer spacing
   if (totalHeight > 0) then
     FarmBuddyFrame:SetHeight(totalHeight);
   end
