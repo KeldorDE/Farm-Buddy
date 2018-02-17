@@ -20,11 +20,11 @@ local DEFAULTS = {
       showTitle = true,
       includeBank = false,
       goalNotification = true,
-      playNotificationSound = true,
       notificationDisplayDuration = 5,
       notificationGlow = true,
       notificationShine = true,
       notificationSound = SOUNDKIT.UI_WORLDQUEST_COMPLETE,
+      playNotificationSound = true,
       showQuantity = true,
     }
   }
@@ -43,8 +43,8 @@ function FarmBuddy:OnInitialize()
   self:InitItems();
   self:SetTitleDisplay();
 
-  InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
-  InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
+  --InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
+  --InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
 end
 
 -- **************************************************************************

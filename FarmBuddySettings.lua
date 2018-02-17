@@ -52,6 +52,11 @@ function FarmBuddy:GetConfigOptions()
         type = 'group',
         order = self:GetOptionOrder('main'),
         args = {
+          general_space_1 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('main'),
+          },
           general_show_title = {
             type = 'toggle',
             name = L['FARM_BUDDY_SHOW_TITLE'],
@@ -97,7 +102,63 @@ function FarmBuddy:GetConfigOptions()
         type = 'group',
         order = self:GetOptionOrder('main'),
         args = {
-
+          notifications_notification_status = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_NOTIFICATION'],
+            desc = L['FARM_BUDDY_NOTIFICATION_DESC'],
+            get = function() return self:GetSetting('goalNotification', 'bool'); end,
+            set = function(info, input) return self:SetSetting('goalNotification', 'bool', input); end,
+            width = 'full',
+            order = self:GetOptionOrder('notifications'),
+          },
+          notifications_space_1 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('notifications'),
+          },
+          notifications_notification_display_duration = {
+            type = 'input',
+            name = L['FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION'],
+            desc = L['FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION_DESC'],
+            get = function() return self:GetSetting('notificationDisplayDuration', 'string'); end,
+            set = function(info, input) return self:SetSetting('notificationDisplayDuration', 'number', input); end,
+            validate = 'ValidateNumber',
+            width = 'double',
+            order = self:GetOptionOrder('notifications'),
+          },
+          notifications_space_2 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('notifications'),
+          },
+          notifications_notification_glow = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_NOTIFICATION_GLOW'],
+            desc = L['FARM_BUDDY_NOTIFICATION_GLOW_DESC'],
+            get = function() return self:GetSetting('notificationGlow', 'bool'); end,
+            set = function(info, input) return self:SetSetting('notificationGlow', 'bool', input); end,
+            width = 'full',
+            order = self:GetOptionOrder('notifications'),
+          },
+          notifications_space_3 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('notifications'),
+          },
+          notifications_notification_shine = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_NOTIFICATION_SHINE'],
+            desc = L['FARM_BUDDY_NOTIFICATION_SHINE_DESC'],
+            get = function() return self:GetSetting('notificationShine', 'bool'); end,
+            set = function(info, input) return self:SetSetting('notificationShine', 'bool', input); end,
+            width = 'full',
+            order = self:GetOptionOrder('notifications'),
+          },
+          notifications_space_4 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('notifications'),
+          },
         }
       },
       tab_actions = {
@@ -407,6 +468,44 @@ function FarmBuddy:SetShowTitle(info, input)
 end
 
 -- **************************************************************************
+-- NAME : FarmBuddy:GetSetting()
+-- DESC : Gets the setting value.
+-- **************************************************************************
+function FarmBuddy:GetSetting(name, type)
+
+  local val;
+  if (self.db.profile.settings ~= nil) then
+    if (self.db.profile.settings[name] ~= nil) then
+      val = self.db.profile.settings[name];
+
+      if (type == 'string') then
+        val = tostring(val);
+      end
+    end
+  end
+
+  return val;
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetSetting()
+-- DESC : Sets the setting value.
+-- **************************************************************************
+function FarmBuddy:SetSetting(name, type, input)
+
+  if (self.db.profile.settings ~= nil) then
+    if (self.db.profile.settings[name] ~= nil) then
+
+      if(type == 'number') then
+        input = tonumber(input);
+      end
+
+      self.db.profile.settings[name] = input;
+    end
+  end
+end
+
+-- **************************************************************************
 -- NAME : FarmBuddy:GenerateChars()
 -- DESC : Generates a table of random chars.
 -- **************************************************************************
@@ -427,4 +526,19 @@ function FarmBuddy:GetRandomString(length)
     table.insert(strTable, RANDOM_CHARS[math.random(1, #RANDOM_CHARS)]);
   end;
   return table.concat(strTable);
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:ValidateNumber()
+-- DESC : Checks if the entered value a valid and positive number.
+-- **************************************************************************
+function FarmBuddy:ValidateNumber(info, input)
+
+  local number = tonumber(input);
+  if not number or number < 0 then
+    self:Print(L['FARM_BUDDY_INVALID_NUMBER']);
+    return false;
+  end
+
+  return true;
 end

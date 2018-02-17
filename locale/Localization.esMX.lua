@@ -21,6 +21,8 @@ L["FARM_BUDDY_COMMAND_GOAL_DESC"] = "Sets the goal quantity."
 --Translation missing 
 L["FARM_BUDDY_GERMAN"] = "German"
 --Translation missing 
+L["FARM_BUDDY_INVALID_NUMBER"] = "Shows a notification if the item quantity has reached."
+--Translation missing 
 L["FARM_BUDDY_ITEM"] = "Item"
 --Translation missing 
 L["FARM_BUDDY_ITEM_TO_TRACK_DESC"] = "The name of the item to track"
@@ -33,9 +35,25 @@ L["FARM_BUDDY_LOCALIZATION"] = "Localization"
 --Translation missing 
 L["FARM_BUDDY_NO_TRACKED_ITEMS"] = "No tracked items"
 --Translation missing 
+L["FARM_BUDDY_NOTIFICATION"] = "Enable Notifications"
+--Translation missing 
 L["FARM_BUDDY_NOTIFICATION_DEMO_ITEM_NAME"] = "Hearthstone"
 --Translation missing 
+L["FARM_BUDDY_NOTIFICATION_DESC"] = "Shows an notification if the item quantity has reached."
+--Translation missing 
+L["FARM_BUDDY_NOTIFICATION_GLOW"] = "Show Glow Effect"
+--Translation missing 
+L["FARM_BUDDY_NOTIFICATION_GLOW_DESC"] = "Shows a glow effect if a notification is shown."
+--Translation missing 
+L["FARM_BUDDY_NOTIFICATION_SHINE"] = "Show Shine Effect"
+--Translation missing 
+L["FARM_BUDDY_NOTIFICATION_SHINE_DESC"] = "Shows a shine effect if a notification is shown."
+--Translation missing 
 L["FARM_BUDDY_NOTIFICATIONS"] = "Notifications"
+--Translation missing 
+L["FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION"] = "Notification Display Duration"
+--Translation missing 
+L["FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION_DESC"] = "The Notification Display Duration in seconds."
 --Translation missing 
 L["FARM_BUDDY_QUANTITY"] = "Quantity"
 --Translation missing 
