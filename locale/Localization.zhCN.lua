@@ -33,6 +33,10 @@ L["FARM_BUDDY_ITEMS"] = "Items"
 --Translation missing 
 L["FARM_BUDDY_LOCALIZATION"] = "Localization"
 --Translation missing 
+L["FARM_BUDDY_MOVE_NOTIFICATION"] = "Change Notification Position"
+--Translation missing 
+L["FARM_BUDDY_MOVE_NOTIFICATION_DESC"] = "Change the Position of the Notification Frame."
+--Translation missing 
 L["FARM_BUDDY_NO_TRACKED_ITEMS"] = "No tracked items"
 --Translation missing 
 L["FARM_BUDDY_NOTIFICATION"] = "Enable Notifications"
@@ -55,6 +59,10 @@ L["FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION"] = "Notification Display Durat
 --Translation missing 
 L["FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION_DESC"] = "The Notification Display Duration in seconds."
 --Translation missing 
+L["FARM_BUDDY_PLAY_NOTIFICATION_SOUND"] = "Play Notification Sound"
+--Translation missing 
+L["FARM_BUDDY_PLAY_NOTIFICATION_SOUND_DESC"] = "Play a notification sound file if the farm goal has reached."
+--Translation missing 
 L["FARM_BUDDY_QUANTITY"] = "Quantity"
 --Translation missing 
 L["FARM_BUDDY_REMOVE_ITEM"] = "Remove item"
@@ -71,4 +79,10 @@ L["FARM_BUDDY_SHOW_TITLE"] = "Show title"
 --Translation missing 
 L["FARM_BUDDY_SHOW_TITLE_DESC"] = "Show the title above the item frame."
 --Translation missing 
+L["FARM_BUDDY_TEST_NOTIFICATION"] = "Test Notification"
+--Translation missing 
+L["FARM_BUDDY_TEST_NOTIFICATION_DESC"] = "Triggers a test for the finish notification."
+--Translation missing 
 L["FARM_BUDDY_VERSION"] = "Version"
+--Translation missing 
+L["TITAN_BUDDY_NOTIFICATION_SOUND"] = "Notification Sound"

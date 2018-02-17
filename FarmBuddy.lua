@@ -23,8 +23,8 @@ local DEFAULTS = {
       notificationDisplayDuration = 5,
       notificationGlow = true,
       notificationShine = true,
-      notificationSound = SOUNDKIT.UI_WORLDQUEST_COMPLETE,
       playNotificationSound = true,
+      notificationSound = SOUNDKIT.UI_WORLDQUEST_COMPLETE,
       showQuantity = true,
     }
   }

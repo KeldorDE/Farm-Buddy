@@ -159,6 +159,43 @@ function FarmBuddy:GetConfigOptions()
             name = '',
             order = self:GetOptionOrder('notifications'),
           },
+          notifications_play_notification_sound = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_PLAY_NOTIFICATION_SOUND'],
+            desc = L['FARM_BUDDY_PLAY_NOTIFICATION_SOUND_DESC'],
+            get = function() return self:GetSetting('notificationSound', 'bool'); end,
+            set = function(info, input) return self:SetSetting('notificationSound', 'bool', input); end,
+            width = 'full',
+            order = self:GetOptionOrder('notifications'),
+          },
+          notifications_space_5 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('notifications'),
+          },
+          notifications_notification_sound = {
+            type = 'select',
+            name = L['TITAN_BUDDY_NOTIFICATION_SOUND'],
+            style = 'dropdown',
+            values = self:GetSounds(),
+            get = function() return self:GetSetting('notificationSound', 'number'); end,
+            set = function(info, input) PlaySound(input, 'master'); return self:SetSetting('notificationSound', 'number', input); end,
+            width = 'double',
+            order = self:GetOptionOrder('notifications'),
+          },
+          notifications_space_6 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('notifications'),
+          },
+          notifications_move_notification = {
+            type = 'execute',
+            name = L['FARM_BUDDY_MOVE_NOTIFICATION'],
+            desc = L['FARM_BUDDY_MOVE_NOTIFICATION_DESC'],
+            func = function() FarmBuddyNotification_ShowAnchor() end,
+            width = 'double',
+            order = self:GetOptionOrder('notifications'),
+          },
         }
       },
       tab_actions = {
@@ -166,7 +203,30 @@ function FarmBuddy:GetConfigOptions()
         type = 'group',
         order = self:GetOptionOrder('main'),
         args = {
-
+          actions_space_1 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('actions'),
+          },
+          actions_space_2 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('actions'),
+            width = 'half',
+          },
+          actions_test_alert = {
+            type = 'execute',
+            name = L['FARM_BUDDY_TEST_NOTIFICATION'],
+            desc = L['FARM_BUDDY_TEST_NOTIFICATION_DESC'],
+            func = 'TestNotification',
+            width = 'double',
+            order = self:GetOptionOrder('actions'),
+          },
+          actions_space_3 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('actions'),
+          },
         }
       },
       tab_about = {
@@ -506,6 +566,14 @@ function FarmBuddy:SetSetting(name, type, input)
 end
 
 -- **************************************************************************
+-- NAME : FarmBuddy:TestNotification()
+-- DESC : Raises a test notification.
+-- **************************************************************************
+function FarmBuddy:TestNotification()
+  self:ShowNotification(0, L['FARM_BUDDY_NOTIFICATION_DEMO_ITEM_NAME'], 200, true);
+end
+
+-- **************************************************************************
 -- NAME : FarmBuddy:GenerateChars()
 -- DESC : Generates a table of random chars.
 -- **************************************************************************
@@ -541,4 +609,18 @@ function FarmBuddy:ValidateNumber(info, input)
   end
 
   return true;
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:GetSounds()
+-- DESC : Get a list of available sounds.
+-- **************************************************************************
+function FarmBuddy:GetSounds()
+
+  local sounds = {};
+  for k, v in pairs(SOUNDKIT) do
+    sounds[v] = k;
+  end
+
+  return sounds;
 end
