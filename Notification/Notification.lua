@@ -5,6 +5,9 @@
 -- **************************************************************************
 
 local L = LibStub('AceLocale-3.0'):GetLocale('FarmBuddyStandalone', true);
+local FARM_BUDDY_ID = FarmBuddy_GetID();
+local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true);
+local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID);
 local FarmBuddyNotification = LibStub('AceAddon-3.0'):NewAddon('FarmBuddyNotificationStandalone');
 local FRAME_NAME = 'FarmBuddyAlertFrameTemplate';
 local FRAME = CreateFrame('Button', FRAME_NAME, UIParent, 'FarmBuddyAlertFrameTemplate');
@@ -20,7 +23,7 @@ function FarmBuddyNotification_Show(itemName, goal, sound, duration, glow, shine
 
   FarmBuddyNotification_HideNotification(false);
 
-  local itemInfo = FarmBuddy_GetItemInfo(itemName);
+  local itemInfo = FarmBuddy:GetItemInfo(itemName);
   if itemInfo ~= nil then
 
     FarmBuddyNotification_SetTitle(ADDON_NAME);
