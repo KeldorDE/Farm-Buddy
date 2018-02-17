@@ -302,7 +302,7 @@ function FarmBuddy:SetItemProp(id, key, input, numeric)
   local index = self:GetItemIndexByID(id);
   if(index ~= nil) then
 
-    -- Set empty vlaue based on numeric var
+    -- Set empty value based on numeric var
     if (input == '') then
       if (numeric == true) then
         input = 0;
