@@ -41,6 +41,9 @@ function FarmBuddy:OnInitialize()
   self:InitSettings();
   self:InitItems();
 
+  --InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
+  --InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
+
   --[[
   tinsert(self.db.profile.items, {
     name = 'Einfaches Holz',
@@ -299,6 +302,16 @@ end
 -- **************************************************************************
 function FarmBuddy:GetColoredText(text, color)
   return '|c' .. color .. text .. '|r';
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:TableLength()
+-- DESC : Gets the table item count.
+-- **************************************************************************
+function FarmBuddy:TableLength(T)
+  local count = 0
+  for _ in pairs(T) do count = count + 1 end
+  return count
 end
 
 -- **************************************************************************
