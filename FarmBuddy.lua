@@ -42,9 +42,6 @@ function FarmBuddy:OnInitialize()
   self:InitSettings();
   self:InitItems();
   self:SetTitleDisplay();
-
-  --InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
-  --InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
 end
 
 -- **************************************************************************
