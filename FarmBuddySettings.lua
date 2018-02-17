@@ -24,6 +24,7 @@ function FarmBuddy:InitSettings()
   LibStub('AceConfigDialog-3.0'):AddToBlizOptions(ADDON_NAME);
   self:GenerateChars();
   self:LoadExistingConfigItems();
+  self:RegisterDialogs();
 end
 
 -- **************************************************************************
@@ -225,6 +226,20 @@ function FarmBuddy:GetConfigOptions()
           actions_space_3 = {
             type = 'description',
             name = '',
+            order = self:GetOptionOrder('actions'),
+          },
+          actions_space_4 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('actions'),
+            width = 'half',
+          },
+          actions_reset_items = {
+            type = 'execute',
+            name = L['FARM_BUDDY_RESET_ALL_ITEMS'],
+            desc = L['FARM_BUDDY_RESET_ALL_ITEMS_DESC'],
+            func = function() StaticPopup_Show(ADDON_NAME .. 'ResetAllItemsConfirm'); end,
+            width = 'double',
             order = self:GetOptionOrder('actions'),
           },
         }
@@ -623,4 +638,48 @@ function FarmBuddy:GetSounds()
   end
 
   return sounds;
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:RegisterDialogs()
+-- DESC : Registers the addons dialog boxes.
+-- **************************************************************************
+function FarmBuddy:RegisterDialogs()
+
+  StaticPopupDialogs[ADDON_NAME .. 'ResetAllItemsConfirm'] = {
+    text = L['TITAN_FARM_BUDDY_CONFIRM_RESET'],
+    button1 = L['TITAN_FARM_BUDDY_YES'],
+    button2 = L['TITAN_FARM_BUDDY_NO'],
+    OnAccept = function()
+      self:ResetItems();
+    end,
+    timeout = 0,
+    whileDead = true,
+    hideOnEscape = true,
+    preferredIndex = 3,
+  };
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:ResetItems()
+-- DESC : Resets all tracked items.
+-- **************************************************************************
+function FarmBuddy:ResetItems()
+
+  if (self.db.profile.items ~= nil) then
+    for k, v in pairs(self.db.profile.items) do
+      self.db.profile.items[k] = nil;
+      self:RemoveItemFrame(v.id);
+    end
+  end
+
+  -- Remove settings group for item ID
+  self:ReindexConfigItems();
+
+  -- Remove frame and redraw
+  self:InitItems();
+  self:UpdateGUI();
+
+  -- Update settings GUI
+  CONFIG_REG:NotifyChange(ADDON_NAME);
 end
