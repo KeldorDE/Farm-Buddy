@@ -17,6 +17,7 @@ local DEFAULTS = {
   profile = {
     items = {},
     settings = {
+      showTitle = true,
       includeBank = false,
       goalNotification = true,
       playNotificationSound = true,
@@ -40,9 +41,10 @@ function FarmBuddy:OnInitialize()
   self:RegisterEvent('GET_ITEM_INFO_RECEIVED', 'BagUpdate');
   self:InitSettings();
   self:InitItems();
+  self:SetTitleDisplay();
 
-  --InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
-  --InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
+  InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
+  InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
 end
 
 -- **************************************************************************
@@ -270,6 +272,18 @@ function FarmBuddy:UpdateGUI()
     FarmBuddyFrame.EmptyText:Show();
   else
     FarmBuddyFrame.EmptyText:Hide();
+  end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetTitleDisplay()
+-- DESC : Shows or hides the addon title bases on the showTitle setting.
+-- **************************************************************************
+function FarmBuddy:SetTitleDisplay()
+  if (self.db.profile.settings.showTitle == true) then
+    FarmBuddyFrame.Title:Show();
+  else
+    FarmBuddyFrame.Title:Hide();
   end
 end
 

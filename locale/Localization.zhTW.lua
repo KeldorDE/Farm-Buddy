@@ -49,4 +49,8 @@ L["FARM_BUDDY_RESET_DESC"] = "Resets the tracked item."
 --Translation missing 
 L["FARM_BUDDY_SETTINGS"] = "Common"
 --Translation missing 
+L["FARM_BUDDY_SHOW_TITLE"] = "Show title"
+--Translation missing 
+L["FARM_BUDDY_SHOW_TITLE_DESC"] = "Show the title above the item frame."
+--Translation missing 
 L["FARM_BUDDY_VERSION"] = "Version"

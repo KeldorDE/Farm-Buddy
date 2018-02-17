@@ -52,7 +52,14 @@ function FarmBuddy:GetConfigOptions()
         type = 'group',
         order = self:GetOptionOrder('main'),
         args = {
-
+          general_show_title = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_SHOW_TITLE'],
+            desc = L['FARM_BUDDY_SHOW_TITLE_DESC'],
+            get = 'GetShowTitle',
+            set = 'SetShowTitle',
+            order = self:GetOptionOrder('main'),
+          },
         },
       },
       tab_items = {
@@ -380,6 +387,23 @@ function FarmBuddy:GetOptionOrder(category)
 
   OPTION_ORDER.category = OPTION_ORDER.category + 1;
   return OPTION_ORDER.category;
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:GetShowTitle()
+-- DESC : Gets the show title setting.
+-- **************************************************************************
+function FarmBuddy:GetShowTitle()
+  return self.db.profile.settings.showTitle;
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetShowTitle()
+-- DESC : Sets the show title setting.
+-- **************************************************************************
+function FarmBuddy:SetShowTitle(info, input)
+  self.db.profile.settings.showTitle = input;
+  self:SetTitleDisplay();
 end
 
 -- **************************************************************************
