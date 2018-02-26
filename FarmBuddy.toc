@@ -1,5 +1,5 @@
 ## Interface: 70300
-## Title: Farm Buddy |cff00aa001.0.0.70300|r
+## Title: Farm Buddy
 ## Notes: Adds the functionality to track farmed items.
 ## Author: Keldor (https://www.devil-coding.de)
 ## SavedVariables: FarmBuddyStandaloneDB
