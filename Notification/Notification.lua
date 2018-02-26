@@ -127,6 +127,7 @@ function FarmBuddyNotification_OnMouseDown(self, button)
   if button == 'RightButton' and not self.isMoving then
     self:Hide();
     InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
+    InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
   end
 end
 

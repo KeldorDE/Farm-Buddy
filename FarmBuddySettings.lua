@@ -7,7 +7,7 @@
 local FARM_BUDDY_ID = FarmBuddy_GetID();
 local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true);
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID);
-local CONFIG_REG = LibStub("AceConfigRegistry-3.0")
+local CONFIG_REG = LibStub("AceConfigRegistry-3.0");
 local ADDON_NAME = FarmBuddy_GetAddOnName();
 local ADDON_VERSION = GetAddOnMetadata('FarmBuddy', 'Version');
 local ITEM_PREFIX = FARM_BUDDY_ID .. 'Item';
@@ -58,12 +58,13 @@ function FarmBuddy:GetConfigOptions()
             name = '',
             order = self:GetOptionOrder('general'),
           },
-          general_show_title = {
+          general_include_bank = {
             type = 'toggle',
-            name = L['FARM_BUDDY_SHOW_TITLE'],
-            desc = L['FARM_BUDDY_SHOW_TITLE_DESC'],
-            get = 'GetShowTitle',
-            set = 'SetShowTitle',
+            name = L['FARM_BUDDY_INCLUDE_BANK'],
+            desc = L['FARM_BUDDY_INCLUDE_BANK_DESC'],
+            get = function() return self:GetSetting('includeBank', 'bool'); end,
+            set = function(info, input) self:SetSetting('includeBank', 'bool', input, true); end,
+            width = 'full',
             order = self:GetOptionOrder('general'),
           },
           general_space_2 = {
@@ -71,12 +72,22 @@ function FarmBuddy:GetConfigOptions()
             name = '',
             order = self:GetOptionOrder('general'),
           },
-          general_show_quantity = {
-            type = 'toggle',
-            name = L['FARM_BUDDY_SHOW_GOAL'],
-            get = function() return self:GetSetting('showQuantity', 'bool'); end,
-            set = function(info, input) self:SetSetting('showQuantity', 'bool', input, true); end,
+          general_shortcuts_heading = {
+            type = 'header',
+            name = L['FARM_BUDDY_SHORTCUTS'],
+            order = self:GetOptionOrder('general'),
+          },
+          general_fast_tracking_shortcut_mouse_button = {
+            type = 'select',
+            style = 'radio',
+            name = L['FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON'],
+            get = function() return self:GetSetting('fastTrackingMouseButton', 'string'); end,
+            set = function(info, input) self:SetSetting('fastTrackingMouseButton', 'string', input, false); end,
             width = 'full',
+            values = {
+              LeftButton = L['FARM_BUDDY_KEY_LEFT_MOUSE_BUTTON'],
+              RightButton = L['FARM_BUDDY_KEY_RIGHT_MOUSE_BUTTON'],
+            },
             order = self:GetOptionOrder('general'),
           },
           general_space_3 = {
@@ -84,12 +95,17 @@ function FarmBuddy:GetConfigOptions()
             name = '',
             order = self:GetOptionOrder('general'),
           },
-          general_include_bank = {
-            type = 'toggle',
-            name = L['FARM_BUDDY_INCLUDE_BANK'],
-            desc = L['FARM_BUDDY_INCLUDE_BANK_DESC'],
-            get = function() return self:GetSetting('includeBank', 'bool'); end,
-            set = function(info, input) self:SetSetting('includeBank', 'bool', input, true); end,
+          general_fast_tracking_shortcut_keys = {
+            type = 'multiselect',
+            name = L['FARM_BUDDY_FAST_TRACKING_SHORTCUTS'],
+            desc = L['FARM_BUDDY_FAST_TRACKING_SHORTCUTS_DESC'],
+            set = 'SetKeySetting',
+            get = 'GetKeySetting',
+            values = {
+              alt = L['FARM_BUDDY_KEY_ALT'],
+              ctrl = L['FARM_BUDDY_KEY_CTRL'],
+              shift = L['FARM_BUDDY_KEY_SHIFT'],
+            },
             width = 'full',
             order = self:GetOptionOrder('general'),
           },
@@ -114,7 +130,7 @@ function FarmBuddy:GetConfigOptions()
           items_add_item = {
             type = 'execute',
             name = L['FARM_BUDDY_ADD_NEW_ITEM'],
-            func = function() FarmBuddy:AddConfigItem(nil); end,
+            func = function() self:AddConfigItem(); end,
             width = 'double',
             order = self:GetOptionOrder('items'),
           },
@@ -122,6 +138,203 @@ function FarmBuddy:GetConfigOptions()
             type = 'description',
             name = '',
             order = self:GetOptionOrder('items'),
+          },
+        },
+      },
+      tab_apperance = {
+        name = L['FARM_BUDDY_APPERANCE'],
+        type = 'group',
+        order = self:GetOptionOrder('main'),
+        args = {
+          apperance_show_title = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_SHOW_TITLE'],
+            desc = L['FARM_BUDDY_SHOW_TITLE_DESC'],
+            get = function() return self:GetSetting('showTitle', 'bool'); end,
+            set = function(info, input) self:SetSetting('showTitle', 'bool', input, false); self:SetTitleDisplay(); end,
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_1 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_show_buttons = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_SHOW_BUTTONS'],
+            desc = L['FARM_BUDDY_SHOW_BUTTONS_DESC'],
+            get = function() return self:GetSetting('showButtons', 'bool'); end,
+            set = function(info, input) self:SetSetting('showButtons', 'bool', input, false); self:SetButtonDisplay(); end,
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_2 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_show_quantity = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_SHOW_GOAL'],
+            get = function() return self:GetSetting('showQuantity', 'bool'); end,
+            set = function(info, input) self:SetSetting('showQuantity', 'bool', input, true); end,
+            width = 'full',
+            order = self:GetOptionOrder('general'),
+          },
+          apperance_space_3 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('general'),
+          },
+          apperance_show_goal_indicator = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_SHOW_GOAL_INDICATOR'],
+            desc = L['FARM_BUDDY_SHOW_GOAL_INDICATOR_DESC'],
+            get = function() return self:GetSetting('showGoalIndicator', 'bool'); end,
+            set = function(info, input) self:SetSetting('showGoalIndicator', 'bool', input, true); end,
+            width = 'full',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_4 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_show_progressbar = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_SHOW_PROGRESS_BAR'],
+            desc = L['FARM_BUDDY_SHOW_PROGRESS_BAR_DESC'],
+            get = function() return self:GetSetting('showProgressBar', 'bool'); end,
+            set = function(info, input) self:SetSetting('showProgressBar', 'bool', input, true); end,
+            width = 'full',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_5 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_lock_frame = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_LOCK_FRAME'],
+            desc = L['FARM_BUDDY_LOCK_FRAME_DESC'],
+            get = function() return self:GetSetting('frameLocked', 'bool'); end,
+            set = function(info, input) self:SetSetting('frameLocked', 'bool', input, false); self:SetFrameLockStatus(); end,
+            width = 'full',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_6 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_progress_display = {
+            type = 'select',
+            style = 'radio',
+            name = L['FARM_BUDDY_PROGRESS_DISPLAY'],
+            get = function() return self:GetSetting('progressStyle', 'string'); end,
+            set = function(info, input) self:SetSetting('progressStyle', 'string', input, true); end,
+            width = 'full',
+            values = {
+              CountPercentage = L['FARM_BUDDY_COUNT_WITH_PERCENATGE'],
+              Count = L['FARM_BUDDY_COUNT'],
+              Percentage = L['FARM_BUDDY_PERCENTAGE'],
+            },
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_7 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_show_bonus = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_SHOW_BONUS'],
+            desc = L['FARM_BUDDY_SHOW_BONUS_DESC'],
+            get = function() return self:GetSetting('showGoalBonus', 'bool'); end,
+            set = function(info, input) self:SetSetting('showGoalBonus', 'bool', input, true); end,
+            width = 'full',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_8 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_bonus_display = {
+            type = 'select',
+            style = 'radio',
+            name = L['FARM_BUDDY_BONUS_DISPLAY'],
+            get = function() return self:GetSetting('goalBonusDisplay', 'string'); end,
+            set = function(info, input) self:SetSetting('goalBonusDisplay', 'string', input, true); end,
+            width = 'full',
+            values = {
+              percent = L['FARM_BUDDY_PERCENT'],
+              count = L['FARM_BUDDY_ITEM_COUNT'],
+            },
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_9 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_color_heading = {
+            type = 'header',
+            name = L['FARM_BUDDY_COLORS'],
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_progress_no_goal_color = {
+            type = 'color',
+            name = L['FARM_BUDDY_BAR_COLOR_NO_GOAL'],
+            hasAlpha = false,
+            set = function(info, r,g,b,a) self:SetColorSetting('progressBarNoGoalColor', r, g, b, a, true); end,
+            get = function() return self:GetColorSetting('progressBarNoGoalColor') end,
+            width = 'full',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_progress_goal_color = {
+            type = 'color',
+            name = L['FARM_BUDDY_BAR_COLOR_GOAL'],
+            hasAlpha = false,
+            set = function(info, r,g,b,a) self:SetColorSetting('progressBarNoGoalColor', r, g, b, a, true); end,
+            get = function() return self:GetColorSetting('progressBarGoalColor') end,
+            width = 'full',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_progress_no_quantity_color = {
+            type = 'color',
+            name = L['FARM_BUDDY_BAR_COLOR_NO_QUANTITY'],
+            hasAlpha = false,
+            set = function(info, r,g,b,a) self:SetColorSetting('progressBarNoQuantityColor', r, g, b, a, true); end,
+            get = function() return self:GetColorSetting('progressBarNoQuantityColor') end,
+            width = 'full',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_10 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_11 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_12 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_background_transparency = {
+            type = 'range',
+            name = L['FARM_BUDDY_BACKGROUND_TRANSPARENCY'],
+            get = function() return self:GetSetting('backgroundTransparency', 'number'); end,
+            set = function(info, input) self:SetSetting('backgroundTransparency', 'number', input, false); self:SetBackgroundTransparency() end,
+            isPercent = true,
+            min = 0,
+            max = 1,
+            width = 'full',
+            order = self:GetOptionOrder('apperance'),
           },
         },
       },
@@ -203,7 +416,7 @@ function FarmBuddy:GetConfigOptions()
           },
           notifications_notification_sound = {
             type = 'select',
-            name = L['TITAN_BUDDY_NOTIFICATION_SOUND'],
+            name = L['FARM_BUDDY_NOTIFICATION_SOUND'],
             style = 'dropdown',
             values = self:GetSounds(),
             get = function() return self:GetSetting('notificationSound', 'number'); end,
@@ -266,6 +479,31 @@ function FarmBuddy:GetConfigOptions()
             name = L['FARM_BUDDY_RESET_ALL_ITEMS'],
             desc = L['FARM_BUDDY_RESET_ALL_ITEMS_DESC'],
             func = function() StaticPopup_Show(ADDON_NAME .. 'ResetAllItemsConfirm'); end,
+            width = 'double',
+            order = self:GetOptionOrder('actions'),
+          },
+          actions_space_5 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('actions'),
+            width = 'full',
+          },
+          actions_space_6 = {
+            type = 'header',
+            name = '',
+            order = self:GetOptionOrder('actions'),
+          },
+          actions_space_7 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('actions'),
+            width = 'half',
+          },
+          actions_reset_all = {
+            type = 'execute',
+            name = L['FARM_BUDDY_RESET_ALL'],
+            desc = L['FARM_BUDDY_RESET_ALL_DESC'],
+            func = function() StaticPopup_Show(ADDON_NAME .. 'ResetAllConfirm'); end,
             width = 'double',
             order = self:GetOptionOrder('actions'),
           },
@@ -335,6 +573,19 @@ function FarmBuddy:GetConfigOptions()
             order = self:GetOptionOrder('about'),
             width = 'full',
           },
+          about_info_chat_commands_title = {
+            type = 'description',
+            fontSize = 'medium',
+            name = self:GetColoredText(L['FARM_BUDDY_CHAT_COMMANDS'], 'FFFFFF00') .. '\n',
+            order = self:GetOptionOrder('about'),
+            width = 'full',
+          },
+          about_info_chat_commands = {
+            type = 'description',
+            name = self:GetChatCommandsHelp(false),
+            order = self:GetOptionOrder('about'),
+            width = 'full',
+          },
         }
       },
     }
@@ -347,18 +598,31 @@ end
 -- NAME : FarmBuddy:AddConfigItem()
 -- DESC : Adds a new config item row to tree.
 -- **************************************************************************
-function FarmBuddy:AddConfigItem(id)
+function FarmBuddy:AddConfigItem(id, itemID, name)
 
   local options = CONFIG_REG:GetOptionsTable(ADDON_NAME, 'dialog', 'AceConfigDialog-3.0');
+  local itemIDText;
+
+  if (itemID == nil or tonumber(itemID) == 0) then
+    itemID = 0;
+    itemIDText = L['FARM_BUDDY_WAITING_FOR_DATA'] .. '...';
+  else
+    itemIDText = itemID;
+  end
 
   -- New item so generate a uniqie ID to save it in SavedVariables
   if (id == nil) then
+
     id = self:GetRandomString(ID_LENGTH);
+    if (name == nil) then
+      name = '';
+    end
 
     if (self.db.profile.items ~= nil) then
       tinsert(self.db.profile.items, {
         id = id,
-        name = '',
+        itemID = tonumber(itemID),
+        name = name,
         quantity = 0
       });
     end
@@ -374,13 +638,18 @@ function FarmBuddy:AddConfigItem(id)
     args = {
       ['item_name_' .. id] = {
         type = 'input',
-        name = L['FARM_BUDDY_ITEM'],
-        usage = L['FARM_BUDDY_ITEM_TO_TRACK_USAGE'],
+        name = L['FARM_BUDDY_ITEM_SETTING'],
         desc = L['FARM_BUDDY_ITEM_TO_TRACK_DESC'],
         get = function(info) return self:GetItemFromSV(info.option.unique_index, 'name', false); end,
-        set = function(info, input) self:SetItemProp(info.option.unique_index, 'name', input, false); end,
+        set = function(info, input) self:SetItem(info.option.unique_index, input); end,
         width = 'double',
-        order = 0,
+        order = self:GetOptionOrder(id),
+        unique_index = id,
+      },
+      ['item_spacer_1_' .. id] = {
+        type = 'description',
+        name = '',
+        order = self:GetOptionOrder(id),
         unique_index = id,
       },
       ['item_quantity_' .. id] = {
@@ -388,24 +657,69 @@ function FarmBuddy:AddConfigItem(id)
         name = L['FARM_BUDDY_QUANTITY'],
         desc = L['FARM_BUDDY_COMMAND_GOAL_DESC'],
         usage = L['FARM_BUDDY_ALERT_COUNT_USAGE'],
+        validate = 'ValidateNumber',
         get = function(info) return self:GetItemFromSV(info.option.unique_index, 'quantity', false); end,
         set = function(info, input) self:SetItemProp(info.option.unique_index, 'quantity', input, true); end,
         width = 'half',
-        order = 1,
+        order = self:GetOptionOrder(id),
         unique_index = id,
       },
-      ['item_spacer_' .. id] = {
+      ['item_spacer_2_' .. id] = {
         type = 'description',
         name = '',
-        order = 2,
+        order = self:GetOptionOrder(id),
+        unique_index = id,
+      },
+      ['item_spacer_line_1_' .. id] = {
+        type = 'header',
+        name = '',
+        order = self:GetOptionOrder(id),
+        unique_index = id,
+      },
+      ['item_id_desc_' .. id] = {
+        type = 'description',
+        name = self:GetColoredText(L['FARM_BUDDY_ITEM_ID'] .. ':', 'ffffd300'),
+        width = 'half',
+        order = self:GetOptionOrder(id),
+        unique_index = id,
+      },
+      ['item_id_' .. id] = {
+        type = 'description',
+        name = itemIDText,
+        width = 'half',
+        order = self:GetOptionOrder(id),
+        unique_index = id,
+      },
+      ['item_spacer_3_' .. id] = {
+        type = 'description',
+        name = '',
+        order = self:GetOptionOrder(id),
+        unique_index = id,
+      },
+      ['item_spacer_line_2_' .. id] = {
+        type = 'header',
+        name = '',
+        order = self:GetOptionOrder(id),
         unique_index = id,
       },
       ['item_clear_button_' .. id] = {
         type = 'execute',
         name = L['FARM_BUDDY_REMOVE_ITEM'],
         desc = L['FARM_BUDDY_REMOVE_ITEM_DESC'],
-        order = 3,
-        func = function(info) FarmBuddy:RemoveItem(info); end,
+        order = self:GetOptionOrder(id),
+        func = function(info) self:RemoveItem(info); end,
+        unique_index = id,
+      },
+      ['item_spacer_line_3_' .. id] = {
+        type = 'header',
+        name = '',
+        order = self:GetOptionOrder(id),
+        unique_index = id,
+      },
+      ['item_desc_' .. id] = {
+        type = 'description',
+        name = L['FARM_BUDDY_ITEM_TO_TRACK_USAGE'],
+        order = self:GetOptionOrder(id),
         unique_index = id,
       },
     },
@@ -422,7 +736,7 @@ function FarmBuddy:LoadExistingConfigItems()
   if (self.db.profile.items ~= nil) then
     local items = self.db.profile.items;
     for index, itemStorage in pairs(items) do
-      self:AddConfigItem(itemStorage.id);
+      self:AddConfigItem(itemStorage.id, itemStorage.itemID);
     end
     CONFIG_REG:NotifyChange(ADDON_NAME);
   end
@@ -492,6 +806,47 @@ function FarmBuddy:SetItemProp(id, key, input, numeric)
 end
 
 -- **************************************************************************
+-- NAME : FarmBuddy:SetItem()
+-- DESC : Recive item info or fetch info from the server.
+-- **************************************************************************
+function FarmBuddy:SetItem(id, input)
+
+  self:SetItemProp(id, 'name', input, false);
+  local itemInfo = self:GetItemInfo(input, id);
+  if (itemInfo ~= nil) then
+    self:SetRecivedItemInfo(id, itemInfo);
+  end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:GetKeySetting()
+-- DESC : Get the active status for the given key from the SavedVariables.
+-- **************************************************************************
+function FarmBuddy:GetKeySetting(info, key)
+
+  if (self.db.profile.settings.fastTrackingKeys ~= nil) then
+    if (self.db.profile.settings.fastTrackingKeys[key] ~= nil) then
+      return self.db.profile.settings.fastTrackingKeys[key];
+    end
+  end
+
+  return false;
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetKeySetting()
+-- DESC : Sets the status for the given key from the SavedVariables.
+-- **************************************************************************
+function FarmBuddy:SetKeySetting(info, key, state)
+
+  if (self.db.profile.settings.fastTrackingKeys ~= nil) then
+    if (self.db.profile.settings.fastTrackingKeys[key] ~= nil) then
+      self.db.profile.settings.fastTrackingKeys[key] = state;
+    end
+  end
+end
+
+-- **************************************************************************
 -- NAME : FarmBuddy:RemoveItem()
 -- DESC : Removes the item with the given ID from the settings GUI and SavedVariables.
 -- **************************************************************************
@@ -553,23 +908,6 @@ function FarmBuddy:GetOptionOrder(category)
 end
 
 -- **************************************************************************
--- NAME : FarmBuddy:GetShowTitle()
--- DESC : Gets the show title setting.
--- **************************************************************************
-function FarmBuddy:GetShowTitle()
-  return self.db.profile.settings.showTitle;
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:SetShowTitle()
--- DESC : Sets the show title setting.
--- **************************************************************************
-function FarmBuddy:SetShowTitle(info, input)
-  self.db.profile.settings.showTitle = input;
-  self:SetTitleDisplay();
-end
-
--- **************************************************************************
 -- NAME : FarmBuddy:GetSetting()
 -- DESC : Gets the setting value.
 -- **************************************************************************
@@ -605,10 +943,46 @@ function FarmBuddy:SetSetting(name, type, input, updateGUI)
       self.db.profile.settings[name] = input;
 
       if (updateGUI == true) then
-        FarmBuddy:UpdateGUI();
+        self:UpdateGUI();
       end
     end
   end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetColorSetting()
+-- DESC : Sets the color setting value.
+-- **************************************************************************
+function FarmBuddy:SetColorSetting(name, r, g, b, a, updateGUI)
+
+  if (self.db.profile.settings ~= nil) then
+    if (self.db.profile.settings[name] ~= nil) then
+      if (r ~= nil and g ~= nil and b ~= nil) then
+        self.db.profile.settings[name] = { r = r, g = g, b = b, a = a };
+
+        if (updateGUI == true) then
+          self:UpdateGUI();
+        end
+      end
+    end
+  end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:GetColorSetting()
+-- DESC : Gets the color setting value.
+-- **************************************************************************
+function FarmBuddy:GetColorSetting(name)
+
+  local val;
+  if (self.db.profile.settings ~= nil) then
+    if (self.db.profile.settings[name] ~= nil) then
+      local color = self.db.profile.settings[name];
+      return color.r, color.g, color.b, color.a;
+    end
+  end
+
+  return nil;
 end
 
 -- **************************************************************************
@@ -678,11 +1052,23 @@ end
 function FarmBuddy:RegisterDialogs()
 
   StaticPopupDialogs[ADDON_NAME .. 'ResetAllItemsConfirm'] = {
-    text = L['TITAN_FARM_BUDDY_CONFIRM_RESET'],
-    button1 = L['TITAN_FARM_BUDDY_YES'],
-    button2 = L['TITAN_FARM_BUDDY_NO'],
+    text = L['FARM_BUDDY_CONFIRM_RESET'],
+    button1 = L['FARM_BUDDY_YES'],
+    button2 = L['FARM_BUDDY_NO'],
     OnAccept = function()
-      self:ResetItems();
+      self:ResetItems(true);
+    end,
+    timeout = 0,
+    whileDead = true,
+    hideOnEscape = true,
+    preferredIndex = 3,
+  };
+  StaticPopupDialogs[ADDON_NAME .. 'ResetAllConfirm'] = {
+    text = L['FARM_BUDDY_CONFIRM_ALL_RESET'],
+    button1 = L['FARM_BUDDY_YES'],
+    button2 = L['FARM_BUDDY_NO'],
+    OnAccept = function()
+      self:ResetConfig();
     end,
     timeout = 0,
     whileDead = true,
@@ -695,7 +1081,7 @@ end
 -- NAME : FarmBuddy:ResetItems()
 -- DESC : Resets all tracked items.
 -- **************************************************************************
-function FarmBuddy:ResetItems()
+function FarmBuddy:ResetItems(update)
 
   if (self.db.profile.items ~= nil) then
     for k, v in pairs(self.db.profile.items) do
@@ -708,9 +1094,70 @@ function FarmBuddy:ResetItems()
   self:ReindexConfigItems();
 
   -- Remove frame and redraw
+  if (update == true) then
+    self:InitItems();
+    self:UpdateGUI();
+
+    -- Update settings GUI
+    CONFIG_REG:NotifyChange(ADDON_NAME);
+  end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:ResetConfig()
+-- DESC : Resets all settings to default.
+-- **************************************************************************
+function FarmBuddy:ResetConfig()
+  self:ResetItems(false);
+  self.db:ResetProfile();
+
+  -- Remove frame and redraw
+  self:InitItems();
+  self:UpdateGUI();
+
+  self:SetTitleDisplay();
+  self:SetButtonDisplay();
+  self:SetFrameLockStatus();
+  self:SetBackgroundTransparency();
+
+  -- Update settings GUI
+  CONFIG_REG:NotifyChange(ADDON_NAME);
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetRecivedItemInfo()
+-- DESC : Sets the item ID and the correct name.
+-- **************************************************************************
+function FarmBuddy:SetRecivedItemInfo(uniqueID, info)
+
+  self:SetItemProp(uniqueID, 'itemID', info.ItemID, true);
+  self:SetItemProp(uniqueID, 'name', info.Name, false);
+  self:SetSettingProp(uniqueID, 'item_id', 'name', info.ItemID);
+
   self:InitItems();
   self:UpdateGUI();
 
   -- Update settings GUI
   CONFIG_REG:NotifyChange(ADDON_NAME);
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetSettingProp()
+-- DESC : Sets the settings item.
+-- **************************************************************************
+function FarmBuddy:SetSettingProp(uniqueID, configKey, propKey, value)
+
+  local options = CONFIG_REG:GetOptionsTable(ADDON_NAME, 'dialog', 'AceConfigDialog-3.0');
+  if (options.args.tab_items.args ~= nil) then
+    for k in pairs(options.args.tab_items.args) do
+
+      local prefixCheck = string.sub(k, 1, string.len(ITEM_PREFIX));
+      local idCheck = string.sub(k, -string.len(uniqueID));
+
+      if (prefixCheck == ITEM_PREFIX and idCheck == uniqueID) then
+        options.args.tab_items.args[k].args[configKey .. '_' .. uniqueID][propKey] = tostring(value);
+        break;
+      end
+    end
+  end
 end

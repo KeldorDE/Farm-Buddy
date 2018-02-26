@@ -1,13 +1,76 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
   <Script file="FarmBuddy.lua"/>
+  <Script file="FarmBuddyItem.lua"/>
   <Script file="FarmBuddySettings.lua"/>
+  <Script file="FarmBuddyChatCommands.lua"/>
+
+  <!-- Template for item progress bar -->
+  <StatusBar name="FarmBuddyProgressBarTemplate" virtual="true">
+    <Size x="270" y="14"/>
+    <Anchors>
+      <Anchor point="CENTER"/>
+    </Anchors>
+
+    <Layers>
+      <Layer level="BACKGROUND">
+        <Texture name="$parentBG">
+          <Anchors>
+            <Anchor point="TOPLEFT"/>
+            <Anchor point="BOTTOMRIGHT"/>
+          </Anchors>
+          <Color r="0" g="0" b="0" a=".4"/>
+        </Texture>
+      </Layer>
+      <Layer level="OVERLAY">
+        <FontString name="$parentText" inherits="GameFontHighlightSmall" text="0/100" justifyV="TOP" parentKey="text">
+          <Size x="0" y="0"/>
+          <Anchors>
+            <Anchor point="CENTER" x="0" y="0"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+      <Layer level="ARTWORK">
+        <Texture name="$parentBorderLeft" file="Interface\AchievementFrame\UI-Achievement-ProgressBar-Border">
+          <Size x="16" y="0"/>
+          <Anchors>
+            <Anchor point="TOPLEFT" x="-6" y="5"/>
+            <Anchor point="BOTTOMLEFT" x="-6" y="-5"/>
+          </Anchors>
+          <TexCoords left="0" right="0.0625" top="0" bottom="0.75"/>
+        </Texture>
+        <Texture name="$parentBorderRight" file="Interface\AchievementFrame\UI-Achievement-ProgressBar-Border">
+          <Size x="16" y="0"/>
+          <Anchors>
+            <Anchor point="TOPRIGHT" x="6" y="5"/>
+            <Anchor point="BOTTOMRIGHT" x="6" y="-5"/>
+          </Anchors>
+          <TexCoords left="0.812" right="0.8745" top="0" bottom="0.75"/>
+        </Texture>
+        <Texture name="$parentBorderCenter" file="Interface\AchievementFrame\UI-Achievement-ProgressBar-Border">
+          <Size x="16"/>
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parentBorderLeft" relativePoint="TOPRIGHT"/>
+            <Anchor point="BOTTOMRIGHT" relativeTo="$parentBorderRight" relativePoint="BOTTOMLEFT"/>
+          </Anchors>
+          <TexCoords left="0.0625" right="0.812" top="0" bottom="0.75"/>
+        </Texture>
+      </Layer>
+    </Layers>
+    <Scripts>
+      <OnLoad>
+          self:GetStatusBarTexture():SetDrawLayer('BORDER');
+      </OnLoad>
+    </Scripts>
+    <BarTexture file="Interface\TargetingFrame\UI-StatusBar"/>
+  </StatusBar>
 
   <!-- Template for a tracked item -->
   <Frame name="FarmBuddyItemTemplate" virtual="true">
     <Size>
-      <AbsDimension x="36" y="32" />
+      <AbsDimension x="36" y="36" />
     </Size>
+
     <Anchors>
       <Anchor point="TOPLEFT">
         <Offset>
@@ -15,6 +78,7 @@
         </Offset>
       </Anchor>
     </Anchors>
+
     <Layers>
       <Layer level="ARTWORK">
         <!-- Placeholder icon -->
@@ -27,22 +91,30 @@
             </Anchor>
           </Anchors>
           <Size>
-            <AbsDimension x="28" y="28" />
+            <AbsDimension x="34" y="34" />
           </Size>
         </Texture>
-        <FontString name="$parentTitle" relativeTo="$parentTexture" inherits="GameFontNormal" parentKey="Title">
+        <FontString name="$parentTitle" parentKey="Title" relativeTo="$parentTexture" inherits="GameFontNormal">
           <Anchors>
             <Anchor point="LEFT">
-              <Offset x="36" y="6" />
+              <Offset x="39" y="7" />
             </Anchor>
           </Anchors>
           <Color r="255" g="255" b="255" a="1"/>
           <FontHeight val="12"/>
         </FontString>
-        <FontString name="$parentSubline" relativeTo="$parentTitle" inherits="GameFontNormalSmall" parentKey="Subline">
+        <Texture name="$parentComplete" parentKey="Complete" relativeTo="$parentTexture" file="Interface\Scenarios\ScenarioIcon-Check" hidden="true">
           <Anchors>
             <Anchor point="LEFT">
-              <Offset x="36" y="-7" />
+              <Offset x="40" y="-8" />
+            </Anchor>
+          </Anchors>
+          <Size x="12" y="12"/>
+        </Texture>
+        <FontString name="$parentSubline" parentKey="Subline" relativeTo="$parentTitle" inherits="GameFontNormalSmall">
+          <Anchors>
+            <Anchor point="LEFT">
+              <Offset x="40" y="-7" />
             </Anchor>
           </Anchors>
           <Color r="255" g="216" b="0" a="1"/>
@@ -52,8 +124,10 @@
     </Layers>
   </Frame>
 
-  <Frame name="FarmBuddyFrame" parent="UIParent" toplevel="true" enableMouse="false" movable="true" hidden="false">
+  <!-- FarmBuddy Frame -->
+  <Frame name="FarmBuddyFrame" parent="UIParent" toplevel="true" enableMouse="false" movable="true" hidden="false" FrameLock="false">
     <Size x="320" y="156"/>
+
     <Anchors>
       <Anchor point="CENTER"/>
     </Anchors>
@@ -62,9 +136,24 @@
       <Color r="0" g="0" b="0" a="0.3"/>
     </Backdrop>
 
+    <Frames>
+      <Button name="$parenAddItemButton" parentKey="AddItemButton" inherits="UIPanelButtonTemplate" text="+">
+        <Size>
+          <AbsDimension x="18" y="18"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="0" y="18"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </Button>
+    </Frames>
+
     <Layers>
       <Layer level="BACKGROUND">
-        <FontString name="$parentTitle" inherits="GameFontNormal" parentKey="Title" text="Farm Buddy">
+        <FontString name="$parentTitle" parentKey="Title" inherits="GameFontNormal" text="Farm Buddy">
           <Anchors>
             <Anchor point="TOPLEFT">
               <Offset x="5" y="19" />
@@ -77,7 +166,7 @@
           <Color r="255" g="215" b="0" a="1"/>
           <FontHeight val="12"/>
         </FontString>
-        <FontString name="$parentEmptyText" inherits="GameFontNormal" parentKey="EmptyText" hidden="true" text="">
+        <FontString name="$parentEmptyText" parentKey="EmptyText" inherits="GameFontNormal" hidden="true" text="">
           <Anchors>
             <Anchor point="TOPCENTER">
               <Offset x="5" y="0" />
@@ -93,13 +182,16 @@
     <Scripts>
       <OnLoad>
           self:RegisterForDrag('LeftButton');
-          self:SetUserPlaced(true);
       </OnLoad>
       <OnDragStart>
+        if (self.FrameLock == false) then
           self:StartMoving();
+        end
       </OnDragStart>
       <OnDragStop>
+        if (self.FrameLock == false) then
           self:StopMovingOrSizing();
+        end
       </OnDragStop>
     </Scripts>
   </Frame>
