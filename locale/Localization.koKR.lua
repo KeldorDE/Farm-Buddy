@@ -49,7 +49,7 @@ L["FARM_BUDDY_COMMAND_RESET_DESC"] = "Resets Farm Buddy to it's default settings
 --Translation missing 
 L["FARM_BUDDY_COMMAND_SETTINGS_DESC"] = "Open up the AddOn settings page."
 --Translation missing 
-L["FARM_BUDDY_COMMAND_TRACK_ARGS"] = "Item Name|Item Link"
+L["FARM_BUDDY_COMMAND_TRACK_ARGS"] = "Item ID | Item Name | Item Link"
 --Translation missing 
 L["FARM_BUDDY_COMMAND_TRACK_DESC"] = "Sets the tracked item."
 --Translation missing 
@@ -74,6 +74,10 @@ L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS_DESC"] = "Combine your desired keys as a f
 L["FARM_BUDDY_GERMAN"] = "German"
 --Translation missing 
 L["FARM_BUDDY_GOAL_SET"] = "The goal quantity has been set."
+--Translation missing 
+L["FARM_BUDDY_HIDE_FRAME_IN_COMBAT"] = "Hide frame in combat"
+--Translation missing 
+L["FARM_BUDDY_HIDE_NOTIFICATIONS_IN_COMBAT"] = "Hide notifications in combat"
 --Translation missing 
 L["FARM_BUDDY_INCLUDE_BANK"] = "Include items in your bank"
 --Translation missing 

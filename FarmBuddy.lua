@@ -12,6 +12,7 @@ local NOTIFICATION_QUEUE = {};
 local NOTIFICATION_TRIGGERED = {};
 local ITEM_STORAGE = {};
 local ITEM_FRAMES = {};
+local PLAYER_IN_COMBAT = false;
 local DEFAULTS = {
   profile = {
     items = {},
@@ -42,6 +43,8 @@ local DEFAULTS = {
       },
       showGoalBonus = false,
       goalBonusDisplay = 'percent',
+      hideFrameInCombat = false,
+      hideNotificationsInCombat = false,
     }
   }
 }
@@ -58,6 +61,8 @@ function FarmBuddy:OnInitialize()
   -- Register events
   self:RegisterEvent('BAG_UPDATE', 'BagUpdate');
   self:RegisterEvent('GET_ITEM_INFO_RECEIVED', 'ItemInfoRecived');
+  self:RegisterEvent('PLAYER_REGEN_DISABLED', 'PlayerRegenDisabled');
+  self:RegisterEvent('PLAYER_REGEN_ENABLED', 'PlayerRegenEnabled');
 
   -- Init addon stuff
   self:InitSettings();
@@ -228,8 +233,13 @@ end
 -- **************************************************************************
 function FarmBuddy:NotificationTask()
   if FarmBuddyNotification_Shown() == false then
+    local hideInCombat = self.db.profile.settings.hideNotificationsInCombat;
     for index, notification in pairs(NOTIFICATION_QUEUE) do
-      self:ShowNotification(notification.Index, notification.Item, notification.Quantity, false);
+      if (hideInCombat == false or (hideInCombat == true and PLAYER_IN_COMBAT == false)) then
+        self:ShowNotification(notification.Index, notification.Item, notification.Quantity, false);
+      else
+        NOTIFICATION_TRIGGERED[notification.Index] = true;
+      end
       NOTIFICATION_QUEUE[index] = nil;
       break;
     end
@@ -610,6 +620,28 @@ function FarmBuddy:GetBonus(p, g, inPercent)
   end
 
   return bonus;
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:PlayerRegenDisabled()
+-- DESC : Fires when the player enters combat.
+-- **************************************************************************
+function FarmBuddy:PlayerRegenDisabled()
+
+  if (self.db.profile.settings.hideFrameInCombat == true) then
+    FarmBuddyFrame:Hide();
+  end
+
+  PLAYER_IN_COMBAT = true;
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:PlayerRegenDisabled()
+-- DESC : Fires if the player leaves combat.
+-- **************************************************************************
+function FarmBuddy:PlayerRegenEnabled()
+  FarmBuddyFrame:Show();
+  PLAYER_IN_COMBAT = false;
 end
 
 -- **************************************************************************

@@ -72,6 +72,19 @@ function FarmBuddy:GetConfigOptions()
             name = '',
             order = self:GetOptionOrder('general'),
           },
+          general_hide_frame_in_combat = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_HIDE_FRAME_IN_COMBAT'],
+            get = function() return self:GetSetting('hideFrameInCombat', 'bool'); end,
+            set = function(info, input) self:SetSetting('hideFrameInCombat', 'bool', input, true); end,
+            width = 'full',
+            order = self:GetOptionOrder('general'),
+          },
+          general_space_3 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('general'),
+          },
           general_shortcuts_heading = {
             type = 'header',
             name = L['FARM_BUDDY_SHORTCUTS'],
@@ -357,6 +370,19 @@ function FarmBuddy:GetConfigOptions()
             name = '',
             order = self:GetOptionOrder('notifications'),
           },
+          notifications_hide_in_combat = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_HIDE_NOTIFICATIONS_IN_COMBAT'],
+            get = function() return self:GetSetting('hideNotificationsInCombat', 'bool'); end,
+            set = function(info, input) self:SetSetting('hideNotificationsInCombat', 'bool', input, true); end,
+            width = 'full',
+            order = self:GetOptionOrder('notifications'),
+          },
+          notifications_space_2 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('notifications'),
+          },
           notifications_notification_display_duration = {
             type = 'input',
             name = L['FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION'],
@@ -367,7 +393,7 @@ function FarmBuddy:GetConfigOptions()
             width = 'double',
             order = self:GetOptionOrder('notifications'),
           },
-          notifications_space_2 = {
+          notifications_space_3 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('notifications'),
@@ -381,7 +407,7 @@ function FarmBuddy:GetConfigOptions()
             width = 'full',
             order = self:GetOptionOrder('notifications'),
           },
-          notifications_space_3 = {
+          notifications_space_4 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('notifications'),
@@ -395,7 +421,7 @@ function FarmBuddy:GetConfigOptions()
             width = 'full',
             order = self:GetOptionOrder('notifications'),
           },
-          notifications_space_4 = {
+          notifications_space_5 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('notifications'),
@@ -409,7 +435,7 @@ function FarmBuddy:GetConfigOptions()
             width = 'full',
             order = self:GetOptionOrder('notifications'),
           },
-          notifications_space_5 = {
+          notifications_space_6 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('notifications'),
@@ -424,7 +450,7 @@ function FarmBuddy:GetConfigOptions()
             width = 'double',
             order = self:GetOptionOrder('notifications'),
           },
-          notifications_space_6 = {
+          notifications_space_7 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('notifications'),

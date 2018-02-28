@@ -188,9 +188,6 @@ function FarmBuddy:CmdQuantity(item, quantity)
     local status = self:ValidateNumber(nil, quantity);
     if (status == true) then
 
-      -- Convert item link to name
-      item = self:ItemLinkToName(item);
-
       local itemID = self:GetItemIDByName(item);
       if (itemID ~= nil) then
         self:SetItemProp(itemID, 'quantity', tonumber(quantity), true);
