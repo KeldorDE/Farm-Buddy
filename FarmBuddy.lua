@@ -8,7 +8,6 @@ local FARM_BUDDY_ID = 'FarmBuddyStandalone';
 local ADDON_NAME = 'Farm Buddy';
 local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true);
 local FarmBuddy = LibStub('AceAddon-3.0'):NewAddon(FARM_BUDDY_ID, 'AceConsole-3.0', 'AceEvent-3.0', 'AceTimer-3.0', 'AceHook-3.0');
-local NOTIFICATION_COUNT = 0;
 local NOTIFICATION_QUEUE = {};
 local NOTIFICATION_TRIGGERED = {};
 local ITEM_STORAGE = {};
@@ -216,8 +215,7 @@ end
 -- DESC : Queues a notification.
 -- **************************************************************************
 function FarmBuddy:QueueNotification(index, item, quantity)
-  NOTIFICATION_COUNT = NOTIFICATION_COUNT + 1;
-  NOTIFICATION_QUEUE[NOTIFICATION_COUNT] = {
+  NOTIFICATION_QUEUE[index] = {
     Index = index,
     Item = item,
     Quantity = quantity,
@@ -244,9 +242,13 @@ end
 -- **************************************************************************
 function FarmBuddy:ShowNotification(index, item, quantity, demo)
 
-  local notificationEnabled = self.db.profile.settings.goalNotification;
-  if (notificationEnabled == true and NOTIFICATION_TRIGGERED[index] == false) or demo == true then
+  local triggerStatus = true;
+  if (NOTIFICATION_TRIGGERED[index] == nil or NOTIFICATION_TRIGGERED[index] == false) then
+    triggerStatus = false;
+  end
 
+  local notificationEnabled = self.db.profile.settings.goalNotification;
+  if (notificationEnabled == true and triggerStatus == false) or demo == true then
     local playSound = self.db.profile.settings.playNotificationSound;
     local notificationDisplayDuration = tonumber(self.db.profile.settings.notificationDisplayDuration);
     local notificationGlow = self.db.profile.settings.notificationGlow;
@@ -344,10 +346,11 @@ function FarmBuddy:UpdateGUI()
 
       -- Handle notifications
       if(itemStorage.quantity > 0 and itemCount >= itemStorage.quantity) then
-        self:QueueNotification(itemStorage.name, itemStorage.name, itemStorage.quantity);
+        self:QueueNotification(itemInfo.ItemID, itemInfo.Name, itemStorage.quantity);
         goalReached = true;
       else
-        NOTIFICATION_TRIGGERED[itemStorage.name] = false;
+        NOTIFICATION_QUEUE[itemInfo.ItemID] = nil;
+        NOTIFICATION_TRIGGERED[itemInfo.ItemID] = false;
         goalReached = false;
       end
 
