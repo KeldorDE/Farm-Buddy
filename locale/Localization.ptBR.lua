@@ -89,7 +89,7 @@ L["FARM_BUDDY_ITEM"] = "Item"
 --Translation missing 
 L["FARM_BUDDY_ITEM_COUNT"] = "Item Count"
 --Translation missing 
-L["FARM_BUDDY_ITEM_ID"] = "FARM_BUDDY_ITEM_ID"
+L["FARM_BUDDY_ITEM_ID"] = "Item ID"
 --Translation missing 
 L["FARM_BUDDY_ITEM_NOT_ON_LIST"] = "The given item is not in the list of tracked items."
 --Translation missing 
