@@ -649,7 +649,8 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
         id = id,
         itemID = tonumber(itemID),
         name = name,
-        quantity = 0
+        quantity = 0,
+        rarity = 0,
       });
     end
   end

@@ -13,6 +13,11 @@ local NOTIFICATION_TRIGGERED = {};
 local ITEM_STORAGE = {};
 local ITEM_FRAMES = {};
 local PLAYER_IN_COMBAT = false;
+local SORTING = {
+  Name = 'name',
+  Rarity = 'rarity',
+  Count = 'count',
+};
 local DEFAULTS = {
   profile = {
     items = {},
@@ -45,6 +50,8 @@ local DEFAULTS = {
       goalBonusDisplay = 'percent',
       hideFrameInCombat = false,
       hideNotificationsInCombat = false,
+      sortBy = SORTING.Name,
+      sortOrder = 'asc',
     }
   }
 }
@@ -90,14 +97,40 @@ function FarmBuddy:InitItems()
         local itemInfo = self:GetItemInfo(itemStorage.itemID, itemStorage.id);
         if itemInfo ~= nil then
           ITEM_STORAGE[index].count = self:GetCount(itemInfo);
+          ITEM_STORAGE[index].rarity = itemInfo.Rarity;
         else
           ITEM_STORAGE[index].count = 0;
+          ITEM_STORAGE[index].rarity = 0;
         end
       else
         -- Fetch unknown items
         self:AddItemToQueue(itemStorage.id, itemStorage.name);
       end
     end
+
+    self:SortItems();
+  end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SortItems()
+-- DESC : Sort items by the given setting.
+-- **************************************************************************
+function FarmBuddy:SortItems()
+  table.sort(ITEM_STORAGE, function(a, b)
+    return self:SortItemsByKey(a, b, self.db.profile.settings.sortBy);
+  end);
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SortItemsByKey()
+-- DESC : Sort items by the given key.
+-- **************************************************************************
+function FarmBuddy:SortItemsByKey(a, b, key)
+  if (self.db.profile.settings.sortOrder == 'asc') then
+    return a[key] < b[key];
+  else
+    return a[key] > b[key];
   end
 end
 
