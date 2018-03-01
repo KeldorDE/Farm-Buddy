@@ -1,5 +1,8 @@
 # Farm Buddy Changelog
 
+**1.0.3**
+* Feature: Sort item list by setting
+
 **1.0.2**
 * Feature: Hide frame when in combat
 * Feature: Hide notifications when in combat
