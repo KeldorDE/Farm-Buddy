@@ -291,6 +291,43 @@ function FarmBuddy:GetConfigOptions()
             name = '',
             order = self:GetOptionOrder('apperance'),
           },
+          apperance_sort_by = {
+            type = 'select',
+            style = 'radio',
+            name = L['FARM_BUDDY_SORT_BY'],
+            get = function() return self:GetSetting('sortBy', 'string'); end,
+            set = function(info, input) self:SetSetting('sortBy', 'string', input, true); end,
+            width = 'full',
+            values = {
+              name = L['FARM_BUDDY_NAME'],
+              rarity = L['FARM_BUDDY_RARITY'],
+              count = L['FARM_BUDDY_COUNT_SINGLE'],
+            },
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_10 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_sort_order = {
+            type = 'select',
+            style = 'radio',
+            name = L['FARM_BUDDY_SORT_ORDER'],
+            get = function() return self:GetSetting('sortOrder', 'string'); end,
+            set = function(info, input) self:SetSetting('sortOrder', 'string', input, true); end,
+            width = 'full',
+            values = {
+              asc = L['FARM_BUDDY_SORT_ASC'],
+              desc = L['FARM_BUDDY_SORT_DESC'],
+            },
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_11 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
           apperance_color_heading = {
             type = 'header',
             name = L['FARM_BUDDY_COLORS'],
@@ -323,17 +360,17 @@ function FarmBuddy:GetConfigOptions()
             width = 'full',
             order = self:GetOptionOrder('apperance'),
           },
-          apperance_space_10 = {
-            type = 'description',
-            name = '',
-            order = self:GetOptionOrder('apperance'),
-          },
-          apperance_space_11 = {
-            type = 'description',
-            name = '',
-            order = self:GetOptionOrder('apperance'),
-          },
           apperance_space_12 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_13 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_14 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('apperance'),
@@ -970,6 +1007,7 @@ function FarmBuddy:SetSetting(name, type, input, updateGUI)
       self.db.profile.settings[name] = input;
 
       if (updateGUI == true) then
+        self:InitItems();
         self:UpdateGUI();
       end
     end

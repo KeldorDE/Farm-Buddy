@@ -63,6 +63,8 @@ L["FARM_BUDDY_CONFIRM_RESET"] = "Are you sure you want to reset all items?"
 --Translation missing 
 L["FARM_BUDDY_COUNT"] = "Count only"
 --Translation missing 
+L["FARM_BUDDY_COUNT_SINGLE"] = "Count"
+--Translation missing 
 L["FARM_BUDDY_COUNT_WITH_PERCENATGE"] = "Count with percentage"
 --Translation missing 
 L["FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON"] = "Fast tracking mouse button"
@@ -130,6 +132,8 @@ L["FARM_BUDDY_MOVE_NOTIFICATION"] = "Change Notification Position"
 --Translation missing 
 L["FARM_BUDDY_MOVE_NOTIFICATION_DESC"] = "Change the Position of the Notification Frame."
 --Translation missing 
+L["FARM_BUDDY_NAME"] = "Name"
+--Translation missing 
 L["FARM_BUDDY_NO"] = "No"
 --Translation missing 
 L["FARM_BUDDY_NO_TRACKED_ITEMS"] = "No tracked items"
@@ -167,6 +171,8 @@ L["FARM_BUDDY_PLAY_NOTIFICATION_SOUND_DESC"] = "Play a notification sound file i
 L["FARM_BUDDY_PROGRESS_DISPLAY"] = "Progress display style"
 --Translation missing 
 L["FARM_BUDDY_QUANTITY"] = "Quantity"
+--Translation missing 
+L["FARM_BUDDY_RARITY"] = "Rarity"
 --Translation missing 
 L["FARM_BUDDY_REMOVE_ITEM"] = "Remove item"
 --Translation missing 
@@ -209,6 +215,14 @@ L["FARM_BUDDY_SHOW_PROGRESS_BAR_DESC"] = "Shows a progress bar under the item na
 L["FARM_BUDDY_SHOW_TITLE"] = "Show title"
 --Translation missing 
 L["FARM_BUDDY_SHOW_TITLE_DESC"] = "Show the title above the item frame."
+--Translation missing 
+L["FARM_BUDDY_SORT_ASC"] = "Ascending"
+--Translation missing 
+L["FARM_BUDDY_SORT_BY"] = "Sort items by"
+--Translation missing 
+L["FARM_BUDDY_SORT_DESC"] = "Descending"
+--Translation missing 
+L["FARM_BUDDY_SORT_ORDER"] = "Sort order"
 --Translation missing 
 L["FARM_BUDDY_TEST_NOTIFICATION"] = "Test Notification"
 --Translation missing 

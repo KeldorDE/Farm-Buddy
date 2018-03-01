@@ -13,11 +13,6 @@ local NOTIFICATION_TRIGGERED = {};
 local ITEM_STORAGE = {};
 local ITEM_FRAMES = {};
 local PLAYER_IN_COMBAT = false;
-local SORTING = {
-  Name = 'name',
-  Rarity = 'rarity',
-  Count = 'count',
-};
 local DEFAULTS = {
   profile = {
     items = {},
@@ -50,7 +45,7 @@ local DEFAULTS = {
       goalBonusDisplay = 'percent',
       hideFrameInCombat = false,
       hideNotificationsInCombat = false,
-      sortBy = SORTING.Name,
+      sortBy = 'name',
       sortOrder = 'asc',
     }
   }
@@ -157,6 +152,7 @@ end
 -- DESC : Parse events registered to plugin and act on them.
 -- **************************************************************************
 function FarmBuddy:BagUpdate()
+  self:InitItems();
   self:UpdateGUI();
 end
 
