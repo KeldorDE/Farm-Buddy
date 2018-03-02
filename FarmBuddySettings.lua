@@ -512,14 +512,27 @@ function FarmBuddy:GetConfigOptions()
             type = 'description',
             name = '',
             order = self:GetOptionOrder('actions'),
-            width = 'full',
           },
           actions_space_6 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('actions'),
+            width = 'half',
+          },
+          actions_reset_frame_position = {
+            type = 'execute',
+            name = L['FARM_BUDDY_RESET_FRAME_POSITION'],
+            desc = L['FARM_BUDDY_RESET_FRAME_POSITION_DESC'],
+            func = function() StaticPopup_Show(ADDON_NAME .. 'ResetFramePositionConfirm'); end,
+            width = 'double',
+            order = self:GetOptionOrder('actions'),
+          },
+          actions_space_7 = {
             type = 'header',
             name = '',
             order = self:GetOptionOrder('actions'),
           },
-          actions_space_7 = {
+          actions_space_8 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('actions'),
@@ -1095,6 +1108,18 @@ function FarmBuddy:RegisterDialogs()
     button2 = L['FARM_BUDDY_NO'],
     OnAccept = function()
       self:ResetConfig();
+    end,
+    timeout = 0,
+    whileDead = true,
+    hideOnEscape = true,
+    preferredIndex = 3,
+  };
+  StaticPopupDialogs[ADDON_NAME .. 'ResetFramePositionConfirm'] = {
+    text = L['FARM_BUDDY_CONFIRM_RESET_FRAME_POSITION'],
+    button1 = L['FARM_BUDDY_YES'],
+    button2 = L['FARM_BUDDY_NO'],
+    OnAccept = function()
+      self:ResetFramePosition();
     end,
     timeout = 0,
     whileDead = true,

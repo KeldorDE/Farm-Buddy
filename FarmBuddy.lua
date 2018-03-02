@@ -645,6 +645,15 @@ function FarmBuddy:PlayerRegenEnabled()
 end
 
 -- **************************************************************************
+-- NAME : FarmBuddy:ResetFramePosition()
+-- DESC : Resets the main frame to the center of the screen.
+-- **************************************************************************
+function FarmBuddy:ResetFramePosition()
+  FarmBuddyFrame:ClearAllPoints();
+  FarmBuddyFrame:SetPoint('CENTER');
+end
+
+-- **************************************************************************
 -- NAME : FarmBuddy_GetAddOnName()
 -- DESC : Gets the Plugin AdOn name.
 -- **************************************************************************
