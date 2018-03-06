@@ -1,5 +1,8 @@
 # Farm Buddy Changelog
 
+**NOT RELEASED**
+* Feature: Reset Farm Buddy frame to default position
+
 **1.0.4**
 * Feature: Sort item list by setting
 
