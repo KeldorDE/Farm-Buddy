@@ -88,7 +88,7 @@ function FarmBuddy:InitItems()
   if (self.db.profile.items ~= nil) then
     ITEM_STORAGE = self.db.profile.items;
     for index, itemStorage in pairs(ITEM_STORAGE) do
-      if (itemStorage.itemID > 0) then
+      if (itemStorage.itemID ~= nil and itemStorage.itemID > 0) then
         local itemInfo = self:GetItemInfo(itemStorage.itemID, itemStorage.id);
         if itemInfo ~= nil then
           ITEM_STORAGE[index].count = self:GetCount(itemInfo);
