@@ -45,6 +45,8 @@ local DEFAULTS = {
       goalBonusDisplay = 'percent',
       hideFrameInCombat = false,
       hideNotificationsInCombat = false,
+      sortBy = 'name',
+      sortOrder = 'asc',
     }
   }
 }
@@ -86,18 +88,44 @@ function FarmBuddy:InitItems()
   if (self.db.profile.items ~= nil) then
     ITEM_STORAGE = self.db.profile.items;
     for index, itemStorage in pairs(ITEM_STORAGE) do
-      if (itemStorage.itemID > 0) then
+      if (itemStorage.itemID ~= nil and itemStorage.itemID > 0) then
         local itemInfo = self:GetItemInfo(itemStorage.itemID, itemStorage.id);
         if itemInfo ~= nil then
           ITEM_STORAGE[index].count = self:GetCount(itemInfo);
+          ITEM_STORAGE[index].rarity = itemInfo.Rarity;
         else
           ITEM_STORAGE[index].count = 0;
+          ITEM_STORAGE[index].rarity = 0;
         end
       else
         -- Fetch unknown items
         self:AddItemToQueue(itemStorage.id, itemStorage.name);
       end
     end
+
+    self:SortItems();
+  end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SortItems()
+-- DESC : Sort items by the given setting.
+-- **************************************************************************
+function FarmBuddy:SortItems()
+  table.sort(ITEM_STORAGE, function(a, b)
+    return self:SortItemsByKey(a, b, self.db.profile.settings.sortBy);
+  end);
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SortItemsByKey()
+-- DESC : Sort items by the given key.
+-- **************************************************************************
+function FarmBuddy:SortItemsByKey(a, b, key)
+  if (self.db.profile.settings.sortOrder == 'asc') then
+    return a[key] < b[key];
+  else
+    return a[key] > b[key];
   end
 end
 
@@ -124,6 +152,7 @@ end
 -- DESC : Parse events registered to plugin and act on them.
 -- **************************************************************************
 function FarmBuddy:BagUpdate()
+  self:InitItems();
   self:UpdateGUI();
 end
 
