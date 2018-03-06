@@ -61,6 +61,8 @@ L["FARM_BUDDY_CONFIRM_ALL_RESET"] = "Are you sure you want to reset all settings
 --Translation missing 
 L["FARM_BUDDY_CONFIRM_RESET"] = "Are you sure you want to reset all items?"
 --Translation missing 
+L["FARM_BUDDY_CONFIRM_RESET_FRAME_POSITION"] = "Are you sure you want to reset the main frame to it's default position?"
+--Translation missing 
 L["FARM_BUDDY_COUNT"] = "Count only"
 --Translation missing 
 L["FARM_BUDDY_COUNT_SINGLE"] = "Count"
@@ -189,6 +191,10 @@ L["FARM_BUDDY_RESET_ALL_ITEMS"] = "Reset all tracked Items"
 L["FARM_BUDDY_RESET_ALL_ITEMS_DESC"] = "Resets all tracked items."
 --Translation missing 
 L["FARM_BUDDY_RESET_DESC"] = "Resets the tracked item."
+--Translation missing 
+L["FARM_BUDDY_RESET_FRAME_POSITION"] = "Reset main frame to default position"
+--Translation missing 
+L["FARM_BUDDY_RESET_FRAME_POSITION_DESC"] = "Reset the main frame position to the default position. This action is very useful if the frame is not draggable because it is blocked by another frame for example."
 --Translation missing 
 L["FARM_BUDDY_SETTINGS"] = "Common"
 --Translation missing 
