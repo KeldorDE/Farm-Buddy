@@ -1,6 +1,6 @@
 # Farm Buddy Changelog
 
-**NOT RELEASED**
+**1.0.5**
 * Feature: Reset Farm Buddy frame to default position
 
 **1.0.4**
