@@ -3,7 +3,7 @@
 ## Notes: Adds the functionality to track farmed items.
 ## Author: Keldor (https://www.devil-coding.de)
 ## SavedVariables: FarmBuddyStandaloneDB
-## Version: 1.0.5.70300
+## Version: 1.0.6.70300
 
 embeds.xml
 

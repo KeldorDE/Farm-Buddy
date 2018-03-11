@@ -939,7 +939,7 @@ function FarmBuddy:RemoveItem(info)
   -- Remove item from SavedVariables
   local index = self:GetItemIndexByID(info.option.unique_index);
   if(index ~= nil) then
-    self.db.profile.items[index] = nil;
+    tremove(self.db.profile.items, index);
   end
 
   -- Remove frame and redraw
