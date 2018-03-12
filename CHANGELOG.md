@@ -1,5 +1,8 @@
 # Farm Buddy Changelog
 
+**NOT RELEASED**
+* Bugfix: Unable to set the quantity by chat command
+
 **1.0.6**
 * Bugfix: Error when item was removed with sorting enabled
 
