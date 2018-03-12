@@ -188,10 +188,16 @@ function FarmBuddy:CmdQuantity(item, quantity)
     local status = self:ValidateNumber(nil, quantity);
     if (status == true) then
 
-      local itemID = self:GetItemIDByName(item);
+      -- Convert item link to ID
+      local itemID = self:ItemLinkToID(item);
       if (itemID ~= nil) then
-        self:SetItemProp(itemID, 'quantity', tonumber(quantity), true);
-        self:Print(L['FARM_BUDDY_GOAL_SET']);
+        local uniqueID = self:GetItemUnqiueIDByItemID(itemID);
+        if (uniqueID ~= nil) then
+          self:SetItemProp(uniqueID, 'quantity', tonumber(quantity), true);
+          self:Print(L['FARM_BUDDY_GOAL_SET']);
+        else
+          self:Print(L['FARM_BUDDY_ITEM_NOT_ON_LIST']);
+        end
       else
         self:Print(L['FARM_BUDDY_ITEM_NOT_ON_LIST']);
       end

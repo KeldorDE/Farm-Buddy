@@ -835,6 +835,22 @@ function FarmBuddy:GetItemIndexByID(id)
 end
 
 -- **************************************************************************
+-- NAME : FarmBuddy:GetItemUnqiueIDByItemID()
+-- DESC : Gets the unqiue ID from the SavedVariables by item ID.
+-- **************************************************************************
+function FarmBuddy:GetItemUnqiueIDByItemID(itemID)
+  if (self.db.profile.items ~= nil) then
+    for _, v in pairs(self.db.profile.items) do
+      if (tonumber(v.itemID) == tonumber(itemID)) then
+        return v.id;
+      end
+    end
+  end
+
+  return nil;
+end
+
+-- **************************************************************************
 -- NAME : FarmBuddy:GetItemFromSV()
 -- DESC : Gets the key value from the SavedVariables item list.
 -- **************************************************************************
