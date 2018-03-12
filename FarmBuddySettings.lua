@@ -103,7 +103,7 @@ function FarmBuddy:GetConfigOptions()
             },
             order = self:GetOptionOrder('general'),
           },
-          general_space_3 = {
+          general_space_4 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('general'),
@@ -119,6 +119,29 @@ function FarmBuddy:GetConfigOptions()
               ctrl = L['FARM_BUDDY_KEY_CTRL'],
               shift = L['FARM_BUDDY_KEY_SHIFT'],
             },
+            width = 'full',
+            order = self:GetOptionOrder('general'),
+          },
+          general_space_5 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('general'),
+          },
+          general_shortcuts_heading = {
+            type = 'header',
+            name = L['FARM_BUDDY_DATA_BROKER'],
+            order = self:GetOptionOrder('general'),
+          },
+          general_space_6 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('general'),
+          },
+          general_enable_data_broker_support = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_ENABLE_DATA_BROKER_SUPPORT'],
+            get = function() return self:GetSetting('enableDataBrokerSupport', 'bool'); end,
+            set = function(info, input) self:SetSetting('enableDataBrokerSupport', 'bool', input, true); end,
             width = 'full',
             order = self:GetOptionOrder('general'),
           },
