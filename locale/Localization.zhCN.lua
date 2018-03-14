@@ -214,6 +214,8 @@ L["FARM_BUDDY_SHOW_BUTTONS"] = "Show buttons"
 --Translation missing 
 L["FARM_BUDDY_SHOW_BUTTONS_DESC"] = "Show the action buttons on the titles right handed side."
 --Translation missing 
+L["FARM_BUDDY_SHOW_FRAME"] = "Show frame"
+--Translation missing 
 L["FARM_BUDDY_SHOW_GOAL"] = "Show Goal next to the item count"
 --Translation missing 
 L["FARM_BUDDY_SHOW_GOAL_INDICATOR"] = "Show goal indicator"

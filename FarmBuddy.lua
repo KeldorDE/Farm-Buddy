@@ -19,6 +19,7 @@ local DEFAULTS = {
   profile = {
     items = {},
     settings = {
+      showFrame = true,
       showTitle = true,
       showQuantity = true,
       includeBank = false,
@@ -84,6 +85,7 @@ function FarmBuddy:OnInitialize()
   self:SetFrameLockStatus();
   self:SetBackgroundTransparency();
   self:InitChatCommands();
+  self:SetShowFrame();
 
   -- Set add item click event
   FarmBuddyFrame.AddItemButton:SetScript('OnClick', function(handle, button) self:AddItemClick(button) end);
@@ -693,6 +695,18 @@ end
 function FarmBuddy:PlayerRegenEnabled()
   FarmBuddyFrame:Show();
   PLAYER_IN_COMBAT = false;
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetShowFrame()
+-- DESC : Toggles frame display.
+-- **************************************************************************
+function FarmBuddy:SetShowFrame()
+  if (self.db.profile.settings.showFrame == true) then
+    FarmBuddyFrame:Show();
+  else
+    FarmBuddyFrame:Hide();
+  end
 end
 
 -- **************************************************************************

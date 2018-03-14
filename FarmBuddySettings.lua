@@ -195,6 +195,18 @@ function FarmBuddy:GetConfigOptions()
         type = 'group',
         order = self:GetOptionOrder('main'),
         args = {
+          apperance_show_frame = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_SHOW_FRAME'],
+            get = function() return self:GetSetting('showFrame', 'bool'); end,
+            set = function(info, input) self:SetSetting('showFrame', 'bool', input, false); self:SetShowFrame() end,
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_1 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
           apperance_show_title = {
             type = 'toggle',
             name = L['FARM_BUDDY_SHOW_TITLE'],
@@ -203,7 +215,7 @@ function FarmBuddy:GetConfigOptions()
             set = function(info, input) self:SetSetting('showTitle', 'bool', input, false); self:SetTitleDisplay(); end,
             order = self:GetOptionOrder('apperance'),
           },
-          apperance_space_1 = {
+          apperance_space_2 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('apperance'),
@@ -216,7 +228,7 @@ function FarmBuddy:GetConfigOptions()
             set = function(info, input) self:SetSetting('showButtons', 'bool', input, false); self:SetButtonDisplay(); end,
             order = self:GetOptionOrder('apperance'),
           },
-          apperance_space_2 = {
+          apperance_space_3 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('apperance'),
@@ -229,7 +241,7 @@ function FarmBuddy:GetConfigOptions()
             width = 'full',
             order = self:GetOptionOrder('general'),
           },
-          apperance_space_3 = {
+          apperance_space_4 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('general'),
@@ -243,7 +255,7 @@ function FarmBuddy:GetConfigOptions()
             width = 'full',
             order = self:GetOptionOrder('apperance'),
           },
-          apperance_space_4 = {
+          apperance_space_5 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('apperance'),
@@ -257,7 +269,7 @@ function FarmBuddy:GetConfigOptions()
             width = 'full',
             order = self:GetOptionOrder('apperance'),
           },
-          apperance_space_5 = {
+          apperance_space_6 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('apperance'),
@@ -271,7 +283,7 @@ function FarmBuddy:GetConfigOptions()
             width = 'full',
             order = self:GetOptionOrder('apperance'),
           },
-          apperance_space_6 = {
+          apperance_space_7 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('apperance'),
@@ -290,7 +302,7 @@ function FarmBuddy:GetConfigOptions()
             },
             order = self:GetOptionOrder('apperance'),
           },
-          apperance_space_7 = {
+          apperance_space_8 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('apperance'),
@@ -304,7 +316,7 @@ function FarmBuddy:GetConfigOptions()
             width = 'full',
             order = self:GetOptionOrder('apperance'),
           },
-          apperance_space_8 = {
+          apperance_space_9 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('apperance'),
@@ -322,7 +334,7 @@ function FarmBuddy:GetConfigOptions()
             },
             order = self:GetOptionOrder('apperance'),
           },
-          apperance_space_9 = {
+          apperance_space_10 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('apperance'),
@@ -341,7 +353,7 @@ function FarmBuddy:GetConfigOptions()
             },
             order = self:GetOptionOrder('apperance'),
           },
-          apperance_space_10 = {
+          apperance_space_11 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('apperance'),
@@ -359,7 +371,7 @@ function FarmBuddy:GetConfigOptions()
             },
             order = self:GetOptionOrder('apperance'),
           },
-          apperance_space_11 = {
+          apperance_space_12 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('apperance'),
@@ -396,17 +408,17 @@ function FarmBuddy:GetConfigOptions()
             width = 'full',
             order = self:GetOptionOrder('apperance'),
           },
-          apperance_space_12 = {
-            type = 'description',
-            name = '',
-            order = self:GetOptionOrder('apperance'),
-          },
           apperance_space_13 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('apperance'),
           },
           apperance_space_14 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_15 = {
             type = 'description',
             name = '',
             order = self:GetOptionOrder('apperance'),
