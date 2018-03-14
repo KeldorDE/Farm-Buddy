@@ -1,6 +1,6 @@
 # Farm Buddy Changelog
 
-**NOT RELEASED**
+**1.0.8**
 * Bugfix: Unable to set the quantity by chat command
 
 **1.0.7**
