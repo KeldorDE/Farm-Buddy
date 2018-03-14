@@ -1,5 +1,9 @@
 # Farm Buddy Changelog
 
+**NOT RELEASED**
+* Added data broker support
+* Added the hide frame setting
+
 **1.0.6**
 * Bugfix: Error when item was removed with sorting enabled
 
