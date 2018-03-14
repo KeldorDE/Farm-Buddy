@@ -69,6 +69,12 @@ L["FARM_BUDDY_COUNT_SINGLE"] = "Count"
 --Translation missing 
 L["FARM_BUDDY_COUNT_WITH_PERCENATGE"] = "Count with percentage"
 --Translation missing 
+L["FARM_BUDDY_DATA_BROKER"] = "Broker Plugin"
+--Translation missing 
+L["FARM_BUDDY_DATA_BROKER_SHOW_ITEM_NAME"] = "Show item name"
+--Translation missing 
+L["FARM_BUDDY_ENABLE_DATA_BROKER_SUPPORT"] = "Enable broker plugin support"
+--Translation missing 
 L["FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON"] = "Fast tracking mouse button"
 --Translation missing 
 L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS"] = "Fast tracking shortcuts"
@@ -207,6 +213,8 @@ L["FARM_BUDDY_SHOW_BONUS_DESC"] = "Shows a bonus value behind the tracking goal.
 L["FARM_BUDDY_SHOW_BUTTONS"] = "Show buttons"
 --Translation missing 
 L["FARM_BUDDY_SHOW_BUTTONS_DESC"] = "Show the action buttons on the titles right handed side."
+--Translation missing 
+L["FARM_BUDDY_SHOW_FRAME"] = "Show frame"
 --Translation missing 
 L["FARM_BUDDY_SHOW_GOAL"] = "Show Goal next to the item count"
 --Translation missing 

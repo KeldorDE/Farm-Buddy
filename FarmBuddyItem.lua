@@ -49,6 +49,10 @@ function FarmBuddy:GetItemInfo(item, uniqueID)
   return nil;
 end
 
+-- **************************************************************************
+-- NAME : FarmBuddy:AddItemToQueue()
+-- DESC : Adds the item to the recive queue.
+-- **************************************************************************
 function FarmBuddy:AddItemToQueue(uniqueID, item)
   tinsert(ITEM_QUEUE, {
     uniqueID = uniqueID,
@@ -56,6 +60,10 @@ function FarmBuddy:AddItemToQueue(uniqueID, item)
   });
 end
 
+-- **************************************************************************
+-- NAME : FarmBuddy:ItemInfoRecived()
+-- DESC : Called when the item info has recived.
+-- **************************************************************************
 function FarmBuddy:ItemInfoRecived()
 
   for k, v in pairs(ITEM_QUEUE) do
@@ -65,4 +73,16 @@ function FarmBuddy:ItemInfoRecived()
       ITEM_QUEUE[k] = nil;
     end
   end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:GetIconString()
+-- DESC : Gets an icon string.
+-- **************************************************************************
+function FarmBuddy:GetIconString(icon, space)
+  local str = '|T' .. icon .. ':16|t';
+  if space == true then
+    str = str .. ' ';
+  end
+  return str;
 end
