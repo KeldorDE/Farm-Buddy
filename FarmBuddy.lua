@@ -50,6 +50,7 @@ local DEFAULTS = {
       sortBy = 'name',
       sortOrder = 'asc',
       enableDataBrokerSupport = false,
+      showDataBrokerItemName = true,
     }
   }
 }
@@ -69,7 +70,7 @@ function FarmBuddy:OnInitialize()
   self:RegisterEvent('PLAYER_REGEN_DISABLED', 'PlayerRegenDisabled');
   self:RegisterEvent('PLAYER_REGEN_ENABLED', 'PlayerRegenEnabled');
 
-  DATA_BROKER = ldb:NewDataObject('FarmBuddy', {
+  DATA_BROKER = ldb:NewDataObject('FarmBuddyBroker', {
     type = 'data source',
     icon = 'Interface\\AddOns\\FarmBuddy\\FarmBuddy.tga',
     text = '',
@@ -442,9 +443,12 @@ function FarmBuddy:UpdateGUI()
       totalHeight = (totalHeight + curFrame:GetHeight());
       count = count + 1;
 
-      -- TODO: Option to hide famr buddy frame
-      local icon = self:GetIconString(itemInfo.IconFileDataID, true);
-      brokerStr = brokerStr .. icon .. itemInfo.Name .. ' ' .. self:GetCount(itemInfo, itemStorage.quantity, true) .. '   ';
+      -- Build broker string
+      brokerStr = brokerStr .. self:GetIconString(itemInfo.IconFileDataID, true);
+      if (self.db.profile.settings.showDataBrokerItemName == true) then
+        brokerStr = brokerStr .. itemInfo.Name .. ' ';
+      end
+      brokerStr = brokerStr .. self:GetCount(itemInfo, itemStorage.quantity, true) .. '   ';
     end
   end
 
@@ -711,6 +715,10 @@ function FarmBuddy:UpdateDataBroker(text, showIcon)
     local icon = '';
     if (showIcon == true) then
         icon = 'Interface\\AddOns\\FarmBuddy\\FarmBuddy.tga';
+    end
+
+    if (text == '') then
+      text = 'Farm Buddy'
     end
 
     DATA_BROKER.text = text;

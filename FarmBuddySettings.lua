@@ -145,6 +145,19 @@ function FarmBuddy:GetConfigOptions()
             width = 'full',
             order = self:GetOptionOrder('general'),
           },
+          general_space_7 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('general'),
+          },
+          general_data_broker_show_item_name = {
+            type = 'toggle',
+            name = L['FARM_BUDDY_DATA_BROKER_SHOW_ITEM_NAME'],
+            get = function() return self:GetSetting('showDataBrokerItemName', 'bool'); end,
+            set = function(info, input) self:SetSetting('showDataBrokerItemName', 'bool', input, true); end,
+            width = 'full',
+            order = self:GetOptionOrder('general'),
+          },
         },
       },
       tab_items = {

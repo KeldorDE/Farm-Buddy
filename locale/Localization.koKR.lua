@@ -71,6 +71,8 @@ L["FARM_BUDDY_COUNT_WITH_PERCENATGE"] = "Count with percentage"
 --Translation missing 
 L["FARM_BUDDY_DATA_BROKER"] = "Broker Plugin"
 --Translation missing 
+L["FARM_BUDDY_DATA_BROKER_SHOW_ITEM_NAME"] = "Show item name"
+--Translation missing 
 L["FARM_BUDDY_ENABLE_DATA_BROKER_SUPPORT"] = "Enable broker plugin support"
 --Translation missing 
 L["FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON"] = "Fast tracking mouse button"
