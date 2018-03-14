@@ -1,6 +1,6 @@
 # Farm Buddy Changelog
 
-**NOT RELEASED**
+**1.0.7**
 * Added data broker support
 * Added the hide frame setting
 
