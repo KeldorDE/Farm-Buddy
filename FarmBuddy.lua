@@ -129,7 +129,9 @@ end
 -- DESC : Fires if the player leaves combat.
 -- **************************************************************************
 function FarmBuddy:PlayerRegenEnabled()
-  FarmBuddyFrame:Show();
+  if (self.db.profile.settings.showFrame == true) then
+    FarmBuddyFrame:Show();
+  end
   PLAYER_IN_COMBAT = false;
 end
 
