@@ -4,6 +4,7 @@
   <Script file="FarmBuddyItem.lua"/>
   <Script file="FarmBuddySettings.lua"/>
   <Script file="FarmBuddyChatCommands.lua"/>
+  <Script file="FarmBuddyDataBroker.lua"/>
 
   <!-- Template for item progress bar -->
   <StatusBar name="FarmBuddyProgressBarTemplate" virtual="true">

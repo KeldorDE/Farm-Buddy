@@ -8,13 +8,11 @@ local FARM_BUDDY_ID = 'FarmBuddyStandalone';
 local ADDON_NAME = 'Farm Buddy';
 local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true);
 local FarmBuddy = LibStub('AceAddon-3.0'):NewAddon(FARM_BUDDY_ID, 'AceConsole-3.0', 'AceEvent-3.0', 'AceTimer-3.0', 'AceHook-3.0');
-local ldb = LibStub:GetLibrary('LibDataBroker-1.1');
 local NOTIFICATION_QUEUE = {};
 local NOTIFICATION_TRIGGERED = {};
 local ITEM_STORAGE = {};
 local ITEM_FRAMES = {};
 local PLAYER_IN_COMBAT = false;
-local DATA_BROKER;
 local DEFAULTS = {
   profile = {
     items = {},
@@ -71,12 +69,6 @@ function FarmBuddy:OnInitialize()
   self:RegisterEvent('PLAYER_REGEN_DISABLED', 'PlayerRegenDisabled');
   self:RegisterEvent('PLAYER_REGEN_ENABLED', 'PlayerRegenEnabled');
 
-  DATA_BROKER = ldb:NewDataObject('FarmBuddyBroker', {
-    type = 'data source',
-    icon = 'Interface\\AddOns\\FarmBuddy\\FarmBuddy.tga',
-    text = '',
-  });
-
   -- Init addon stuff
   self:InitSettings();
   self:InitItems();
@@ -86,6 +78,7 @@ function FarmBuddy:OnInitialize()
   self:SetBackgroundTransparency();
   self:InitChatCommands();
   self:SetShowFrame();
+  self:InitDataBroker();
 
   -- Set add item click event
   FarmBuddyFrame.AddItemButton:SetScript('OnClick', function(handle, button) self:AddItemClick(button) end);
@@ -382,7 +375,8 @@ function FarmBuddy:UpdateGUI()
   local totalHeight = 0;
   local count = 0;
   local showIcon = false;
-  local brokerStr = '';
+
+  self:ClearDataBrokerData();
 
   for _, itemStorage in pairs(ITEM_STORAGE) do
 
@@ -445,12 +439,7 @@ function FarmBuddy:UpdateGUI()
       totalHeight = (totalHeight + curFrame:GetHeight());
       count = count + 1;
 
-      -- Build broker string
-      brokerStr = brokerStr .. self:GetIconString(itemInfo.IconFileDataID, true);
-      if (self.db.profile.settings.showDataBrokerItemName == true) then
-        brokerStr = brokerStr .. itemInfo.Name .. ' ';
-      end
-      brokerStr = brokerStr .. self:GetCount(itemInfo, itemStorage.quantity, true) .. '   ';
+      self:AddItemToDataBroker(itemInfo, itemStorage);
     end
   end
 
@@ -470,7 +459,7 @@ function FarmBuddy:UpdateGUI()
     FarmBuddyFrame:SetHeight(totalHeight);
   end
 
-  self:UpdateDataBroker(brokerStr, showIcon);
+  self:UpdateDataBroker(showIcon);
 end
 
 -- **************************************************************************
@@ -716,31 +705,6 @@ end
 function FarmBuddy:ResetFramePosition()
   FarmBuddyFrame:ClearAllPoints();
   FarmBuddyFrame:SetPoint('CENTER');
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:SetupDataBroker()
--- DESC : Shows or hides the data broker.
--- **************************************************************************
-function FarmBuddy:UpdateDataBroker(text, showIcon)
-
-  if (self.db.profile.settings.enableDataBrokerSupport == true) then
-
-    local icon = '';
-    if (showIcon == true) then
-        icon = 'Interface\\AddOns\\FarmBuddy\\FarmBuddy.tga';
-    end
-
-    if (text == '') then
-      text = 'Farm Buddy'
-    end
-
-    DATA_BROKER.text = text;
-    DATA_BROKER.icon = icon;
-  else
-    DATA_BROKER.text = '';
-    DATA_BROKER.icon = '';
-  end
 end
 
 -- **************************************************************************
