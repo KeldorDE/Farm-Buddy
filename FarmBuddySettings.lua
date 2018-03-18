@@ -33,7 +33,7 @@ function FarmBuddy:GetConfigOptions()
   local options = {
     name = FARM_BUDDY_ADDON_NAME,
     handler = FarmBuddy,
-    childGroups = 'tab',
+    childGroups = 'tree',
     type = 'group',
     args = {
       info_version = {
@@ -646,10 +646,11 @@ function FarmBuddy:GetConfigOptions()
           },
         }
       },
+      tab_profiles = LibStub('AceDBOptions-3.0'):GetOptionsTable(self.db),
       tab_about = {
         name = L['FARM_BUDDY_ABOUT'],
         type = 'group',
-        order = self:GetOptionOrder('about'),
+        order = self:GetOptionOrder('main'),
         args = {
           about_space_1 = {
             type = 'description',
@@ -727,6 +728,9 @@ function FarmBuddy:GetConfigOptions()
       },
     }
   };
+
+  -- Order profile tab right before the about entry
+  options.args.tab_profiles.order = options.args.tab_about.order - 1;
 
   return options;
 end
@@ -1432,4 +1436,30 @@ function FarmBuddy:OpenSettings(tab)
   if (tab ~= nil) then
     LibStub('AceConfigDialog-3.0'):SelectGroup(FARM_BUDDY_ADDON_NAME, tab)
   end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:OnProfileShutdown()
+-- DESC : Fires before changing the profile.
+-- **************************************************************************
+function FarmBuddy:OnProfileShutdown()
+  self:ResetItems(false);
+end
+
+  -- **************************************************************************
+-- NAME : FarmBuddy:OnProfileChanged()
+-- DESC : Fires after changing the profile.
+-- **************************************************************************
+function FarmBuddy:OnProfileChanged()
+
+  self:InitItems();
+  self:SetTitleDisplay();
+  self:SetButtonDisplay();
+  self:SetFrameLockStatus();
+  self:SetBackgroundTransparency();
+  self:SetShowFrame();
+
+  -- Update GUIs
+  CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
+  self:UpdateGUI();
 end

@@ -68,6 +68,11 @@ function FarmBuddy:OnInitialize()
   self:RegisterEvent('PLAYER_REGEN_DISABLED', 'PlayerRegenDisabled');
   self:RegisterEvent('PLAYER_REGEN_ENABLED', 'PlayerRegenEnabled');
 
+  self.db.RegisterCallback(self, 'OnProfileChanged', 'OnProfileChanged');
+  self.db.RegisterCallback(self, 'OnProfileCopied', 'OnProfileChanged');
+  self.db.RegisterCallback(self, 'OnProfileReset', 'OnProfileChanged');
+  self.db.RegisterCallback(self, 'OnProfileShutdown', 'OnProfileShutdown');
+
   -- Init addon stuff
   self:InitSettings();
   self:InitItems();
