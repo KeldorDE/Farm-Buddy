@@ -1315,3 +1315,91 @@ function FarmBuddy:SetSettingProp(uniqueID, configKey, propKey, value)
     end
   end
 end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetTitleDisplay()
+-- DESC : Shows or hides the addon title bases on the showTitle setting.
+-- **************************************************************************
+function FarmBuddy:SetTitleDisplay()
+  if (self.db.profile.settings.showTitle == true) then
+    FarmBuddyFrame.Title:Show();
+  else
+    FarmBuddyFrame.Title:Hide();
+  end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetButtonDisplay()
+-- DESC : Shows or hides the addon buttons bases on the showButtons setting.
+-- **************************************************************************
+function FarmBuddy:SetButtonDisplay()
+  if (self.db.profile.settings.showButtons == true) then
+    FarmBuddyFrame.AddItemButton:Show();
+  else
+    FarmBuddyFrame.AddItemButton:Hide();
+  end
+
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetFrameLockStatus()
+-- DESC : Set or unset the frame is locked setting.
+-- **************************************************************************
+function FarmBuddy:SetFrameLockStatus()
+  FarmBuddyFrame.FrameLock = self.db.profile.settings.frameLocked;
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetBackgroundTransparency()
+-- DESC : Set the background transprency based on the user setting.
+-- **************************************************************************
+function FarmBuddy:SetBackgroundTransparency()
+  FarmBuddyFrame:SetBackdropColor(0, 0, 0, self.db.profile.settings.backgroundTransparency);
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetShowFrame()
+-- DESC : Toggles frame display.
+-- **************************************************************************
+function FarmBuddy:SetShowFrame()
+  if (self.db.profile.settings.showFrame == true) then
+    FarmBuddyFrame:Show();
+  else
+    FarmBuddyFrame:Hide();
+  end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:ResetFramePosition()
+-- DESC : Resets the main frame to the center of the screen.
+-- **************************************************************************
+function FarmBuddy:ResetFramePosition()
+  FarmBuddyFrame:ClearAllPoints();
+  FarmBuddyFrame:SetPoint('CENTER');
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:AddItemClick()
+-- DESC : Opens the FarmBuddy Settings GUI with focus on the items tab.
+-- **************************************************************************
+function FarmBuddy:AddItemClick(button)
+  if (button == 'LeftButton') then
+    self:OpenSettings('tab_items');
+  end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:OpenSettings()
+-- DESC : Opens the FarmBuddy settings GUI.
+-- **************************************************************************
+function FarmBuddy:OpenSettings(tab)
+
+  -- Workarround for opening controls instead of AddOn options
+  -- Call it two times to ensure the AddOn panel is opened
+  InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
+  InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
+
+  if (tab ~= nil) then
+    LibStub('AceConfigDialog-3.0'):SelectGroup(ADDON_NAME, tab)
+  end
+end

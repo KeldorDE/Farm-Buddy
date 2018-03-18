@@ -85,6 +85,55 @@ function FarmBuddy:OnInitialize()
 end
 
 -- **************************************************************************
+-- NAME : FarmBuddy:OnEnable()
+-- DESC : Is called when the Plugin gets enabled.
+-- **************************************************************************
+function FarmBuddy:OnEnable()
+  self:SecureHook('ContainerFrameItemButton_OnModifiedClick', 'ModifiedClick');
+  self:ScheduleRepeatingTimer('NotificationTask', 1);
+  self:ScheduleRepeatingTimer('ItemInfoRecived', 5);
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:OnDisable()
+-- DESC : Is called when the Plugin gets disabled.
+-- **************************************************************************
+function FarmBuddy:OnDisable()
+  self:CancelAllTimers();
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:BagUpdate()
+-- DESC : Parse events registered to plugin and act on them.
+-- **************************************************************************
+function FarmBuddy:BagUpdate()
+  self:InitItems();
+  self:UpdateGUI();
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:PlayerRegenDisabled()
+-- DESC : Fires when the player enters combat.
+-- **************************************************************************
+function FarmBuddy:PlayerRegenDisabled()
+
+  if (self.db.profile.settings.hideFrameInCombat == true) then
+    FarmBuddyFrame:Hide();
+  end
+
+  PLAYER_IN_COMBAT = true;
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:PlayerRegenDisabled()
+-- DESC : Fires if the player leaves combat.
+-- **************************************************************************
+function FarmBuddy:PlayerRegenEnabled()
+  FarmBuddyFrame:Show();
+  PLAYER_IN_COMBAT = false;
+end
+
+-- **************************************************************************
 -- NAME : FarmBuddy:InitItems()
 -- DESC : Init all items including counts.
 -- **************************************************************************
@@ -120,45 +169,6 @@ function FarmBuddy:SortItems()
   table.sort(ITEM_STORAGE, function(a, b)
     return self:SortItemsByKey(a, b, self.db.profile.settings.sortBy);
   end);
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:SortItemsByKey()
--- DESC : Sort items by the given key.
--- **************************************************************************
-function FarmBuddy:SortItemsByKey(a, b, key)
-  if (self.db.profile.settings.sortOrder == 'asc') then
-    return a[key] < b[key];
-  else
-    return a[key] > b[key];
-  end
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:OnEnable()
--- DESC : Is called when the Plugin gets enabled.
--- **************************************************************************
-function FarmBuddy:OnEnable()
-  self:SecureHook('ContainerFrameItemButton_OnModifiedClick', 'ModifiedClick');
-  self:ScheduleRepeatingTimer('NotificationTask', 1);
-  self:ScheduleRepeatingTimer('ItemInfoRecived', 5);
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:OnDisable()
--- DESC : Is called when the Plugin gets disabled.
--- **************************************************************************
-function FarmBuddy:OnDisable()
-  self:CancelAllTimers();
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:BagUpdate()
--- DESC : Parse events registered to plugin and act on them.
--- **************************************************************************
-function FarmBuddy:BagUpdate()
-  self:InitItems();
-  self:UpdateGUI();
 end
 
 -- **************************************************************************
@@ -313,55 +323,6 @@ function FarmBuddy:ShowNotification(index, item, quantity, demo)
 
     FarmBuddyNotification_Show(item, quantity, sound, notificationDisplayDuration, notificationGlow, notificationShine);
   end
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:GetCount()
--- DESC : Gets the item count.
--- **************************************************************************
-function FarmBuddy:GetCount(itemInfo, quantity, showIndicator)
-
-  local includeBank = self.db.profile.settings.includeBank;
-  local count = itemInfo.CountBags;
-  local displayStyle = self.db.profile.settings.progressStyle;
-
-  if includeBank == 1 or includeBank == true then
-    count = itemInfo.CountTotal;
-  end
-
-  if(self.db.profile.settings.showQuantity == true and quantity ~= nil and quantity > 0) then
-
-    -- Handle bonus display
-    local bonus = '';
-    if (self.db.profile.settings.showGoalBonus == true) then
-      local bonusInPercent = true;
-      local bonusUnit = '%';
-      if (self.db.profile.settings.goalBonusDisplay == 'count') then
-        bonusInPercent = false;
-        bonusUnit = '';
-      end
-
-      local bonusValue = self:GetBonus(count, quantity, bonusInPercent);
-      if (bonusValue > 0) then
-        bonus = ' ' .. self:GetColoredText('+' .. bonusValue .. bonusUnit, 'FF00FF00');
-      end
-    end
-
-    if (displayStyle == 'CountPercentage') then
-      count = count .. ' / ' .. quantity .. ' (' .. self:GetPercent(count, quantity, true) .. '%)';
-    elseif (displayStyle == 'Percentage') then
-      count = self:GetPercent(count, quantity, true) .. '%';
-    else
-      count = count .. ' / ' .. quantity;
-    end
-
-    count = count .. bonus;
-
-  elseif (showIndicator == true) then
-    count = count .. 'x';
-  end
-
-  return count;
 end
 
 -- **************************************************************************
@@ -522,47 +483,6 @@ function FarmBuddy:SetupProgressBar(frameName, itemInfo, itemStorage)
 end
 
 -- **************************************************************************
--- NAME : FarmBuddy:SetTitleDisplay()
--- DESC : Shows or hides the addon title bases on the showTitle setting.
--- **************************************************************************
-function FarmBuddy:SetTitleDisplay()
-  if (self.db.profile.settings.showTitle == true) then
-    FarmBuddyFrame.Title:Show();
-  else
-    FarmBuddyFrame.Title:Hide();
-  end
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:SetButtonDisplay()
--- DESC : Shows or hides the addon buttons bases on the showButtons setting.
--- **************************************************************************
-function FarmBuddy:SetButtonDisplay()
-  if (self.db.profile.settings.showButtons == true) then
-    FarmBuddyFrame.AddItemButton:Show();
-  else
-    FarmBuddyFrame.AddItemButton:Hide();
-  end
-
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:SetFrameLockStatus()
--- DESC : Set or unset the frame is locked setting.
--- **************************************************************************
-function FarmBuddy:SetFrameLockStatus()
-  FarmBuddyFrame.FrameLock = self.db.profile.settings.frameLocked;
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:SetBackgroundTransparency()
--- DESC : Set the background transprency based on the user setting.
--- **************************************************************************
-function FarmBuddy:SetBackgroundTransparency()
-  FarmBuddyFrame:SetBackdropColor(0, 0, 0, self.db.profile.settings.backgroundTransparency);
-end
-
--- **************************************************************************
 -- NAME : FarmBuddy:RemoveItemFrame()
 -- DESC : Removes the item frame with the given ID.
 -- **************************************************************************
@@ -573,138 +493,6 @@ function FarmBuddy:RemoveItemFrame(id)
     ITEM_FRAMES[frameName]:Hide();
     ITEM_FRAMES[frameName] = nil;
   end
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:AddItemClick()
--- DESC : Opens the FarmBuddy Settings GUI with focus on the items tab.
--- **************************************************************************
-function FarmBuddy:AddItemClick(button)
-  if (button == 'LeftButton') then
-    self:OpenSettings('tab_items');
-  end
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:OpenSettings()
--- DESC : Opens the FarmBuddy settings GUI.
--- **************************************************************************
-function FarmBuddy:OpenSettings(tab)
-
-  -- Workarround for opening controls instead of AddOn options
-  -- Call it two times to ensure the AddOn panel is opened
-  InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
-  InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
-
-  if (tab ~= nil) then
-    LibStub('AceConfigDialog-3.0'):SelectGroup(ADDON_NAME, tab)
-  end
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:GetColoredText()
--- DESC : Gets a colored string.
--- **************************************************************************
-function FarmBuddy:GetColoredText(text, color)
-  return '|c' .. color .. text .. '|r';
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:TableLength()
--- DESC : Gets the table item count.
--- **************************************************************************
-function FarmBuddy:TableLength(T)
-  local count = 0
-  for _ in pairs(T) do count = count + 1 end
-  return count
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:GetPercent()
--- DESC : Gets the percent value.
--- **************************************************************************
-function FarmBuddy:GetPercent(p, g, capCheck)
-
-  local percent = 0;
-
-  if (capCheck == true and p > g) then
-    percent = 100;
-  else
-    percent = tonumber(string.format("%." .. 0 .. 'f', ((p * 100) / g)));
-  end
-
-  if (capCheck == true) then
-    if (percent < 0) then
-      percent = 0;
-    elseif (percent > 100) then
-      percent = 100;
-    end
-  end
-
-  return percent;
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:GetBonus()
--- DESC : Gets the bonus based on the given quantity value in percent or as item count.
--- **************************************************************************
-function FarmBuddy:GetBonus(p, g, inPercent)
-
-  local bonus = 0;
-  local percent = self:GetPercent(p, g, false);
-
-  if (percent > 100) then
-    if (inPercent == true) then
-      bonus = percent - 100;
-    else
-      bonus = p - g;
-    end
-  end
-
-  return bonus;
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:PlayerRegenDisabled()
--- DESC : Fires when the player enters combat.
--- **************************************************************************
-function FarmBuddy:PlayerRegenDisabled()
-
-  if (self.db.profile.settings.hideFrameInCombat == true) then
-    FarmBuddyFrame:Hide();
-  end
-
-  PLAYER_IN_COMBAT = true;
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:PlayerRegenDisabled()
--- DESC : Fires if the player leaves combat.
--- **************************************************************************
-function FarmBuddy:PlayerRegenEnabled()
-  FarmBuddyFrame:Show();
-  PLAYER_IN_COMBAT = false;
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:SetShowFrame()
--- DESC : Toggles frame display.
--- **************************************************************************
-function FarmBuddy:SetShowFrame()
-  if (self.db.profile.settings.showFrame == true) then
-    FarmBuddyFrame:Show();
-  else
-    FarmBuddyFrame:Hide();
-  end
-end
-
--- **************************************************************************
--- NAME : FarmBuddy:ResetFramePosition()
--- DESC : Resets the main frame to the center of the screen.
--- **************************************************************************
-function FarmBuddy:ResetFramePosition()
-  FarmBuddyFrame:ClearAllPoints();
-  FarmBuddyFrame:SetPoint('CENTER');
 end
 
 -- **************************************************************************
