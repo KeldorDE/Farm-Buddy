@@ -1357,7 +1357,7 @@ end
 
 -- **************************************************************************
 -- NAME : FarmBuddy:SetShowFrame()
--- DESC : Toggles frame display.
+-- DESC : Sets frame display.
 -- **************************************************************************
 function FarmBuddy:SetShowFrame()
   if (self.db.profile.settings.showFrame == true) then
@@ -1365,6 +1365,23 @@ function FarmBuddy:SetShowFrame()
   else
     FarmBuddyFrame:Hide();
   end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:ToggleShowFrame()
+-- DESC : Toggles frame display.
+-- **************************************************************************
+function FarmBuddy:ToggleShowFrame()
+  if (self.db.profile.settings.showFrame == true) then
+    FarmBuddyFrame:Hide();
+    self.db.profile.settings.showFrame = false;
+  else
+    FarmBuddyFrame:Show();
+    self.db.profile.settings.showFrame = true;
+  end
+
+  -- Update settings GUI
+  CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
 end
 
 -- **************************************************************************
