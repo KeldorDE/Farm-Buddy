@@ -1,5 +1,8 @@
 # Farm Buddy Changelog
 
+**NOT RELEASED**
+* Bugfix: Frame is shown after zoning or combat when the show frame setting is not set.
+
 **1.0.8**
 * Bugfix: Unable to set the quantity by chat command
 
