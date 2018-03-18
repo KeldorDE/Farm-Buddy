@@ -1,4 +1,4 @@
--- **************************************************************************
+  -- **************************************************************************
 -- * FarmBuddyDataBroker.lua
 -- *
 -- * By: Keldor
@@ -72,8 +72,18 @@ function FarmBuddy:UpdateDataBroker(showIcon)
 
   if (self.db.profile.settings.enableDataBrokerSupport == true) then
     local dataList = {};
+    local numItems = 0;
+    local totalItemCount = tonumber(self.db.profile.settings.dataBrokerNumItems);
+
+    if (totalItemCount == 0) then
+      showIcon = true;
+    end
 
     for _, v in pairs(DATA_BROKER_ITEMS) do
+
+      if (numItems >= totalItemCount) then
+        break;
+      end
 
       tinsert(dataList, self:GetIconString(v.itemInfo.IconFileDataID, false));
 
@@ -82,6 +92,8 @@ function FarmBuddy:UpdateDataBroker(showIcon)
       end
 
       tinsert(dataList, self:GetCount(v.itemInfo, v.itemStorage.quantity, true) .. '  ');
+
+      numItems = numItems + 1;
     end
 
     local icon = '';
@@ -97,5 +109,8 @@ function FarmBuddy:UpdateDataBroker(showIcon)
 
     DATA_BROKER.text = text;
     DATA_BROKER.icon = icon;
+  else
+    DATA_BROKER.text = '';
+    DATA_BROKER.icon = '';
   end
 end

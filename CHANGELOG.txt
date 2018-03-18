@@ -2,6 +2,7 @@ NOT RELEASED
 ------------------
 - Feature: Toggle frame visibility by left clicking on the data broker plugin.
 - Feature: Open settings by right clicking on the data broker plugin.
+- Feature: Setting to limit items to show inside the broker plugin.
 
 1.0.9
 ------------------

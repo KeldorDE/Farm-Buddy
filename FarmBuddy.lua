@@ -48,6 +48,7 @@ local DEFAULTS = {
       sortOrder = 'asc',
       enableDataBrokerSupport = false,
       showDataBrokerItemName = true,
+      dataBrokerNumItems = 2,
     }
   }
 }

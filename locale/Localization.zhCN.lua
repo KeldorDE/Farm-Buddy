@@ -75,6 +75,10 @@ L["FARM_BUDDY_COUNT_WITH_PERCENATGE"] = "Count with percentage"
 --Translation missing 
 L["FARM_BUDDY_DATA_BROKER"] = "Broker Plugin"
 --Translation missing 
+L["FARM_BUDDY_DATA_BROKER_NUM_ITEMS"] = "Number of items to show"
+--Translation missing 
+L["FARM_BUDDY_DATA_BROKER_NUM_ITEMS_DESC"] = "Limits the number of items to display inside the data broker plugin. If the count is set to 0 the data broker acts as launcher plugin."
+--Translation missing 
 L["FARM_BUDDY_DATA_BROKER_SHOW_ITEM_NAME"] = "Show item name"
 --Translation missing 
 L["FARM_BUDDY_ENABLE_DATA_BROKER_SUPPORT"] = "Enable broker plugin support"
