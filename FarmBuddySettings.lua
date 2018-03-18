@@ -4,11 +4,9 @@
 -- * By: Keldor
 -- **************************************************************************
 
-local FARM_BUDDY_ID = FarmBuddy_GetID();
 local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true);
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID);
 local CONFIG_REG = LibStub("AceConfigRegistry-3.0");
-local ADDON_NAME = FarmBuddy_GetAddOnName();
 local ADDON_VERSION = GetAddOnMetadata('FarmBuddy', 'Version');
 local ITEM_PREFIX = FARM_BUDDY_ID .. 'Item';
 local ID_LENGTH = 32;
@@ -20,8 +18,8 @@ local RANDOM_CHARS = {}
 -- DESC : Creates the configuration page.
 -- **************************************************************************
 function FarmBuddy:InitSettings()
-  LibStub('AceConfig-3.0'):RegisterOptionsTable(ADDON_NAME, FarmBuddy:GetConfigOptions());
-  LibStub('AceConfigDialog-3.0'):AddToBlizOptions(ADDON_NAME);
+  LibStub('AceConfig-3.0'):RegisterOptionsTable(FARM_BUDDY_ADDON_NAME, FarmBuddy:GetConfigOptions());
+  LibStub('AceConfigDialog-3.0'):AddToBlizOptions(FARM_BUDDY_ADDON_NAME);
   self:GenerateChars();
   self:LoadExistingConfigItems();
   self:RegisterDialogs();
@@ -33,7 +31,7 @@ end
 -- **************************************************************************
 function FarmBuddy:GetConfigOptions()
   local options = {
-    name = ADDON_NAME,
+    name = FARM_BUDDY_ADDON_NAME,
     handler = FarmBuddy,
     childGroups = 'tab',
     type = 'group',
@@ -589,7 +587,7 @@ function FarmBuddy:GetConfigOptions()
             type = 'execute',
             name = L['FARM_BUDDY_RESET_ALL_ITEMS'],
             desc = L['FARM_BUDDY_RESET_ALL_ITEMS_DESC'],
-            func = function() StaticPopup_Show(ADDON_NAME .. 'ResetAllItemsConfirm'); end,
+            func = function() StaticPopup_Show(FARM_BUDDY_ADDON_NAME .. 'ResetAllItemsConfirm'); end,
             width = 'double',
             order = self:GetOptionOrder('actions'),
           },
@@ -608,7 +606,7 @@ function FarmBuddy:GetConfigOptions()
             type = 'execute',
             name = L['FARM_BUDDY_RESET_FRAME_POSITION'],
             desc = L['FARM_BUDDY_RESET_FRAME_POSITION_DESC'],
-            func = function() StaticPopup_Show(ADDON_NAME .. 'ResetFramePositionConfirm'); end,
+            func = function() StaticPopup_Show(FARM_BUDDY_ADDON_NAME .. 'ResetFramePositionConfirm'); end,
             width = 'double',
             order = self:GetOptionOrder('actions'),
           },
@@ -627,7 +625,7 @@ function FarmBuddy:GetConfigOptions()
             type = 'execute',
             name = L['FARM_BUDDY_RESET_ALL'],
             desc = L['FARM_BUDDY_RESET_ALL_DESC'],
-            func = function() StaticPopup_Show(ADDON_NAME .. 'ResetAllConfirm'); end,
+            func = function() StaticPopup_Show(FARM_BUDDY_ADDON_NAME .. 'ResetAllConfirm'); end,
             width = 'double',
             order = self:GetOptionOrder('actions'),
           },
@@ -680,14 +678,14 @@ function FarmBuddy:GetConfigOptions()
           about_info_localization_title = {
             type = 'description',
             fontSize = 'medium',
-            name = self:GetColoredText(L['FARM_BUDDY_LOCALIZATION'], 'FFFFFF00') .. '\n',
+            name = self:GetColoredText(L['FARM_BUDDY_LOCALIZATION'], FARM_BUDDY_COLOR_YELLOW) .. '\n',
             order = self:GetOptionOrder('about'),
             width = 'full',
           },
           about_info_localization_deDE = {
             type = 'description',
             fontSize = 'small',
-            name = self:GetColoredText(L['FARM_BUDDY_GERMAN'], 'FF00FF00') .. '\n',
+            name = self:GetColoredText(L['FARM_BUDDY_GERMAN'], FARM_BUDDY_COLOR_GREEN) .. '\n',
             order = self:GetOptionOrder('about'),
             width = 'full',
           },
@@ -700,7 +698,7 @@ function FarmBuddy:GetConfigOptions()
           about_info_chat_commands_title = {
             type = 'description',
             fontSize = 'medium',
-            name = self:GetColoredText(L['FARM_BUDDY_CHAT_COMMANDS'], 'FFFFFF00') .. '\n',
+            name = self:GetColoredText(L['FARM_BUDDY_CHAT_COMMANDS'], FARM_BUDDY_COLOR_YELLOW) .. '\n',
             order = self:GetOptionOrder('about'),
             width = 'full',
           },
@@ -724,7 +722,7 @@ end
 -- **************************************************************************
 function FarmBuddy:AddConfigItem(id, itemID, name)
 
-  local options = CONFIG_REG:GetOptionsTable(ADDON_NAME, 'dialog', 'AceConfigDialog-3.0');
+  local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0');
   local itemIDText;
 
   if (itemID == nil or tonumber(itemID) == 0) then
@@ -803,7 +801,7 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
       },
       ['item_id_desc_' .. id] = {
         type = 'description',
-        name = self:GetColoredText(L['FARM_BUDDY_ITEM_ID'] .. ':', 'ffffd300'),
+        name = self:GetColoredText(L['FARM_BUDDY_ITEM_ID'] .. ':', FARM_BUDDY_COLOR_ORANGE),
         width = 'half',
         order = self:GetOptionOrder(id),
         unique_index = id,
@@ -850,7 +848,7 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
     },
   };
 
-  CONFIG_REG:NotifyChange(ADDON_NAME);
+  CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
 end
 
 -- **************************************************************************
@@ -863,7 +861,7 @@ function FarmBuddy:LoadExistingConfigItems()
     for index, itemStorage in pairs(items) do
       self:AddConfigItem(itemStorage.id, itemStorage.itemID);
     end
-    CONFIG_REG:NotifyChange(ADDON_NAME);
+    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
   end
 end
 
@@ -1013,7 +1011,7 @@ function FarmBuddy:RemoveItem(info)
 
   -- Update settings GUI
   self:ReindexConfigItems();
-  CONFIG_REG:NotifyChange(ADDON_NAME);
+  CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
 end
 
 -- **************************************************************************
@@ -1022,7 +1020,7 @@ end
 -- **************************************************************************
 function FarmBuddy:ReindexConfigItems()
 
-  local options = CONFIG_REG:GetOptionsTable(ADDON_NAME, 'dialog', 'AceConfigDialog-3.0');
+  local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0');
   if (options.args.tab_items.args ~= nil) then
     for k in pairs(options.args.tab_items.args) do
       if (string.sub(k, 1, string.len(ITEM_PREFIX)) == ITEM_PREFIX) then
@@ -1193,7 +1191,7 @@ end
 -- **************************************************************************
 function FarmBuddy:RegisterDialogs()
 
-  StaticPopupDialogs[ADDON_NAME .. 'ResetAllItemsConfirm'] = {
+  StaticPopupDialogs[FARM_BUDDY_ADDON_NAME .. 'ResetAllItemsConfirm'] = {
     text = L['FARM_BUDDY_CONFIRM_RESET'],
     button1 = L['FARM_BUDDY_YES'],
     button2 = L['FARM_BUDDY_NO'],
@@ -1205,7 +1203,7 @@ function FarmBuddy:RegisterDialogs()
     hideOnEscape = true,
     preferredIndex = 3,
   };
-  StaticPopupDialogs[ADDON_NAME .. 'ResetAllConfirm'] = {
+  StaticPopupDialogs[FARM_BUDDY_ADDON_NAME .. 'ResetAllConfirm'] = {
     text = L['FARM_BUDDY_CONFIRM_ALL_RESET'],
     button1 = L['FARM_BUDDY_YES'],
     button2 = L['FARM_BUDDY_NO'],
@@ -1217,7 +1215,7 @@ function FarmBuddy:RegisterDialogs()
     hideOnEscape = true,
     preferredIndex = 3,
   };
-  StaticPopupDialogs[ADDON_NAME .. 'ResetFramePositionConfirm'] = {
+  StaticPopupDialogs[FARM_BUDDY_ADDON_NAME .. 'ResetFramePositionConfirm'] = {
     text = L['FARM_BUDDY_CONFIRM_RESET_FRAME_POSITION'],
     button1 = L['FARM_BUDDY_YES'],
     button2 = L['FARM_BUDDY_NO'],
@@ -1253,7 +1251,7 @@ function FarmBuddy:ResetItems(update)
     self:UpdateGUI();
 
     -- Update settings GUI
-    CONFIG_REG:NotifyChange(ADDON_NAME);
+    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
   end
 end
 
@@ -1275,7 +1273,7 @@ function FarmBuddy:ResetConfig()
   self:SetBackgroundTransparency();
 
   -- Update settings GUI
-  CONFIG_REG:NotifyChange(ADDON_NAME);
+  CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
 end
 
 -- **************************************************************************
@@ -1292,7 +1290,7 @@ function FarmBuddy:SetRecivedItemInfo(uniqueID, info)
   self:UpdateGUI();
 
   -- Update settings GUI
-  CONFIG_REG:NotifyChange(ADDON_NAME);
+  CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
 end
 
 -- **************************************************************************
@@ -1301,7 +1299,7 @@ end
 -- **************************************************************************
 function FarmBuddy:SetSettingProp(uniqueID, configKey, propKey, value)
 
-  local options = CONFIG_REG:GetOptionsTable(ADDON_NAME, 'dialog', 'AceConfigDialog-3.0');
+  local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0');
   if (options.args.tab_items.args ~= nil) then
     for k in pairs(options.args.tab_items.args) do
 
@@ -1396,10 +1394,10 @@ function FarmBuddy:OpenSettings(tab)
 
   -- Workarround for opening controls instead of AddOn options
   -- Call it two times to ensure the AddOn panel is opened
-  InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
-  InterfaceOptionsFrame_OpenToCategory(ADDON_NAME);
+  InterfaceOptionsFrame_OpenToCategory(FARM_BUDDY_ADDON_NAME);
+  InterfaceOptionsFrame_OpenToCategory(FARM_BUDDY_ADDON_NAME);
 
   if (tab ~= nil) then
-    LibStub('AceConfigDialog-3.0'):SelectGroup(ADDON_NAME, tab)
+    LibStub('AceConfigDialog-3.0'):SelectGroup(FARM_BUDDY_ADDON_NAME, tab)
   end
 end

@@ -4,7 +4,6 @@
 -- * By: Keldor
 -- **************************************************************************
 
-local FARM_BUDDY_ID = FarmBuddy_GetID();
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID);
 local ITEM_QUEUE = {};
 

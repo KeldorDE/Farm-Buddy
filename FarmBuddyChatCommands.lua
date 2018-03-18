@@ -4,10 +4,8 @@
 -- * By: Keldor
 -- **************************************************************************
 
-local FARM_BUDDY_ID = FarmBuddy_GetID();
 local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true);
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID);
-local ADDON_NAME = FarmBuddy_GetAddOnName();
 local CHAT_COMMAND = 'fbs';
 local CHAT_COMMANDS = {
   track = {
@@ -53,9 +51,9 @@ function FarmBuddy:GetChatCommandsHelp(printOut)
   local helpStr = '';
 
   for command, info in pairs(CHAT_COMMANDS) do
-    helpStr = helpStr .. self:GetColoredText('/' .. CHAT_COMMAND, 'FF00FF00') .. ' ' .. self:GetColoredText(command, 'FFFF0000');
+    helpStr = helpStr .. self:GetColoredText('/' .. CHAT_COMMAND, FARM_BUDDY_COLOR_GREEN) .. ' ' .. self:GetColoredText(command, FARM_BUDDY_COLOR_RED);
     if info.Args ~= '' then
-      helpStr = helpStr .. ' ' .. self:GetColoredText(info.Args, 'FF00FF00');
+      helpStr = helpStr .. ' ' .. self:GetColoredText(info.Args, FARM_BUDDY_COLOR_GREEN);
     end
     helpStr = helpStr .. ' - ' .. info.Description;
     if printOut then

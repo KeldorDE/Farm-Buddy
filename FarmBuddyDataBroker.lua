@@ -4,7 +4,7 @@
 -- * By: Keldor
 -- **************************************************************************
 
-local FARM_BUDDY_ID = FarmBuddy_GetID();
+local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true);
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID);
 local ldb = LibStub:GetLibrary('LibDataBroker-1.1');
 local DATA_BROKER;
@@ -18,11 +18,30 @@ local DATA_BROKER_ICON = 'Interface\\AddOns\\FarmBuddy\\FarmBuddy.tga';
 -- **************************************************************************
 function FarmBuddy:InitDataBroker()
 
+  -- Init data broker
   DATA_BROKER = ldb:NewDataObject('FarmBuddyBroker', {
     type = 'data source',
     icon = DATA_BROKER_ICON,
     text = '',
   });
+
+  -- Data broker click handler
+  DATA_BROKER.OnClick = function(self, button)
+    if (button == 'LeftButton') then
+
+      -- TODO: Toggle frame
+    elseif (button == 'RightButton') then
+      FarmBuddy:OpenSettings('tab_general');
+    end
+  end
+
+  -- Data broker tooltip
+  DATA_BROKER.OnTooltipShow = function(tooltip)
+    if not tooltip or not tooltip.AddLine then return end
+    tooltip:AddLine(FarmBuddy:GetColoredText(FARM_BUDDY_ADDON_NAME, FARM_BUDDY_COLOR_WHITE));
+    tooltip:AddLine(FarmBuddy:GetColoredText(L['FARM_BUDDY_BROKER_TOOLTIP_LINE_1'], FARM_BUDDY_COLOR_GREEN));
+    tooltip:AddLine(FarmBuddy:GetColoredText(L['FARM_BUDDY_BROKER_TOOLTIP_LINE_2'], FARM_BUDDY_COLOR_GREEN));
+  end
 end
 
 -- **************************************************************************
@@ -74,7 +93,7 @@ function FarmBuddy:UpdateDataBroker(showIcon)
     end
 
     if (text == '') then
-      text = 'Farm Buddy'
+      text = FARM_BUDDY_ADDON_NAME;
     end
 
     DATA_BROKER.text = text;

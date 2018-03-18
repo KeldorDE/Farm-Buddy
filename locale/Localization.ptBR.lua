@@ -29,6 +29,10 @@ L["FARM_BUDDY_BAR_COLOR_NO_QUANTITY"] = "Progress bar color (No goal defined)"
 --Translation missing 
 L["FARM_BUDDY_BONUS_DISPLAY"] = "Bonus display style"
 --Translation missing 
+L["FARM_BUDDY_BROKER_TOOLTIP_LINE_1"] = "Left click to toggle the Farm Buddy frame display."
+--Translation missing 
+L["FARM_BUDDY_BROKER_TOOLTIP_LINE_2"] = "Right click to open the settings."
+--Translation missing 
 L["FARM_BUDDY_CHAT_COMMANDS"] = "Chat Commands"
 --Translation missing 
 L["FARM_BUDDY_COLORS"] = "Colors"

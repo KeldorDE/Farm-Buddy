@@ -4,8 +4,6 @@
 -- * By: Keldor
 -- **************************************************************************
 
-local FARM_BUDDY_ID = 'FarmBuddyStandalone';
-local ADDON_NAME = 'Farm Buddy';
 local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true);
 local FarmBuddy = LibStub('AceAddon-3.0'):NewAddon(FARM_BUDDY_ID, 'AceConsole-3.0', 'AceEvent-3.0', 'AceTimer-3.0', 'AceHook-3.0');
 local NOTIFICATION_QUEUE = {};
@@ -495,20 +493,4 @@ function FarmBuddy:RemoveItemFrame(id)
     ITEM_FRAMES[frameName]:Hide();
     ITEM_FRAMES[frameName] = nil;
   end
-end
-
--- **************************************************************************
--- NAME : FarmBuddy_GetAddOnName()
--- DESC : Gets the Plugin AdOn name.
--- **************************************************************************
-function FarmBuddy_GetAddOnName()
-  return ADDON_NAME;
-end
-
--- **************************************************************************
--- NAME : FarmBuddy_GetID()
--- DESC : Gets the Plugin ID.
--- **************************************************************************
-function FarmBuddy_GetID()
-  return FARM_BUDDY_ID;
 end

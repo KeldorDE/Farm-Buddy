@@ -4,7 +4,6 @@
 -- * By: Keldor
 -- **************************************************************************
 
-local FARM_BUDDY_ID = FarmBuddy_GetID();
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID);
 
 
@@ -111,7 +110,7 @@ function FarmBuddy:GetCount(itemInfo, quantity, showIndicator)
 
       local bonusValue = self:GetBonus(count, quantity, bonusInPercent);
       if (bonusValue > 0) then
-        bonus = ' ' .. self:GetColoredText('+' .. bonusValue .. bonusUnit, 'FF00FF00');
+        bonus = ' ' .. self:GetColoredText('+' .. bonusValue .. bonusUnit, FARM_BUDDY_COLOR_GREEN);
       end
     end
 
