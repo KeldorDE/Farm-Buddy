@@ -1,5 +1,5 @@
 1.0.11
-- Feature: Added frame sacling to the apperance settings.
+- Feature: Added frame scaling to the apperance settings.
 
 1.0.10
 ------------------
