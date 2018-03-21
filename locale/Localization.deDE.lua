@@ -45,6 +45,7 @@ L["FARM_BUDDY_ENABLE_DATA_BROKER_SUPPORT"] = "Broker Plugin Unterstützung aktiv
 L["FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON"] = "Maustaste für die Schnellerfassung"
 L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS"] = "Tastenkürzel der Schnellerfassung"
 L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS_DESC"] = "Kombiniere deine gewünschten Tasten zu eine Schnellerfassungs-Tastenkürzel. Mithilfe des Tastenkürzels kannst du einen Gegenstand aus deinem Inventar sofort zur Liste hinzufügen."
+L["FARM_BUDDY_FRAME_SCALE"] = "Fenstergröße"
 L["FARM_BUDDY_GERMAN"] = "Deutsch"
 L["FARM_BUDDY_GOAL_SET"] = "Das neue Ziel wurde erfolgreich gesetzt."
 L["FARM_BUDDY_HIDE_FRAME_IN_COMBAT"] = "Fenster im Kampf ausblenden"

@@ -49,6 +49,7 @@ local DEFAULTS = {
       enableDataBrokerSupport = false,
       showDataBrokerItemName = true,
       dataBrokerNumItems = 2,
+      frameScale = 1.0,
     }
   }
 }
@@ -83,6 +84,7 @@ function FarmBuddy:OnInitialize()
   self:InitChatCommands();
   self:SetShowFrame();
   self:InitDataBroker();
+  self:SetScale();
 
   -- Set add item click event
   FarmBuddyFrame.AddItemButton:SetScript('OnClick', function(handle, button) self:AddItemClick(button) end);
@@ -498,5 +500,15 @@ function FarmBuddy:RemoveItemFrame(id)
   if (ITEM_FRAMES[frameName] ~= nil) then
     ITEM_FRAMES[frameName]:Hide();
     ITEM_FRAMES[frameName] = nil;
+  end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetScale()
+-- DESC : Removes the item frame with the given ID.
+-- **************************************************************************
+function FarmBuddy:SetScale()
+  if(self.db.profile.settings.frameScale) then
+    FarmBuddyFrame:SetScale(self.db.profile.settings.frameScale);
   end
 end

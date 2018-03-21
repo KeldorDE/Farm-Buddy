@@ -426,16 +426,6 @@ function FarmBuddy:GetConfigOptions()
             name = '',
             order = self:GetOptionOrder('apperance'),
           },
-          apperance_space_14 = {
-            type = 'description',
-            name = '',
-            order = self:GetOptionOrder('apperance'),
-          },
-          apperance_space_15 = {
-            type = 'description',
-            name = '',
-            order = self:GetOptionOrder('apperance'),
-          },
           apperance_background_transparency = {
             type = 'range',
             name = L['FARM_BUDDY_BACKGROUND_TRANSPARENCY'],
@@ -444,6 +434,23 @@ function FarmBuddy:GetConfigOptions()
             isPercent = true,
             min = 0,
             max = 1,
+            width = 'full',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_space_14 = {
+            type = 'description',
+            name = '',
+            order = self:GetOptionOrder('apperance'),
+          },
+          apperance_scale = {
+            type = 'range',
+            name = L['FARM_BUDDY_FRAME_SCALE'],
+            get = function() return self:GetSetting('frameScale', 'number'); end,
+            set = function(info, input) self:SetSetting('frameScale', 'number', input, false); self:SetScale() end,
+            isPercent = true,
+            bigStep  = 0.1,
+            min = 0.5,
+            max = 2.0,
             width = 'full',
             order = self:GetOptionOrder('apperance'),
           },
@@ -1290,6 +1297,8 @@ function FarmBuddy:ResetConfig()
   self:SetButtonDisplay();
   self:SetFrameLockStatus();
   self:SetBackgroundTransparency();
+  self:SetShowFrame();
+  self:SetScale();
 
   -- Update settings GUI
   CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);

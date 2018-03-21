@@ -89,6 +89,8 @@ L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS"] = "Fast tracking shortcuts"
 --Translation missing 
 L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS_DESC"] = "Combine your desired keys as a fast tracking shortcut. Fast tracking allows you to track an item from your inventory with these shortcut."
 --Translation missing 
+L["FARM_BUDDY_FRAME_SCALE"] = "Frame scale"
+--Translation missing 
 L["FARM_BUDDY_GERMAN"] = "German"
 --Translation missing 
 L["FARM_BUDDY_GOAL_SET"] = "The goal quantity has been set."
