@@ -77,13 +77,13 @@ function FarmBuddy:OnInitialize()
   -- Init addon stuff
   self:InitSettings();
   self:InitItems();
+  self:InitDataBroker();
   self:SetTitleDisplay();
   self:SetButtonDisplay();
   self:SetFrameLockStatus();
   self:SetBackgroundTransparency();
   self:InitChatCommands();
   self:SetShowFrame();
-  self:InitDataBroker();
   self:SetScale();
 
   -- Set add item click event
