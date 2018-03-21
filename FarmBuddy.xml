@@ -140,22 +140,22 @@
     </Backdrop>
 
     <Frames>
-      <Button name="$parenAddItemButton" parentKey="AddItemButton" inherits="UIPanelButtonTemplate" text="+">
-        <Size>
-          <AbsDimension x="18" y="18"/>
-        </Size>
-        <Anchors>
-          <Anchor point="TOPRIGHT">
-            <Offset>
-              <AbsDimension x="0" y="18"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-      </Button>
+      <Button name="$parentAddItemButton" parentKey="AddItemButton" inherits="UIPanelButtonTemplate" text="+">
+      <Size>
+        <AbsDimension x="18" y="18"/>
+      </Size>
+      <Anchors>
+        <Anchor point="TOPRIGHT">
+          <Offset>
+            <AbsDimension x="0" y="18"/>
+          </Offset>
+        </Anchor>
+      </Anchors>
+    </Button>
     </Frames>
 
     <Layers>
-      <Layer level="BACKGROUND">
+      <Layer level="OVERLAY">
         <FontString name="$parentTitle" parentKey="Title" inherits="GameFontNormal" text="Farm Buddy">
           <Anchors>
             <Anchor point="TOPLEFT">
