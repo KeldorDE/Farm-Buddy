@@ -432,6 +432,7 @@ function FarmBuddy:GetConfigOptions()
             get = function() return self:GetSetting('backgroundTransparency', 'number'); end,
             set = function(info, input) self:SetSetting('backgroundTransparency', 'number', input, false); self:SetBackgroundTransparency() end,
             isPercent = true,
+            bigStep  = 0.01,
             min = 0,
             max = 1,
             width = 'full',
