@@ -53,6 +53,8 @@ L["FARM_BUDDY_COMMAND_RESET_DESC"] = "Resets Farm Buddy to it's default settings
 --Translation missing 
 L["FARM_BUDDY_COMMAND_SETTINGS_DESC"] = "Open up the AddOn settings page."
 --Translation missing 
+L["FARM_BUDDY_COMMAND_TOGGLE_DESC"] = "FARM_BUDDY_COMMAND_TOGGLE_DESC"
+--Translation missing 
 L["FARM_BUDDY_COMMAND_TRACK_ARGS"] = "Item ID | Item Name | Item Link"
 --Translation missing 
 L["FARM_BUDDY_COMMAND_TRACK_DESC"] = "Sets the tracked item."

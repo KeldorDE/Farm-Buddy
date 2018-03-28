@@ -20,6 +20,10 @@ local CHAT_COMMANDS = {
     Args = '<' .. L['FARM_BUDDY_COMMAND_RESET_ARGS'] .. '>',
     Description = L['FARM_BUDDY_COMMAND_RESET_DESC']
   },
+  toggle = {
+    Args = '',
+    Description = L['FARM_BUDDY_COMMAND_TOGGLE_DESC']
+  },
   settings = {
     Args = '',
     Description = L['FARM_BUDDY_COMMAND_SETTINGS_DESC']
@@ -94,6 +98,10 @@ function FarmBuddy:ChatCommand(input)
   -- Set goal quantity
   elseif cmd == 'quantity' then
     self:CmdQuantity(value, arg1);
+
+    -- Toggle frame display
+  elseif cmd == 'toggle' then
+    self:CmdToggle();
 
   -- Open settings
   elseif cmd == 'settings' then
@@ -203,6 +211,14 @@ function FarmBuddy:CmdQuantity(item, quantity)
       self:Print(L['FARM_BUDDY_COMMAND_GOAL_PARAM_MISSING']);
     end
   end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:CmdToggle()
+-- DESC : Handles the toggle chat command.
+-- **************************************************************************
+function FarmBuddy:CmdToggle()
+  self:ToggleShowFrame();
 end
 
 -- **************************************************************************

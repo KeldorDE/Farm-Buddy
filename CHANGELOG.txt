@@ -1,3 +1,7 @@
+1.0.13
+------------------
+- Added new chat command to toggle frame display.
+
 1.0.12
 ------------------
 - Bugfix: Fix for invalid data broker setting type.

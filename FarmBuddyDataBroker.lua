@@ -28,7 +28,7 @@ function FarmBuddy:InitDataBroker()
   -- Data broker click handler
   DATA_BROKER.OnClick = function(self, button)
     if (button == 'LeftButton') then
-      FarmBuddy:ToggleShowFrame()
+      FarmBuddy:ToggleShowFrame();
     elseif (button == 'RightButton') then
       FarmBuddy:OpenSettings('tab_general');
     end
