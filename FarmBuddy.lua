@@ -68,6 +68,8 @@ function FarmBuddy:OnInitialize()
   self:RegisterEvent('GET_ITEM_INFO_RECEIVED', 'ItemInfoRecived');
   self:RegisterEvent('PLAYER_REGEN_DISABLED', 'PlayerRegenDisabled');
   self:RegisterEvent('PLAYER_REGEN_ENABLED', 'PlayerRegenEnabled');
+  self:RegisterEvent('PET_BATTLE_OPENING_START', 'PlayerRegenDisabled');
+  self:RegisterEvent('PET_BATTLE_CLOSE', 'PlayerRegenEnabled');
 
   self.db.RegisterCallback(self, 'OnProfileChanged', 'OnProfileChanged');
   self.db.RegisterCallback(self, 'OnProfileCopied', 'OnProfileChanged');

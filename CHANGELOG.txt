@@ -1,3 +1,7 @@
+1.0.14
+------------------
+- The option "Hide frame in combat" now also hides the frame in pet battles.
+
 1.0.13
 ------------------
 - Added new chat command to toggle frame display.
