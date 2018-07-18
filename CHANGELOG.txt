@@ -1,3 +1,8 @@
+1.0.15
+------------------
+- API update for patch 8.0
+- Fixed could not load Notification.lua error
+
 1.0.14
 ------------------
 - The option "Hide frame in combat" now also hides the frame in pet battles.
