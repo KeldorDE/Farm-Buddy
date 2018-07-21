@@ -407,7 +407,7 @@ function FarmBuddy:GetConfigOptions()
             type = 'color',
             name = L['FARM_BUDDY_BAR_COLOR_GOAL'],
             hasAlpha = false,
-            set = function(info, r,g,b,a) self:SetColorSetting('progressBarNoGoalColor', r, g, b, a, true); end,
+            set = function(info, r,g,b,a) self:SetColorSetting('progressBarGoalColor', r, g, b, a, true); end,
             get = function() return self:GetColorSetting('progressBarGoalColor') end,
             width = 'full',
             order = self:GetOptionOrder('apperance'),
