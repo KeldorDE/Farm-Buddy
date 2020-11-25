@@ -76,6 +76,8 @@ function FarmBuddy:OnInitialize()
   self.db.RegisterCallback(self, 'OnProfileReset', 'OnProfileChanged');
   self.db.RegisterCallback(self, 'OnProfileShutdown', 'OnProfileShutdown');
 
+  Mixin(FarmBuddyFrame, BackdropTemplateMixin)
+
   -- Init addon stuff
   self:InitSettings();
   self:InitItems();
