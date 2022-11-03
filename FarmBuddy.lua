@@ -99,7 +99,7 @@ end
 -- DESC : Is called when the Plugin gets enabled.
 -- **************************************************************************
 function FarmBuddy:OnEnable()
-  self:SecureHook('ContainerFrameItemButton_OnModifiedClick', 'ModifiedClick');
+  self:SecureHook('HandleModifiedItemClick', 'ModifiedClick');
   self:ScheduleRepeatingTimer('NotificationTask', 1);
   self:ScheduleRepeatingTimer('ItemInfoRecived', 5);
 end
@@ -187,7 +187,12 @@ end
 -- NAME : FarmBuddy:ModifiedClick()
 -- DESC : Is called when an item is clicked with modifier key.
 -- **************************************************************************
-function FarmBuddy:ModifiedClick(handle, button)
+function FarmBuddy:ModifiedClick(itemLink, itemLocation)
+
+  -- item location is only not nil for bag item clicks
+  if itemLocation == nil then
+    return;
+  end
 
   local db = self.db.profile.settings;
   local conditions = false;
@@ -229,11 +234,7 @@ function FarmBuddy:ModifiedClick(handle, button)
     end
   end
 
-  if button == db.fastTrackingMouseButton and not CursorHasItem() and conditions == true then
-
-    local bagID = handle:GetParent():GetID();
-    local bagSlot = handle:GetID();
-    local itemLink = GetContainerItemLink(bagID, bagSlot);
+  if GetMouseButtonClicked() == db.fastTrackingMouseButton and not CursorHasItem() and conditions == true then
 
     if itemLink ~= nil then
       local itemInfo = self:GetItemInfo(itemLink);
@@ -393,7 +394,7 @@ function FarmBuddy:UpdateGUI()
 
       -- Set frame position
       if (count > 0) then
-        curFrame:SetPoint('TOPLEFT', lastFrame, 0, -curFrame:GetHeight());
+        curFrame:SetPoint('TOPLEFT', lastFrame, 0, -(curFrame:GetHeight() + 3));
       else
         curFrame:SetPoint('TOPLEFT', FarmBuddyFrame, 0, 0);
       end

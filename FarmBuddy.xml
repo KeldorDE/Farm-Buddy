@@ -97,7 +97,7 @@
             <AbsDimension x="34" y="34" />
           </Size>
         </Texture>
-        <FontString name="$parentTitle" parentKey="Title" relativeTo="$parentTexture" inherits="GameFontNormal">
+        <FontString name="$parentTitle" parentKey="Title" inherits="GameFontNormal">
           <Anchors>
             <Anchor point="LEFT">
               <Offset x="39" y="7" />
@@ -106,7 +106,7 @@
           <Color r="255" g="255" b="255" a="1"/>
           <FontHeight val="12"/>
         </FontString>
-        <Texture name="$parentComplete" parentKey="Complete" relativeTo="$parentTexture" file="Interface\Scenarios\ScenarioIcon-Check" hidden="true">
+        <Texture name="$parentComplete" parentKey="Complete" file="Interface\Scenarios\ScenarioIcon-Check" hidden="true">
           <Anchors>
             <Anchor point="LEFT">
               <Offset x="40" y="-8" />
@@ -114,7 +114,7 @@
           </Anchors>
           <Size x="12" y="12"/>
         </Texture>
-        <FontString name="$parentSubline" parentKey="Subline" relativeTo="$parentTitle" inherits="GameFontNormalSmall">
+        <FontString name="$parentSubline" parentKey="Subline" inherits="GameFontNormalSmall">
           <Anchors>
             <Anchor point="LEFT">
               <Offset x="40" y="-7" />
@@ -128,16 +128,12 @@
   </Frame>
 
   <!-- FarmBuddy Frame -->
-  <Frame name="FarmBuddyFrame" parent="UIParent" toplevel="true" enableMouse="false" movable="true" hidden="false" FrameLock="false">
+  <Frame name="FarmBuddyFrame" parent="UIParent" toplevel="true" enableMouse="false" movable="true" hidden="false">
     <Size x="320" y="156"/>
 
     <Anchors>
       <Anchor point="CENTER"/>
     </Anchors>
-
-    <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" tile="true">
-      <Color r="0" g="0" b="0" a="0.3"/>
-    </Backdrop>
 
     <Frames>
       <Button name="$parentAddItemButton" parentKey="AddItemButton" inherits="UIPanelButtonTemplate" text="+">
