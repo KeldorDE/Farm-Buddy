@@ -1,9 +1,9 @@
-## Interface: 100000
+## Interface: 100002
 ## Title: Farm Buddy
 ## Notes: Adds the functionality to track farmed items.
 ## Author: Keldor (https://www.devil-coding.de)
 ## SavedVariables: FarmBuddyStandaloneDB
-## Version: 1.0.25.100000
+## Version: 1.0.26.100002
 
 embeds.xml
 
