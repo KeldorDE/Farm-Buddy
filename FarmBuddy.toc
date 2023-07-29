@@ -1,9 +1,10 @@
-## Interface: 100100
+## Interface: 100105
 ## Title: Farm Buddy
+## IconTexture: Interface\Icons\INV_Misc_Coin_01
 ## Notes: Adds the functionality to track farmed items.
 ## Author: Keldor (https://www.devil-coding.de)
 ## SavedVariables: FarmBuddyStandaloneDB
-## Version: 1.0.29.100100
+## Version: 1.0.30.100105
 
 embeds.xml
 
