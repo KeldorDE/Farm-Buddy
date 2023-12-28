@@ -25,3 +25,4 @@ ignore:
   - CHANGES.txt
   - CHANGELOG.txt
   - scripts
+  - .github
