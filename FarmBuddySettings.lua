@@ -719,6 +719,19 @@ function FarmBuddy:GetConfigOptions()
             order = self:GetOptionOrder('about'),
             width = 'full',
           },
+          about_info_support_title = {
+            type = 'description',
+            fontSize = 'medium',
+            name = self:GetColoredText(L['FARM_BUDDY_SUPPORT'], FARM_BUDDY_COLOR_YELLOW) .. '\n',
+            order = self:GetOptionOrder('about'),
+            width = 'full',
+          },
+          about_info_support_text = {
+            type = 'description',
+            name = '   • ' .. L['FARM_BUDDY_SUPPORT_TEXT'] .. '\n\n\n',
+            order = self:GetOptionOrder('about'),
+            width = 'full',
+          },
           about_info_chat_commands_title = {
             type = 'description',
             fontSize = 'medium',
