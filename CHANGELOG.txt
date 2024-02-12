@@ -1,3 +1,7 @@
+1.0.33
+------------------
+- API update for patch 10.2.5
+
 1.0.32
 ------------------
 - API update for patch 10.2.0

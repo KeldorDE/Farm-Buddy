@@ -1,10 +1,10 @@
-## Interface: 100200
+## Interface: 100205
 ## Title: Farm Buddy
 ## IconTexture: Interface\Icons\INV_Misc_Coin_01
 ## Notes: Adds the functionality to track farmed items in a movable window.|n|cffbbbbbbBy Keldor|r|n|nSupport:|n|cff82c5ff- patreon.com/keldor|r|n|n
 ## Author: Keldor (https://www.devil-coding.de)
 ## SavedVariables: FarmBuddyStandaloneDB
-## Version: 1.0.32.100200
+## Version: 1.0.33.100205
 
 embeds.xml
 
