@@ -7,7 +7,7 @@
 local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true);
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID);
 local CONFIG_REG = LibStub("AceConfigRegistry-3.0");
-local ADDON_VERSION = GetAddOnMetadata('FarmBuddy', 'Version');
+local ADDON_VERSION = C_AddOns.GetAddOnMetadata('FarmBuddy', 'Version');
 local ITEM_PREFIX = FARM_BUDDY_ID .. 'Item';
 local ID_LENGTH = 32;
 local OPTION_ORDER = {};
@@ -43,7 +43,7 @@ function FarmBuddy:GetConfigOptions()
       },
       info_author = {
         type = 'description',
-        name = L['FARM_BUDDY_AUTHOR'] .. ': ' .. GetAddOnMetadata('FarmBuddy', 'Author'),
+        name = L['FARM_BUDDY_AUTHOR'] .. ': ' .. C_AddOns.GetAddOnMetadata('FarmBuddy', 'Author'),
         order = self:GetOptionOrder('main'),
       },
       tab_general = {
@@ -690,7 +690,7 @@ function FarmBuddy:GetConfigOptions()
           },
           about_info_author = {
             type = 'description',
-            name = GetAddOnMetadata('FarmBuddy', 'Author'),
+            name = C_AddOns.GetAddOnMetadata('FarmBuddy', 'Author'),
             order = self:GetOptionOrder('about'),
             width = 'double',
           },
@@ -1451,10 +1451,7 @@ end
 -- **************************************************************************
 function FarmBuddy:OpenSettings(tab)
 
-  -- Workarround for opening controls instead of AddOn options
-  -- Call it two times to ensure the AddOn panel is opened
-  InterfaceOptionsFrame_OpenToCategory(FARM_BUDDY_ADDON_NAME);
-  InterfaceOptionsFrame_OpenToCategory(FARM_BUDDY_ADDON_NAME);
+  Settings.OpenToCategory(FARM_BUDDY_ADDON_NAME);
 
   if (tab ~= nil) then
     LibStub('AceConfigDialog-3.0'):SelectGroup(FARM_BUDDY_ADDON_NAME, tab)

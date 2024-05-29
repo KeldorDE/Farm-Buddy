@@ -1,3 +1,8 @@
+1.0.34
+- API update for patch 11
+- Fix GetAddOnMetadata() is null error
+- Replace deprecated InterfaceOptionsFrame_OpenToCategory() function
+
 1.0.33
 ------------------
 - API update for patch 10.2.5

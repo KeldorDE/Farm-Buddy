@@ -125,7 +125,7 @@ end
 -- **************************************************************************
 function FarmBuddy:CmdVersion()
 
-  self:Print(GetAddOnMetadata('FarmBuddy', 'Version'));
+  self:Print(C_AddOns.GetAddOnMetadata('FarmBuddy', 'Version'));
 end
 
 -- **************************************************************************
