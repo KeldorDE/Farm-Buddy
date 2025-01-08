@@ -149,7 +149,6 @@ function FarmBuddyNotification_ShowAnchor()
   FarmBuddyAnchor:SetScale(FRAME:GetEffectiveScale());
   FarmBuddyAnchor.Name:SetText(L['FARM_BUDDY_ANCHOR_HELP_TEXT']);
 
-  InterfaceOptionsFrame:Hide();
   FarmBuddyAnchor:Show();
 end
 
