@@ -189,8 +189,8 @@ end
 -- **************************************************************************
 function FarmBuddy:ModifiedClick(itemLink, itemLocation)
 
-  -- item location is only not nil for bag item clicks
-  if itemLocation == nil then
+  -- item location can be nil for bags/bank/mail and is not nil for inventory slots, make an explicit check
+  if itemLocation and itemLocation.IsBagAndSlot and (not itemLocation:IsBagAndSlot()) then
     return;
   end
 
