@@ -265,3 +265,9 @@ L["FARM_BUDDY_VERSION"] = "Version"
 L["FARM_BUDDY_WAITING_FOR_DATA"] = "Waiting for data"
 --[[Translation missing --]]
 L["FARM_BUDDY_YES"] = "Yes"
+--[[Translation missing --]]
+L["FARM_BUDDY_HIDE_ITEM"] = "Hidden"
+--[[Translation missing --]]
+L["FARM_BUDDY_HIDE_ITEM_DESC"] = "Hide item."
+--[[Translation missing --]]
+L["FARM_BUDDY_HIDE_ITEM_USAGE"] = "Item will not show up on tracker or notifications"
