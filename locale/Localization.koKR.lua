@@ -99,6 +99,12 @@ L["FARM_BUDDY_GOAL_SET"] = "The goal quantity has been set."
 --[[Translation missing --]]
 L["FARM_BUDDY_HIDE_FRAME_IN_COMBAT"] = "Hide frame in combat"
 --[[Translation missing --]]
+L["FARM_BUDDY_HIDE_ITEM"] = "Hidden"
+--[[Translation missing --]]
+L["FARM_BUDDY_HIDE_ITEM_DESC"] = "Hide item."
+--[[Translation missing --]]
+L["FARM_BUDDY_HIDE_ITEM_USAGE"] = "Item will not show up on tracker or notifications"
+--[[Translation missing --]]
 L["FARM_BUDDY_HIDE_NOTIFICATIONS_IN_COMBAT"] = "Hide notifications in combat"
 --[[Translation missing --]]
 L["FARM_BUDDY_INCLUDE_BANK"] = "Include items in your bank"
@@ -252,7 +258,7 @@ L["FARM_BUDDY_SORT_ORDER"] = "Sort order"
 --[[Translation missing --]]
 L["FARM_BUDDY_SUPPORT"] = "Support"
 --[[Translation missing --]]
-L["FARM_BUDDY_SUPPORT_TEXT"] = "patreon.com/keldor"
+L["FARM_BUDDY_SUPPORT_TEXT"] = "patreon.com/eso_database_com"
 --[[Translation missing --]]
 L["FARM_BUDDY_TEST_NOTIFICATION"] = "Test Notification"
 --[[Translation missing --]]
@@ -265,9 +271,3 @@ L["FARM_BUDDY_VERSION"] = "Version"
 L["FARM_BUDDY_WAITING_FOR_DATA"] = "Waiting for data"
 --[[Translation missing --]]
 L["FARM_BUDDY_YES"] = "Yes"
---[[Translation missing --]]
-L["FARM_BUDDY_HIDE_ITEM"] = "Hidden"
---[[Translation missing --]]
-L["FARM_BUDDY_HIDE_ITEM_DESC"] = "Hide item."
---[[Translation missing --]]
-L["FARM_BUDDY_HIDE_ITEM_USAGE"] = "Item will not show up on tracker or notifications"

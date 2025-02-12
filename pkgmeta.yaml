@@ -26,3 +26,6 @@ ignore:
   - CHANGELOG.txt
   - scripts
   - .github
+  - .editorconfig
+  - .gitattributes
+  - .gitignore

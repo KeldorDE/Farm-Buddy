@@ -1,3 +1,11 @@
+1.1.0
+------------------
+- Add Classic support
+- Add Cataclysm Classic support (Thanks to MrFIXIT)
+- New hide item option to hide items from the tracker and notifications (Thanks to MrFIXIT)
+- Bugfix: Fast tracking modified click handling (Thanks to MrFIXIT)
+- Change default notification sound to make the code compatible with Classic
+
 1.0.35
 ------------------
 - API update for patch 11.0.7
