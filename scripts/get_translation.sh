@@ -49,6 +49,6 @@ do
   echo "${RESP}" >> "${LOCALE_FILE}"
 done
 
-echo -e "\033[1;32m[OK] All trnalsations has been updated\033[m"
+echo -e "\033[1;32m[OK] All translations has been updated\033[m"
 
 exit 0
