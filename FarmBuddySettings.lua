@@ -827,6 +827,17 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
         order = self:GetOptionOrder(id),
         unique_index = id,
       },
+      ['item_hidden_' .. id] = {
+        type = 'toggle',
+        name = L['FARM_BUDDY_HIDE_ITEM'],
+        desc = L['FARM_BUDDY_HIDE_ITEM_DESC'],
+        usage = L['FARM_BUDDY_HIDE_ITEM_USAGE'],
+        get = function(info) return self:GetItemFromSV(info.option.unique_index, 'hidden', true)==1; end,
+        set = function(info, input) self:SetItemProp(info.option.unique_index, 'hidden', (input and 1 or 0), true); end,
+        width = 'half',
+        order = self:GetOptionOrder(id),
+        unique_index = id,
+      },
       ['item_spacer_2_' .. id] = {
         type = 'description',
         name = '',

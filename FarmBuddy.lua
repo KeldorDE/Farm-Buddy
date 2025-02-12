@@ -189,8 +189,8 @@ end
 -- **************************************************************************
 function FarmBuddy:ModifiedClick(itemLink, itemLocation)
 
-  -- item location is only not nil for bag item clicks
-  if itemLocation == nil then
+  -- item location can be nil for bags/bank/mail and is not nil for inventory slots, make an explicit check
+  if itemLocation and itemLocation.IsBagAndSlot and (not itemLocation:IsBagAndSlot()) then
     return;
   end
 
@@ -355,7 +355,8 @@ function FarmBuddy:UpdateGUI()
   for _, itemStorage in pairs(ITEM_STORAGE) do
 
     local itemInfo = self:GetItemInfo(itemStorage.itemID);
-    if itemInfo ~= nil then
+    local hidden = itemStorage.hidden and (itemStorage.hidden == 1) or false
+    if itemInfo then
       local frameName = FARM_BUDDY_ID .. 'Item' .. itemStorage.id;
       local itemCount = self:GetCount(itemInfo);
       local goalReached;
@@ -363,16 +364,6 @@ function FarmBuddy:UpdateGUI()
 
       if (_G[frameName .. 'ProgressBar'] ~= nil) then
         progressBarFrame = _G[frameName .. 'ProgressBar'];
-      end
-
-      -- Handle notifications
-      if(itemStorage.quantity > 0 and itemCount >= itemStorage.quantity) then
-        self:QueueNotification(itemInfo.ItemID, itemInfo.Name, itemStorage.quantity);
-        goalReached = true;
-      else
-        NOTIFICATION_QUEUE[itemInfo.ItemID] = nil;
-        NOTIFICATION_TRIGGERED[itemInfo.ItemID] = false;
-        goalReached = false;
       end
 
       -- Only add new frame if the frame does not already exists
@@ -392,28 +383,43 @@ function FarmBuddy:UpdateGUI()
         curFrame = ITEM_FRAMES[frameName];
       end
 
-      -- Set frame position
-      if (count > 0) then
-        curFrame:SetPoint('TOPLEFT', lastFrame, 0, -(curFrame:GetHeight() + 3));
+      if hidden then
+        if curFrame then curFrame:Hide(); end
       else
-        curFrame:SetPoint('TOPLEFT', FarmBuddyFrame, 0, 0);
+        -- Handle notifications
+        if(itemStorage.quantity > 0 and itemCount >= itemStorage.quantity) then
+          self:QueueNotification(itemInfo.ItemID, itemInfo.Name, itemStorage.quantity);
+          goalReached = true;
+        else
+          NOTIFICATION_QUEUE[itemInfo.ItemID] = nil;
+          NOTIFICATION_TRIGGERED[itemInfo.ItemID] = false;
+          goalReached = false;
+        end
+        curFrame:Show();
+        curFrame:ClearAllPoints();
+        -- Set frame position
+        if (count > 0) then
+          curFrame:SetPoint('TOPLEFT', lastFrame, 0, -(curFrame:GetHeight() + 3));
+        else
+          curFrame:SetPoint('TOPLEFT', FarmBuddyFrame, 0, 0);
+        end
+
+        if (self.db.profile.settings.showProgressBar == true) then
+          progressBarFrame:Show();
+          curFrame.Subline:Hide();
+          self:SetupProgressBar(frameName, itemInfo, itemStorage);
+        else
+          progressBarFrame:Hide();
+          curFrame.Subline:Show();
+          self:SetSubline(curFrame, itemInfo, itemStorage, goalReached);
+        end
+
+        lastFrame = curFrame;
+        totalHeight = (totalHeight + curFrame:GetHeight());
+        count = count + 1;
+
+        self:AddItemToDataBroker(itemInfo, itemStorage);
       end
-
-      if (self.db.profile.settings.showProgressBar == true) then
-        progressBarFrame:Show();
-        curFrame.Subline:Hide();
-        self:SetupProgressBar(frameName, itemInfo, itemStorage);
-      else
-        progressBarFrame:Hide();
-        curFrame.Subline:Show();
-        self:SetSubline(curFrame, itemInfo, itemStorage, goalReached);
-      end
-
-      lastFrame = curFrame;
-      totalHeight = (totalHeight + curFrame:GetHeight());
-      count = count + 1;
-
-      self:AddItemToDataBroker(itemInfo, itemStorage);
     end
   end
 

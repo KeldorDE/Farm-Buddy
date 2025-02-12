@@ -1,4 +1,4 @@
-## Interface: 110007
+## Interface: 110007, 40401
 ## Title: Farm Buddy
 ## IconTexture: Interface\Icons\INV_Misc_Coin_01
 ## Notes: Adds the functionality to track farmed items in a movable window.|n|cffbbbbbbBy Keldor|r|n|nSupport:|n|cff82c5ff- patreon.com/keldor|r|n|n

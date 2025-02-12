@@ -136,3 +136,6 @@ L["FARM_BUDDY_TRACK_ITEM_PARAM_MISSING"] = "You have to set an Item Name or Item
 L["FARM_BUDDY_VERSION"] = "Version"
 L["FARM_BUDDY_WAITING_FOR_DATA"] = "Waiting for data"
 L["FARM_BUDDY_YES"] = "Yes"
+L["FARM_BUDDY_HIDE_ITEM"] = "Hidden"
+L["FARM_BUDDY_HIDE_ITEM_DESC"] = "Hide item."
+L["FARM_BUDDY_HIDE_ITEM_USAGE"] = "Item will not show up on tracker or notifications"
