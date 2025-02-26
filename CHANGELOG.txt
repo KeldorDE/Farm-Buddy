@@ -1,3 +1,8 @@
+1.1.1
+------------------
+- API update for the Undermined update
+- Add a AddOn category
+
 1.1.0
 ------------------
 - Add Classic support
