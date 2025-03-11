@@ -71,7 +71,7 @@
   <!-- Template for a tracked item -->
   <Frame name="FarmBuddyItemTemplate" virtual="true">
     <Size>
-      <AbsDimension x="36" y="36" />
+      <AbsDimension x="36" y="38" />
     </Size>
 
     <Anchors>
@@ -89,18 +89,18 @@
           <Anchors>
             <Anchor point="CENTER">
               <Offset>
-                <AbsDimension x="0" y="-2" />
+                <AbsDimension x="0" y="-6" />
               </Offset>
             </Anchor>
           </Anchors>
           <Size>
-            <AbsDimension x="34" y="34" />
+            <AbsDimension x="36" y="36" />
           </Size>
         </Texture>
         <FontString name="$parentTitle" parentKey="Title" inherits="GameFontNormal">
           <Anchors>
-            <Anchor point="LEFT">
-              <Offset x="39" y="7" />
+            <Anchor point="TOPLEFT">
+              <Offset x="39" y="-7" />
             </Anchor>
           </Anchors>
           <Color r="255" g="255" b="255" a="1"/>
@@ -109,15 +109,15 @@
         <Texture name="$parentComplete" parentKey="Complete" file="Interface\Scenarios\ScenarioIcon-Check" hidden="true">
           <Anchors>
             <Anchor point="LEFT">
-              <Offset x="40" y="-8" />
+              <Offset x="40" y="-11" />
             </Anchor>
           </Anchors>
           <Size x="12" y="12"/>
         </Texture>
-        <FontString name="$parentSubline" parentKey="Subline" inherits="GameFontNormalSmall">
+        <FontString name="$parentSubline" parentKey="Subline" inherits="GameFontDarkGraySmall">
           <Anchors>
             <Anchor point="LEFT">
-              <Offset x="40" y="-7" />
+              <Offset x="40" y="-10" />
             </Anchor>
           </Anchors>
           <Color r="255" g="216" b="0" a="1"/>

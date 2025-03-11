@@ -89,6 +89,7 @@ function FarmBuddy:OnInitialize()
   self:InitChatCommands();
   self:SetShowFrame();
   self:SetScale();
+  self:UpdateGUI();
 
   -- Set add item click event
   FarmBuddyFrame.AddItemButton:SetScript('OnClick', function(handle, button) self:AddItemClick(button) end);
@@ -240,10 +241,8 @@ function FarmBuddy:ModifiedClick(itemLink, itemLocation)
       local itemInfo = self:GetItemInfo(itemLink);
       if (itemInfo ~= nil) then
 
-        local chatText;
-
         -- Add the item
-        self:AddConfigItem(nil, itemInfo.ItemID, itemInfo.Name);
+        self:AddConfigItem(nil, itemInfo.ItemID, FarmBuddy:GetNameFromItemLink(itemLink));
         self:InitItems();
         self:UpdateGUI();
 
@@ -371,12 +370,12 @@ function FarmBuddy:UpdateGUI()
         local r, g, b = GetItemQualityColor(itemInfo.Rarity);
 
         curFrame = CreateFrame('Frame', frameName, FarmBuddyFrame, 'FarmBuddyItemTemplate');
-        curFrame.Title:SetText(itemInfo.Name);
+        curFrame.Title:SetText(itemStorage.name);
         curFrame.Title:SetTextColor(r, g, b, 1);
         curFrame.Texture:SetTexture(itemInfo.IconFileDataID);
 
         progressBarFrame = CreateFrame('STATUSBAR', frameName .. 'ProgressBar', curFrame, 'FarmBuddyProgressBarTemplate');
-        progressBarFrame:SetPoint('TOPLEFT', curFrame, (curFrame.Texture:GetWidth() + 7), -(curFrame.Title:GetHeight() + 9));
+        progressBarFrame:SetPoint('TOPLEFT', curFrame, (curFrame.Texture:GetWidth() + 7), -25);
 
         ITEM_FRAMES[frameName] = curFrame;
       else

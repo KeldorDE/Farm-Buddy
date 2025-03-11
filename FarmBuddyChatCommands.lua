@@ -154,8 +154,6 @@ function FarmBuddy:CmdTrack(item, quantity)
 
   if item ~= nil then
 
-    local chatText;
-
     -- Convert item link to name
     local origItem = item;
     item = self:ItemLinkToID(item);

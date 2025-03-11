@@ -85,3 +85,12 @@ function FarmBuddy:GetIconString(icon, space)
   end
   return str;
 end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:GetNameFromItemLink()
+-- DESC : Gets the item link without the brackets.
+-- **************************************************************************
+function FarmBuddy:GetNameFromItemLink(itemLink)
+  local itemLinkNoBrackets = itemLink:gsub("%[(.-)%]", "%1")
+  return itemLinkNoBrackets;
+end
