@@ -1,3 +1,7 @@
+1.1.5
+------------------
+- API update for Patch 11.2.5
+
 1.1.4
 ------------------
 - API update for Patch 11.2, Ghosts of Karesh

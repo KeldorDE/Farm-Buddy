@@ -1,10 +1,10 @@
-## Interface: 110200, 11507, 50500
+## Interface: 110205, 11507, 50500, 50501
 ## Title: Farm Buddy
 ## IconTexture: Interface\Icons\INV_Misc_Coin_01
 ## Notes: Adds the functionality to track farmed items in a movable window.|n|cffbbbbbbBy Keldor|r|n|nSupport:|n|cff82c5ff- patreon.com/eso_database_com|r|n|n
 ## Author: Keldor (https://www.devil-coding.de)
 ## SavedVariables: FarmBuddyStandaloneDB
-## Version: 1.1.4
+## Version: 1.1.5
 ## Category-enUS: Farming
 ## Category-deDE: Farmen
 
