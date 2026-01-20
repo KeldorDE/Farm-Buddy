@@ -29,12 +29,6 @@ L["FARM_BUDDY_BAR_COLOR_NO_QUANTITY"] = [=[Cor da barra de progresso (sem meta d
 L["FARM_BUDDY_BONUS_DISPLAY"] = [=[Estilo de exibição de bônus
 
 ]=]
-L["FARM_BUDDY_BROKER_TOOLTIP_LINE_1"] = [=[Clique com o botão esquerdo do mouse para alternar a exibição do quadro Farm Buddy.
-
-]=]
-L["FARM_BUDDY_BROKER_TOOLTIP_LINE_2"] = [=[Clique com o botão direito do mouse para abrir as configurações.
-
-]=]
 L["FARM_BUDDY_CHAT_COMMANDS"] = [=[Comandos de bate-papo
 
 ]=]
@@ -89,20 +83,6 @@ L["FARM_BUDDY_COUNT"] = [=[Contar apenas
 ]=]
 L["FARM_BUDDY_COUNT_SINGLE"] = "Contar"
 L["FARM_BUDDY_COUNT_WITH_PERCENATGE"] = [=[Conte com porcentagem
-
-]=]
---[[Translation missing --]]
-L["FARM_BUDDY_DATA_BROKER"] = "Broker Plugin"
-L["FARM_BUDDY_DATA_BROKER_NUM_ITEMS"] = [=[Número de itens a serem exibidos
-
-]=]
-L["FARM_BUDDY_DATA_BROKER_NUM_ITEMS_DESC"] = [=[Limita o número de itens a serem exibidos dentro do plug-in do agente de dados. Se a contagem for definida como 0, o agente de dados atuará como plug-in iniciador.
-
-]=]
-L["FARM_BUDDY_DATA_BROKER_SHOW_ITEM_NAME"] = [=[Mostrar nome do item
-
-]=]
-L["FARM_BUDDY_ENABLE_DATA_BROKER_SUPPORT"] = [=[Habilitar o suporte ao plug-in do broker
 
 ]=]
 L["FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON"] = [=[Botão do mouse de rastreamento rápido
@@ -320,7 +300,7 @@ L["FARM_BUDDY_SORT_ORDER"] = [=[Ordem de classificação
 ]=]
 L["FARM_BUDDY_SUPPORT"] = "Apoio"
 --[[Translation missing --]]
-L["FARM_BUDDY_SUPPORT_TEXT"] = "patreon.com/eso_database_com"
+L["FARM_BUDDY_SUPPORT_TEXT"] = "patreon.com/c/keldor"
 L["FARM_BUDDY_TEST_NOTIFICATION"] = [=[Notificação de teste
 
 ]=]

@@ -1,3 +1,7 @@
+1.1.6
+------------------
+- Remove outdated Broker functions and library
+
 1.1.5
 ------------------
 - API update for Patch 11.2.5

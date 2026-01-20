@@ -29,10 +29,6 @@ L["FARM_BUDDY_BAR_COLOR_NO_QUANTITY"] = "Progress bar color (No goal defined)"
 --[[Translation missing --]]
 L["FARM_BUDDY_BONUS_DISPLAY"] = "Bonus display style"
 --[[Translation missing --]]
-L["FARM_BUDDY_BROKER_TOOLTIP_LINE_1"] = "Left click to toggle the Farm Buddy frame display."
---[[Translation missing --]]
-L["FARM_BUDDY_BROKER_TOOLTIP_LINE_2"] = "Right click to open the settings."
---[[Translation missing --]]
 L["FARM_BUDDY_CHAT_COMMANDS"] = "Chat Commands"
 --[[Translation missing --]]
 L["FARM_BUDDY_COLORS"] = "Colors"
@@ -74,16 +70,6 @@ L["FARM_BUDDY_COUNT"] = "Count only"
 L["FARM_BUDDY_COUNT_SINGLE"] = "Count"
 --[[Translation missing --]]
 L["FARM_BUDDY_COUNT_WITH_PERCENATGE"] = "Count with percentage"
---[[Translation missing --]]
-L["FARM_BUDDY_DATA_BROKER"] = "Broker Plugin"
---[[Translation missing --]]
-L["FARM_BUDDY_DATA_BROKER_NUM_ITEMS"] = "Number of items to show"
---[[Translation missing --]]
-L["FARM_BUDDY_DATA_BROKER_NUM_ITEMS_DESC"] = "Limits the number of items to display inside the data broker plugin. If the count is set to 0 the data broker acts as launcher plugin."
---[[Translation missing --]]
-L["FARM_BUDDY_DATA_BROKER_SHOW_ITEM_NAME"] = "Show item name"
---[[Translation missing --]]
-L["FARM_BUDDY_ENABLE_DATA_BROKER_SUPPORT"] = "Enable broker plugin support"
 --[[Translation missing --]]
 L["FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON"] = "Fast tracking mouse button"
 --[[Translation missing --]]
@@ -258,7 +244,7 @@ L["FARM_BUDDY_SORT_ORDER"] = "Sort order"
 --[[Translation missing --]]
 L["FARM_BUDDY_SUPPORT"] = "Support"
 --[[Translation missing --]]
-L["FARM_BUDDY_SUPPORT_TEXT"] = "patreon.com/eso_database_com"
+L["FARM_BUDDY_SUPPORT_TEXT"] = "patreon.com/c/keldor"
 --[[Translation missing --]]
 L["FARM_BUDDY_TEST_NOTIFICATION"] = "Test Notification"
 --[[Translation missing --]]

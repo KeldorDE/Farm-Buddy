@@ -46,9 +46,6 @@ local DEFAULTS = {
       hideNotificationsInCombat = false,
       sortBy = 'name',
       sortOrder = 'asc',
-      enableDataBrokerSupport = false,
-      showDataBrokerItemName = true,
-      dataBrokerNumItems = 2,
       frameScale = 1.0,
     }
   }
@@ -81,7 +78,6 @@ function FarmBuddy:OnInitialize()
   -- Init addon stuff
   self:InitSettings();
   self:InitItems();
-  self:InitDataBroker();
   self:SetTitleDisplay();
   self:SetButtonDisplay();
   self:SetFrameLockStatus();
@@ -349,8 +345,6 @@ function FarmBuddy:UpdateGUI()
   local count = 0;
   local showIcon = false;
 
-  self:ClearDataBrokerData();
-
   for _, itemStorage in pairs(ITEM_STORAGE) do
 
     local itemInfo = self:GetItemInfo(itemStorage.itemID);
@@ -416,8 +410,6 @@ function FarmBuddy:UpdateGUI()
         lastFrame = curFrame;
         totalHeight = (totalHeight + curFrame:GetHeight());
         count = count + 1;
-
-        self:AddItemToDataBroker(itemInfo, itemStorage);
       end
     end
   end
@@ -437,8 +429,6 @@ function FarmBuddy:UpdateGUI()
   if (totalHeight > 0) then
     FarmBuddyFrame:SetHeight(totalHeight);
   end
-
-  self:UpdateDataBroker(showIcon);
 end
 
 -- **************************************************************************
