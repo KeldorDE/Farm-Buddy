@@ -61,8 +61,8 @@ function FarmBuddy:OnInitialize()
   self.db = LibStub('AceDB-3.0'):New(FARM_BUDDY_ID .. 'DB', DEFAULTS);
 
   -- Register events
-  self:RegisterEvent('BAG_UPDATE', 'BagUpdate');
-  self:RegisterEvent('GET_ITEM_INFO_RECEIVED', 'ItemInfoRecived');
+  self:RegisterEvent('BAG_UPDATE_DELAYED', 'BagUpdate');
+  self:RegisterEvent('GET_ITEM_INFO_RECEIVED', 'ItemInfoReceived');
   self:RegisterEvent('PLAYER_REGEN_DISABLED', 'PlayerRegenDisabled');
   self:RegisterEvent('PLAYER_REGEN_ENABLED', 'PlayerRegenEnabled');
   self:RegisterEvent('PET_BATTLE_OPENING_START', 'PlayerRegenDisabled');
@@ -98,7 +98,7 @@ end
 function FarmBuddy:OnEnable()
   self:SecureHook('HandleModifiedItemClick', 'ModifiedClick');
   self:ScheduleRepeatingTimer('NotificationTask', 1);
-  self:ScheduleRepeatingTimer('ItemInfoRecived', 5);
+  self:ScheduleRepeatingTimer('ItemInfoReceived', 5);
 end
 
 -- **************************************************************************

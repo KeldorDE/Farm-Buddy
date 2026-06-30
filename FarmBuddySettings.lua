@@ -19,7 +19,7 @@ local RANDOM_CHARS = {}
 -- **************************************************************************
 function FarmBuddy:InitSettings()
   LibStub('AceConfig-3.0'):RegisterOptionsTable(FARM_BUDDY_ADDON_NAME, FarmBuddy:GetConfigOptions());
-  LibStub('AceConfigDialog-3.0'):AddToBlizOptions(FARM_BUDDY_ADDON_NAME);
+  self.optionsFrame, self.optionsID = LibStub('AceConfigDialog-3.0'):AddToBlizOptions(FARM_BUDDY_ADDON_NAME);
   self:GenerateChars();
   self:LoadExistingConfigItems();
   self:RegisterDialogs();
@@ -1411,7 +1411,7 @@ end
 -- **************************************************************************
 function FarmBuddy:OpenSettings(tab)
 
-  Settings.OpenToCategory(FARM_BUDDY_ADDON_NAME);
+  Settings.OpenToCategory(self.optionsID);
 
   if (tab ~= nil) then
     LibStub('AceConfigDialog-3.0'):SelectGroup(FARM_BUDDY_ADDON_NAME, tab)
