@@ -953,7 +953,7 @@ function FarmBuddy:SetItem(id, input)
   self:SetItemProp(id, 'name', input, false);
   local itemInfo = self:GetItemInfo(input, id);
   if (itemInfo ~= nil) then
-    self:SetRecivedItemInfo(id, itemInfo);
+    self:SetReceivedItemInfo(id, itemInfo);
   end
 end
 
@@ -1279,10 +1279,10 @@ function FarmBuddy:ResetConfig()
 end
 
 -- **************************************************************************
--- NAME : FarmBuddy:SetRecivedItemInfo()
+-- NAME : FarmBuddy:SetReceivedItemInfo()
 -- DESC : Sets the item ID and the correct name.
 -- **************************************************************************
-function FarmBuddy:SetRecivedItemInfo(uniqueID, info)
+function FarmBuddy:SetReceivedItemInfo(uniqueID, info)
 
   self:SetItemProp(uniqueID, 'itemID', info.ItemID, true);
   self:SetItemProp(uniqueID, 'name', info.Name, false);
