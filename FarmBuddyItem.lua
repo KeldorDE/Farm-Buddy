@@ -60,10 +60,10 @@ function FarmBuddy:AddItemToQueue(uniqueID, item)
 end
 
 -- **************************************************************************
--- NAME : FarmBuddy:ItemInfoRecived()
+-- NAME : FarmBuddy:ItemInfoReceived()
 -- DESC : Called when the item info has recived.
 -- **************************************************************************
-function FarmBuddy:ItemInfoRecived()
+function FarmBuddy:ItemInfoReceived()
 
   for k, v in pairs(ITEM_QUEUE) do
     local itemInfo = self:GetItemInfo(v.itemValue);
