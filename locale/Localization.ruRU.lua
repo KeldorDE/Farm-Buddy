@@ -4,127 +4,76 @@ local L = LibStub('AceLocale-3.0'):NewLocale('FarmBuddyStandalone', 'ruRU', fals
 if not L then return end
 
 L = L or {}
+L["FARM_BUDDY_ABOUT"] = "О аддоне"
+L["FARM_BUDDY_ACTIONS"] = "Действия"
+L["FARM_BUDDY_ADD_ITEM_DESC"] = "Нажмите кнопку добавления предмета ниже, чтобы добавить новый предмет."
+L["FARM_BUDDY_ADD_NEW_ITEM"] = "Добавить новый предмет"
+L["FARM_BUDDY_ALERT_COUNT_USAGE"] = "Количество для вашей цели фарминга."
+L["FARM_BUDDY_ANCHOR_HELP_TEXT"] = "Удерживайте ЛКМ для перемещения. ПКМ для закрытия."
 --[[Translation missing --]]
-L["FARM_BUDDY_ABOUT"] = "About"
+L["FARM_BUDDY_APPEARANCE"] = "Внешний вид"
+L["FARM_BUDDY_AUTHOR"] = "Автор"
+L["FARM_BUDDY_BACKGROUND_TRANSPARENCY"] = "Прозрачность фона"
+L["FARM_BUDDY_BAR_COLOR_GOAL"] = "Цвет полосы прогресса (цель достигнута)"
+L["FARM_BUDDY_BAR_COLOR_NO_GOAL"] = "Цвет полосы прогресса (цель не достигнута)"
+L["FARM_BUDDY_BAR_COLOR_NO_QUANTITY"] = "Цвет полосы прогресса (цель не определена)"
+L["FARM_BUDDY_BONUS_DISPLAY"] = "Стиль отображения бонуса"
+L["FARM_BUDDY_BROKER_TOOLTIP_LINE_1"] = "ЛКМ для переключения отображения рамки Farm Buddy."
+L["FARM_BUDDY_BROKER_TOOLTIP_LINE_2"] = "ПКМ для открытия настроек."
+L["FARM_BUDDY_CHAT_COMMANDS"] = "Команды чата"
+L["FARM_BUDDY_COLORS"] = "Цвета"
+L["FARM_BUDDY_COMMAND_GOAL_ARGS"] = "Количество"
+L["FARM_BUDDY_COMMAND_GOAL_DESC"] = "Устанавливает количество цели."
+L["FARM_BUDDY_COMMAND_GOAL_PARAM_MISSING"] = "Вы должны указать количество как второй параметр."
+L["FARM_BUDDY_COMMAND_HELP_DESC"] = "Выводит эту информацию."
+L["FARM_BUDDY_COMMAND_LIST"] = "Выводит эту информацию."
+L["FARM_BUDDY_COMMAND_RESET_ARGS"] = "все | предметы"
+L["FARM_BUDDY_COMMAND_RESET_DESC"] = "Сбрасывает Farm Buddy к настройкам по умолчанию."
+L["FARM_BUDDY_COMMAND_SETTINGS_DESC"] = "Открывает страницу настроек аддона."
+L["FARM_BUDDY_COMMAND_TOGGLE_DESC"] = "Переключает отображение рамки Farm Buddy."
+L["FARM_BUDDY_COMMAND_TRACK_ARGS"] = "ID предмета | Название предмета | Ссылка на предмет"
+L["FARM_BUDDY_COMMAND_TRACK_DESC"] = "Устанавливает отслеживаемый предмет."
+L["FARM_BUDDY_COMMAND_VERSION_DESC"] = "Показывает текущую используемую версию Farm Buddy."
+L["FARM_BUDDY_CONFIG_RESET_MSG"] = "Конфигурация сброшена к значениям по умолчанию."
+L["FARM_BUDDY_CONFIRM_ALL_RESET"] = "Вы уверены, что хотите сбросить все настройки к значениям по умолчанию?"
+L["FARM_BUDDY_CONFIRM_RESET"] = "Вы уверены, что хотите сбросить все предметы?"
+L["FARM_BUDDY_CONFIRM_RESET_FRAME_POSITION"] = "Вы уверены, что хотите сбросить основную рамку в позицию по умолчанию?"
+L["FARM_BUDDY_COUNT"] = "Только количество"
+L["FARM_BUDDY_COUNT_SINGLE"] = "Количество"
 --[[Translation missing --]]
-L["FARM_BUDDY_ACTIONS"] = "Actions"
---[[Translation missing --]]
-L["FARM_BUDDY_ADD_ITEM_DESC"] = "Click the add item button below to add a new item."
---[[Translation missing --]]
-L["FARM_BUDDY_ADD_NEW_ITEM"] = "Add new item"
---[[Translation missing --]]
-L["FARM_BUDDY_ALERT_COUNT_USAGE"] = "An quantity for your farming goal."
---[[Translation missing --]]
-L["FARM_BUDDY_ANCHOR_HELP_TEXT"] = "Hold left mouse button to move. Right click to close."
---[[Translation missing --]]
-L["FARM_BUDDY_APPEARANCE"] = "Appearance"
---[[Translation missing --]]
-L["FARM_BUDDY_AUTHOR"] = "Author"
---[[Translation missing --]]
-L["FARM_BUDDY_BACKGROUND_TRANSPARENCY"] = "Background transparency"
---[[Translation missing --]]
-L["FARM_BUDDY_BAR_COLOR_GOAL"] = "Progress bar color (goal reached)"
---[[Translation missing --]]
-L["FARM_BUDDY_BAR_COLOR_NO_GOAL"] = "Progress bar color (Goal not reached)"
---[[Translation missing --]]
-L["FARM_BUDDY_BAR_COLOR_NO_QUANTITY"] = "Progress bar color (No goal defined)"
---[[Translation missing --]]
-L["FARM_BUDDY_BONUS_DISPLAY"] = "Bonus display style"
---[[Translation missing --]]
-L["FARM_BUDDY_CHAT_COMMANDS"] = "Chat Commands"
---[[Translation missing --]]
-L["FARM_BUDDY_COLORS"] = "Colors"
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_GOAL_ARGS"] = "Quantity"
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_GOAL_DESC"] = "Sets the goal quantity."
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_GOAL_PARAM_MISSING"] = "You have to set a quantity as second parameter."
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_HELP_DESC"] = "Prints this information."
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_LIST"] = "Prints this information."
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_RESET_ARGS"] = "all | items"
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_RESET_DESC"] = "Resets Farm Buddy to it's default settings."
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_SETTINGS_DESC"] = "Open up the AddOn settings page."
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_TOGGLE_DESC"] = "FARM_BUDDY_COMMAND_TOGGLE_DESC"
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_TRACK_ARGS"] = "Item ID | Item Name | Item Link"
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_TRACK_DESC"] = "Sets the tracked item."
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_VERSION_DESC"] = "Show the current used Farm Buddy Version."
---[[Translation missing --]]
-L["FARM_BUDDY_CONFIG_RESET_MSG"] = "The configuration has been set back to the defaults."
---[[Translation missing --]]
-L["FARM_BUDDY_CONFIRM_ALL_RESET"] = "Are you sure you want to reset all settings to default values?"
---[[Translation missing --]]
-L["FARM_BUDDY_CONFIRM_RESET"] = "Are you sure you want to reset all items?"
---[[Translation missing --]]
-L["FARM_BUDDY_CONFIRM_RESET_FRAME_POSITION"] = "Are you sure you want to reset the main frame to it's default position?"
---[[Translation missing --]]
-L["FARM_BUDDY_COUNT"] = "Count only"
---[[Translation missing --]]
-L["FARM_BUDDY_COUNT_SINGLE"] = "Count"
---[[Translation missing --]]
-L["FARM_BUDDY_COUNT_WITH_PERCENTAGE"] = "Count with percentage"
---[[Translation missing --]]
-L["FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON"] = "Fast tracking mouse button"
---[[Translation missing --]]
-L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS"] = "Fast tracking shortcuts"
---[[Translation missing --]]
-L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS_DESC"] = "Combine your desired keys as a fast tracking shortcut. Fast tracking allows you to track an item from your inventory with these shortcut."
---[[Translation missing --]]
-L["FARM_BUDDY_FRAME_SCALE"] = "Frame scale"
---[[Translation missing --]]
-L["FARM_BUDDY_GERMAN"] = "German"
---[[Translation missing --]]
-L["FARM_BUDDY_GOAL_SET"] = "The goal quantity has been set."
---[[Translation missing --]]
-L["FARM_BUDDY_HIDE_FRAME_IN_COMBAT"] = "Hide frame in combat"
---[[Translation missing --]]
-L["FARM_BUDDY_HIDE_ITEM"] = "Hidden"
---[[Translation missing --]]
-L["FARM_BUDDY_HIDE_ITEM_DESC"] = "Hide item."
---[[Translation missing --]]
-L["FARM_BUDDY_HIDE_ITEM_USAGE"] = "Item will not show up on tracker or notifications"
---[[Translation missing --]]
-L["FARM_BUDDY_HIDE_NOTIFICATIONS_IN_COMBAT"] = "Hide notifications in combat"
---[[Translation missing --]]
-L["FARM_BUDDY_INCLUDE_BANK"] = "Include items in your bank"
---[[Translation missing --]]
-L["FARM_BUDDY_INCLUDE_BANK_DESC"] = "If enabled items in your bank are included when counting the farmed item."
---[[Translation missing --]]
-L["FARM_BUDDY_INVALID_NUMBER"] = "Shows a notification if the item quantity has reached."
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM"] = "Item"
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_COUNT"] = "Item Count"
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_ID"] = "Item ID"
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_NOT_ON_LIST"] = "The given item is not in the list of tracked items."
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_NOT_SET_MSG"] = "The !itemName! is already one of your tracked items!"
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_SET_MSG"] = "!itemName! has been added to the list."
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_SETTING"] = "Item ID / Item Link / Item name"
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_TO_TRACK_DESC"] = "The name of the item to track"
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_TO_TRACK_USAGE"] = [=[It's recommended to use the item ID or the item link. If you use the item name the item will show up in the list until you have seen the item in the current play session.
+L["FARM_BUDDY_COUNT_WITH_PERCENTAGE"] = "Количество с процентом"
+L["FARM_BUDDY_DATA_BROKER"] = "Плагин Broker"
+L["FARM_BUDDY_DATA_BROKER_NUM_ITEMS"] = "Количество предметов для показа"
+L["FARM_BUDDY_DATA_BROKER_NUM_ITEMS_DESC"] = "Ограничивает количество предметов для отображения в плагине Broker. Если количество установлено в 0, Broker действует как плагин запуска."
+L["FARM_BUDDY_DATA_BROKER_SHOW_ITEM_NAME"] = "Показывать название предмета"
+L["FARM_BUDDY_ENABLE_DATA_BROKER_SUPPORT"] = "Включить поддержку плагина Broker"
+L["FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON"] = "Кнопка мыши для быстрого отслеживания"
+L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS"] = "Сочетания клавиш для быстрого отслеживания"
+L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS_DESC"] = "Комбинируйте желаемые клавиши как сочетание для быстрого отслеживания. Быстрое отслеживание позволяет отслеживать предмет из инвентаря с помощью этого сочетания."
+L["FARM_BUDDY_FRAME_SCALE"] = "Масштаб рамки"
+L["FARM_BUDDY_GERMAN"] = "Немецкий"
+L["FARM_BUDDY_GOAL_SET"] = "Количество цели установлено."
+L["FARM_BUDDY_HIDE_FRAME_IN_COMBAT"] = "Скрывать рамку в бою"
+L["FARM_BUDDY_HIDE_ITEM"] = "Скрыто"
+L["FARM_BUDDY_HIDE_ITEM_DESC"] = "Скрыть предмет."
+L["FARM_BUDDY_HIDE_ITEM_USAGE"] = "Предмет не будет отображаться в трекере или уведомлениях"
+L["FARM_BUDDY_HIDE_NOTIFICATIONS_IN_COMBAT"] = "Скрывать уведомления в бою"
+L["FARM_BUDDY_INCLUDE_BANK"] = "Учитывать предметы в банке"
+L["FARM_BUDDY_INCLUDE_BANK_DESC"] = "Если включено, предметы в вашем банке будут учитываться при подсчёте фармимых предметов."
+L["FARM_BUDDY_INVALID_NUMBER"] = "Показывает уведомление, если достигнуто количество предмета."
+L["FARM_BUDDY_ITEM"] = "Предмет"
+L["FARM_BUDDY_ITEM_COUNT"] = "Количество предметов"
+L["FARM_BUDDY_ITEM_ID"] = "ID предмета"
+L["FARM_BUDDY_ITEM_NOT_ON_LIST"] = "Указанный предмет отсутствует в списке отслеживаемых предметов."
+L["FARM_BUDDY_ITEM_NOT_SET_MSG"] = "!itemName! уже является одним из ваших отслеживаемых предметов!"
+L["FARM_BUDDY_ITEM_SET_MSG"] = "!itemName! добавлен в список."
+L["FARM_BUDDY_ITEM_SETTING"] = "ID предмета / Ссылка на предмет / Название предмета"
+L["FARM_BUDDY_ITEM_TO_TRACK_DESC"] = "Название предмета для отслеживания"
+L["FARM_BUDDY_ITEM_TO_TRACK_USAGE"] = [=[Вы можете отслеживать неизвестные названия предметов, они появятся автоматически, если предмет есть в вашем инвентаре.
 
-You can track unknown item names they will appear automatically if you have the item in your inventory.
-
-Use the following site to obtain the desired item ID:
+Используйте следующий сайт для получения желаемого ID предмета:
 - http://www.wowhead.com]=]
---[[Translation missing --]]
-L["FARM_BUDDY_ITEMS"] = "Items"
+L["FARM_BUDDY_ITEMS"] = "Предметы"
 --[[Translation missing --]]
 L["FARM_BUDDY_KEY_ALT"] = "Alt"
 --[[Translation missing --]]

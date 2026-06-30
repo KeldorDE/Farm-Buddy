@@ -5,6 +5,7 @@
 - Fix error opening blizzard options from tracker/cmd/minimap icon (Thx MrFIXlT)
 - Rename misspelled API recived > received (Thx MrFIXlT)
 - Fixed: Animation duration setting now takes effect
+- Added updates Russian translation by Hubbotu
 
 1.1.5
 ------------------
