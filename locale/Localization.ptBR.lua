@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 local L = LibStub('AceLocale-3.0'):NewLocale('FarmBuddyStandalone', 'ptBR', false)
 if not L then return end
 
@@ -12,7 +14,7 @@ L["FARM_BUDDY_ALERT_COUNT_USAGE"] = [=[Uma quantidade para o seu objetivo agríc
 
 ]=]
 L["FARM_BUDDY_ANCHOR_HELP_TEXT"] = "Mantenha pressionado o botão esquerdo do mouse para mover. Clique com o botão direito do mouse para fechar."
-L["FARM_BUDDY_APPERANCE"] = "Aparência"
+L["FARM_BUDDY_APPEARANCE"] = "Aparência"
 L["FARM_BUDDY_AUTHOR"] = "Autor"
 L["FARM_BUDDY_BACKGROUND_TRANSPARENCY"] = [=[Transparência de fundo
 
@@ -82,7 +84,7 @@ L["FARM_BUDDY_COUNT"] = [=[Contar apenas
 
 ]=]
 L["FARM_BUDDY_COUNT_SINGLE"] = "Contar"
-L["FARM_BUDDY_COUNT_WITH_PERCENATGE"] = [=[Conte com porcentagem
+L["FARM_BUDDY_COUNT_WITH_PERCENTAGE"] = [=[Conte com porcentagem
 
 ]=]
 L["FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON"] = [=[Botão do mouse de rastreamento rápido

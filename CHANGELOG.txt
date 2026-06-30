@@ -4,6 +4,7 @@
 - Fix the freeze issue after the loading screen
 - Fix error opening blizzard options from tracker/cmd/minimap icon (Thx MrFIXlT)
 - Rename misspelled API recived > received (Thx MrFIXlT)
+- Fixed: Animation duration setting now takes effect
 
 1.1.5
 ------------------
@@ -148,8 +149,8 @@
 
 1.0.9
 ------------------
-- Feature: Toggle frame visibility by left clicking on the data broker plugin.
-- Feature: Open settings by right clicking on the data broker plugin.
+- Feature: Toggle frame visibility by left-clicking on the data broker plugin.
+- Feature: Open settings by right-clicking on the data broker plugin.
 - Feature: Setting to limit items to show inside the broker plugin.
 - Bugfix: Frame is shown after zoning or combat when the show frame setting is not set.
 

@@ -1,49 +1,50 @@
+---@diagnostic disable: undefined-global
 -- **************************************************************************
 -- * FarmBuddyChatCommands.lua
 -- *
 -- * By: Keldor
 -- **************************************************************************
 
-local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true);
-local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID);
-local CHAT_COMMAND = 'fbs';
+local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
+local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID)
+local CHAT_COMMAND = 'fbs'
 local CHAT_COMMANDS = {
-  track = {
-    Args = '<' .. L['FARM_BUDDY_COMMAND_TRACK_ARGS'] .. '> (<' .. L['FARM_BUDDY_COMMAND_GOAL_ARGS'] .. '>)',
-    Description = L['FARM_BUDDY_COMMAND_TRACK_DESC']
-  },
-  quantity = {
-    Args = '<' .. L['FARM_BUDDY_COMMAND_TRACK_ARGS'] .. '> <' .. L['FARM_BUDDY_COMMAND_GOAL_ARGS'] .. '>',
-    Description = L['FARM_BUDDY_COMMAND_GOAL_DESC']
-  },
-  reset = {
-    Args = '<' .. L['FARM_BUDDY_COMMAND_RESET_ARGS'] .. '>',
-    Description = L['FARM_BUDDY_COMMAND_RESET_DESC']
-  },
-  toggle = {
-    Args = '',
-    Description = L['FARM_BUDDY_COMMAND_TOGGLE_DESC']
-  },
-  settings = {
-    Args = '',
-    Description = L['FARM_BUDDY_COMMAND_SETTINGS_DESC']
-  },
-  version = {
-    Args = '',
-    Description = L['FARM_BUDDY_COMMAND_VERSION_DESC']
-  },
-  help = {
-    Args = '',
-    Description = L['FARM_BUDDY_COMMAND_HELP_DESC']
-  }
-};
+    track = {
+        Args = '<' .. L['FARM_BUDDY_COMMAND_TRACK_ARGS'] .. '> (<' .. L['FARM_BUDDY_COMMAND_GOAL_ARGS'] .. '>)',
+        Description = L['FARM_BUDDY_COMMAND_TRACK_DESC']
+    },
+    quantity = {
+        Args = '<' .. L['FARM_BUDDY_COMMAND_TRACK_ARGS'] .. '> <' .. L['FARM_BUDDY_COMMAND_GOAL_ARGS'] .. '>',
+        Description = L['FARM_BUDDY_COMMAND_GOAL_DESC']
+    },
+    reset = {
+        Args = '<' .. L['FARM_BUDDY_COMMAND_RESET_ARGS'] .. '>',
+        Description = L['FARM_BUDDY_COMMAND_RESET_DESC']
+    },
+    toggle = {
+        Args = '',
+        Description = L['FARM_BUDDY_COMMAND_TOGGLE_DESC']
+    },
+    settings = {
+        Args = '',
+        Description = L['FARM_BUDDY_COMMAND_SETTINGS_DESC']
+    },
+    version = {
+        Args = '',
+        Description = L['FARM_BUDDY_COMMAND_VERSION_DESC']
+    },
+    help = {
+        Args = '',
+        Description = L['FARM_BUDDY_COMMAND_HELP_DESC']
+    }
+}
 
 -- **************************************************************************
 -- NAME : FarmBuddy:InitChatCommands()
 -- DESC : Creates the chat commands.
 -- **************************************************************************
 function FarmBuddy:InitChatCommands()
-  self:RegisterChatCommand(CHAT_COMMAND, 'ChatCommand');
+    self:RegisterChatCommand(CHAT_COMMAND, 'ChatCommand')
 end
 
 -- **************************************************************************
@@ -51,24 +52,24 @@ end
 -- DESC : Returns the help text of the chat commands.
 -- **************************************************************************
 function FarmBuddy:GetChatCommandsHelp(printOut)
+    local helpStr = ''
 
-  local helpStr = '';
-
-  for command, info in pairs(CHAT_COMMANDS) do
-    helpStr = helpStr .. self:GetColoredText('/' .. CHAT_COMMAND, FARM_BUDDY_COLOR_GREEN) .. ' ' .. self:GetColoredText(command, FARM_BUDDY_COLOR_RED);
-    if info.Args ~= '' then
-      helpStr = helpStr .. ' ' .. self:GetColoredText(info.Args, FARM_BUDDY_COLOR_GREEN);
+    for command, info in pairs(CHAT_COMMANDS) do
+        helpStr = helpStr .. self:GetColoredText('/' .. CHAT_COMMAND, FARM_BUDDY_COLOR_GREEN)
+            .. ' ' .. self:GetColoredText(command, FARM_BUDDY_COLOR_RED)
+        if info.Args ~= '' then
+            helpStr = helpStr .. ' ' .. self:GetColoredText(info.Args, FARM_BUDDY_COLOR_GREEN)
+        end
+        helpStr = helpStr .. ' - ' .. info.Description
+        if printOut then
+            print(helpStr)
+            helpStr = ''
+        else
+            helpStr = helpStr .. '\n'
+        end
     end
-    helpStr = helpStr .. ' - ' .. info.Description;
-    if printOut then
-      print(helpStr);
-      helpStr = '';
-    else
-      helpStr = helpStr .. '\n';
-    end
-  end
 
-  return helpStr;
+    return helpStr
 end
 
 -- **************************************************************************
@@ -76,37 +77,36 @@ end
 -- DESC : Handles AddOn commands.
 -- **************************************************************************
 function FarmBuddy:ChatCommand(input)
+    local cmd, value, arg1 = self:GetArgs(input, 3)
 
-  local cmd, value, arg1 = self:GetArgs(input, 3);
+    -- Show help
+    if not cmd or cmd == 'help' then
+        self:CmdGetHelp()
 
-  -- Show help
-  if not cmd or cmd == 'help' then
-    self:CmdGetHelp();
+        -- Prints version information
+    elseif cmd == 'version' then
+        self:CmdVersion()
 
-  -- Prints version information
-  elseif cmd == 'version' then
-    self:CmdVersion();
+        -- Reset AddOn settings
+    elseif cmd == 'reset' then
+        self:CmdReset(value)
 
-  -- Reset AddOn settings
-  elseif cmd == 'reset' then
-    self:CmdReset(value);
+        -- Set tracked item
+    elseif cmd == 'track' then
+        self:CmdTrack(value, arg1)
 
-    -- Set tracked item
-  elseif cmd == 'track' then
-    self:CmdTrack(value, arg1);
+        -- Set goal quantity
+    elseif cmd == 'quantity' then
+        self:CmdQuantity(value, arg1)
 
-  -- Set goal quantity
-  elseif cmd == 'quantity' then
-    self:CmdQuantity(value, arg1);
+        -- Toggle frame display
+    elseif cmd == 'toggle' then
+        self:CmdToggle()
 
-    -- Toggle frame display
-  elseif cmd == 'toggle' then
-    self:CmdToggle();
-
-  -- Open settings
-  elseif cmd == 'settings' then
-    self:CmdSettings();
-  end
+        -- Open settings
+    elseif cmd == 'settings' then
+        self:CmdSettings()
+    end
 end
 
 -- **************************************************************************
@@ -114,9 +114,8 @@ end
 -- DESC : Handles the help chat command.
 -- **************************************************************************
 function FarmBuddy:CmdGetHelp()
-
-  self:Print(L['FARM_BUDDY_COMMAND_LIST'] .. '\n');
-  self:GetChatCommandsHelp(true);
+    self:Print(L['FARM_BUDDY_COMMAND_LIST'] .. '\n')
+    self:GetChatCommandsHelp(true)
 end
 
 -- **************************************************************************
@@ -124,8 +123,7 @@ end
 -- DESC : Handles the version chat command.
 -- **************************************************************************
 function FarmBuddy:CmdVersion()
-
-  self:Print(C_AddOns.GetAddOnMetadata('FarmBuddy', 'Version'));
+    self:Print(C_AddOns.GetAddOnMetadata('FarmBuddy', 'Version'))
 end
 
 -- **************************************************************************
@@ -133,17 +131,16 @@ end
 -- DESC : Handles the reset chat command.
 -- **************************************************************************
 function FarmBuddy:CmdReset(value)
+    if value == 'all' then
+        self:ResetConfig()
+    else
+        self:ResetItems(false)
+    end
 
-  if value == 'all' then
-    self:ResetConfig()
-  else
-    self:ResetItems(false);
-  end
+    self:InitItems()
+    self:UpdateGUI()
 
-  self:InitItems();
-  self:UpdateGUI();
-
-  self:Print(L['FARM_BUDDY_CONFIG_RESET_MSG']);
+    self:Print(L['FARM_BUDDY_CONFIG_RESET_MSG'])
 end
 
 -- **************************************************************************
@@ -151,34 +148,32 @@ end
 -- DESC : Handles the track chat command.
 -- **************************************************************************
 function FarmBuddy:CmdTrack(item, quantity)
+    if item ~= nil then
+        -- Convert item link to name
+        local origItem = item
+        item = self:ItemLinkToID(item)
 
-  if item ~= nil then
+        -- Add the item
+        self:AddConfigItem(nil, item, FarmBuddy:GetNameFromItemLink(origItem))
 
-    -- Convert item link to name
-    local origItem = item;
-    item = self:ItemLinkToID(item);
-
-    -- Add the item
-    self:AddConfigItem(nil, item, FarmBuddy:GetNameFromItemLink(origItem));
-
-    if (quantity ~= nil) then
-      local status = self:ValidateNumber(nil, quantity);
-      if (status == true) then
-        local itemID = self:GetItemIDByName(item);
-        if (itemID ~= nil) then
-          self:SetItemProp(itemID, 'quantity', tonumber(quantity), true);
+        if (quantity ~= nil) then
+            local status = self:ValidateNumber(nil, quantity)
+            if (status == true) then
+                local itemID = self:GetItemIDByName(item)
+                if (itemID ~= nil) then
+                    self:SetItemProp(itemID, 'quantity', tonumber(quantity), true)
+                end
+            end
         end
-      end
+
+        self:InitItems()
+        self:UpdateGUI()
+
+        local text = L['FARM_BUDDY_ITEM_SET_MSG']:gsub('!itemName!', origItem)
+        self:Print(text)
+    else
+        self:Print(L['FARM_BUDDY_TRACK_ITEM_PARAM_MISSING'])
     end
-
-    self:InitItems();
-    self:UpdateGUI();
-
-    local text = L['FARM_BUDDY_ITEM_SET_MSG']:gsub('!itemName!', origItem);
-    self:Print(text);
-  else
-    self:Print(L['FARM_BUDDY_TRACK_ITEM_PARAM_MISSING'])
-  end
 end
 
 -- **************************************************************************
@@ -186,29 +181,26 @@ end
 -- DESC : Handles the quantity chat command.
 -- **************************************************************************
 function FarmBuddy:CmdQuantity(item, quantity)
-
-  if item ~= nil then
-
-    local status = self:ValidateNumber(nil, quantity);
-    if (status == true) then
-
-      -- Convert item link to ID
-      local itemID = self:ItemLinkToID(item);
-      if (itemID ~= nil) then
-        local uniqueID = self:GetItemUnqiueIDByItemID(itemID);
-        if (uniqueID ~= nil) then
-          self:SetItemProp(uniqueID, 'quantity', tonumber(quantity), true);
-          self:Print(L['FARM_BUDDY_GOAL_SET']);
+    if item ~= nil then
+        local status = self:ValidateNumber(nil, quantity)
+        if (status == true) then
+            -- Convert item link to ID
+            local itemID = self:ItemLinkToID(item)
+            if (itemID ~= nil) then
+                local uniqueID = self:GetItemUniqueIDByItemID(itemID)
+                if (uniqueID ~= nil) then
+                    self:SetItemProp(uniqueID, 'quantity', tonumber(quantity), true)
+                    self:Print(L['FARM_BUDDY_GOAL_SET'])
+                else
+                    self:Print(L['FARM_BUDDY_ITEM_NOT_ON_LIST'])
+                end
+            else
+                self:Print(L['FARM_BUDDY_ITEM_NOT_ON_LIST'])
+            end
         else
-          self:Print(L['FARM_BUDDY_ITEM_NOT_ON_LIST']);
+            self:Print(L['FARM_BUDDY_COMMAND_GOAL_PARAM_MISSING'])
         end
-      else
-        self:Print(L['FARM_BUDDY_ITEM_NOT_ON_LIST']);
-      end
-    else
-      self:Print(L['FARM_BUDDY_COMMAND_GOAL_PARAM_MISSING']);
     end
-  end
 end
 
 -- **************************************************************************
@@ -216,7 +208,7 @@ end
 -- DESC : Handles the toggle chat command.
 -- **************************************************************************
 function FarmBuddy:CmdToggle()
-  self:ToggleShowFrame();
+    self:ToggleShowFrame()
 end
 
 -- **************************************************************************
@@ -224,7 +216,7 @@ end
 -- DESC : Handles the settings chat command.
 -- **************************************************************************
 function FarmBuddy:CmdSettings()
-  self:OpenSettings('tab_general');
+    self:OpenSettings('tab_general')
 end
 
 -- **************************************************************************
@@ -232,11 +224,10 @@ end
 -- DESC : Converts a item link to item name.
 -- **************************************************************************
 function FarmBuddy:ItemLinkToID(item)
+    local itemID = item:match("item:(%d+)")
+    if (itemID ~= nil) then
+        item = itemID
+    end
 
-  local itemID = item:match("item:(%d+)");
-  if (itemID ~= nil) then
-    item = itemID;
-  end
-
-  return item;
+    return item
 end

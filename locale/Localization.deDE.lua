@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 local L = LibStub('AceLocale-3.0'):NewLocale('FarmBuddyStandalone', 'deDE', false)
 if not L then return end
 
@@ -8,7 +10,7 @@ L["FARM_BUDDY_ADD_ITEM_DESC"] = "Klicke auf den \"Gegenstand hinzufügen\"-Butto
 L["FARM_BUDDY_ADD_NEW_ITEM"] = "Gegenstand hinzufügen"
 L["FARM_BUDDY_ALERT_COUNT_USAGE"] = "Die gewünschte Anzahl des beobachteten Gegenstands."
 L["FARM_BUDDY_ANCHOR_HELP_TEXT"] = "Linke Maustaste halten zum Bewegen. Rechtsklick zum Schließen."
-L["FARM_BUDDY_APPERANCE"] = "Ansicht"
+L["FARM_BUDDY_APPEARANCE"] = "Ansicht"
 L["FARM_BUDDY_AUTHOR"] = "Autor"
 L["FARM_BUDDY_BACKGROUND_TRANSPARENCY"] = "Transparenz des Hintergrunds"
 L["FARM_BUDDY_BAR_COLOR_GOAL"] = "Fortschrittsbalken Farbe (Ziel erreicht)"
@@ -35,7 +37,7 @@ L["FARM_BUDDY_CONFIRM_RESET"] = "Bist du sicher, dass du alle beobachteten Gegen
 L["FARM_BUDDY_CONFIRM_RESET_FRAME_POSITION"] = "Bist du sicher, dass du das Hauptfenster auf die Standardposition zurücksetzen möchtest?"
 L["FARM_BUDDY_COUNT"] = "Nur Anzahl"
 L["FARM_BUDDY_COUNT_SINGLE"] = "Anzahl"
-L["FARM_BUDDY_COUNT_WITH_PERCENATGE"] = "Anzahl und Prozent"
+L["FARM_BUDDY_COUNT_WITH_PERCENTAGE"] = "Anzahl und Prozent"
 L["FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON"] = "Maustaste für die Schnellerfassung"
 L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS"] = "Tastenkürzel der Schnellerfassung"
 L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS_DESC"] = "Kombiniere deine gewünschten Tasten zu eine Schnellerfassungs-Tastenkürzel. Mithilfe des Tastenkürzels kannst du einen Gegenstand aus deinem Inventar sofort zur Liste hinzufügen."

@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 local L = LibStub('AceLocale-3.0'):NewLocale('FarmBuddyStandalone', 'itIT', false)
 if not L then return end
 
@@ -15,7 +17,7 @@ L["FARM_BUDDY_ALERT_COUNT_USAGE"] = "An quantity for your farming goal."
 --[[Translation missing --]]
 L["FARM_BUDDY_ANCHOR_HELP_TEXT"] = "Hold left mouse button to move. Right click to close."
 --[[Translation missing --]]
-L["FARM_BUDDY_APPERANCE"] = "Appearance"
+L["FARM_BUDDY_APPEARANCE"] = "Appearance"
 --[[Translation missing --]]
 L["FARM_BUDDY_AUTHOR"] = "Author"
 --[[Translation missing --]]
@@ -69,7 +71,7 @@ L["FARM_BUDDY_COUNT"] = "Count only"
 --[[Translation missing --]]
 L["FARM_BUDDY_COUNT_SINGLE"] = "Count"
 --[[Translation missing --]]
-L["FARM_BUDDY_COUNT_WITH_PERCENATGE"] = "Count with percentage"
+L["FARM_BUDDY_COUNT_WITH_PERCENTAGE"] = "Count with percentage"
 --[[Translation missing --]]
 L["FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON"] = "Fast tracking mouse button"
 --[[Translation missing --]]
@@ -117,7 +119,7 @@ L["FARM_BUDDY_ITEM_TO_TRACK_DESC"] = "The name of the item to track"
 --[[Translation missing --]]
 L["FARM_BUDDY_ITEM_TO_TRACK_USAGE"] = [=[It's recommended to use the item ID or the item link. If you use the item name the item will show up in the list until you have seen the item in the current play session.
 
-You can track unknown item names they will appear automaticly if you have the item in your inventory.
+You can track unknown item names they will appear automatically if you have the item in your inventory.
 
 Use the following site to obtain the desired item ID:
 - http://www.wowhead.com]=]
