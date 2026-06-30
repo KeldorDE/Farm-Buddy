@@ -1,6 +1,9 @@
 1.1.6
 ------------------
 - Remove outdated Broker functions and library
+- Fix the freeze issue after the loading screen
+- Fix error opening blizzard options from tracker/cmd/minimap icon (Thx MrFIXlT)
+- Rename misspelled API recived > received (Thx MrFIXlT)
 
 1.1.5
 ------------------
