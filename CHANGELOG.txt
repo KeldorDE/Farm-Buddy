@@ -1,5 +1,6 @@
 1.1.7
 ------------------
+- Reverted: Removal of the Data Broker library, as it is still used by some users
 - Fix various grammar issues in the English translation
 - Fix various grammar issues in the German translation
 - Add French translation

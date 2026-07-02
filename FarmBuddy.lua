@@ -13,43 +13,46 @@ local ITEM_STORAGE = {}
 local ITEM_FRAMES = {}
 local PLAYER_IN_COMBAT = false
 local DEFAULTS = {
-  profile = {
-    items = {},
-    settings = {
-      showFrame = true,
-      showTitle = true,
-      showQuantity = true,
-      includeBank = false,
-      goalNotification = true,
-      notificationDisplayDuration = 5,
-      notificationGlow = true,
-      notificationShine = true,
-      playNotificationSound = true,
-      notificationSound = SOUNDKIT.ALARM_CLOCK_WARNING_3,
-      frameLocked = false,
-      showButtons = true,
-      showGoalIndicator = true,
-      showProgressBar = true,
-      progressStyle = 'CountPercentage',
-      progressBarNoGoalColor = { r = 1, g = .8, b = 0, a = 1 },
-      progressBarGoalColor = { r = 0, g = .6, b = 0, a = 1 },
-      progressBarNoQuantityColor = { r = 0, g = .5, b = 1, a = 1 },
-      backgroundTransparency = 0.3,
-      fastTrackingMouseButton = 'LeftButton',
-      fastTrackingKeys = {
-        ctrl = false,
-        shift = false,
-        alt = true,
-      },
-      showGoalBonus = false,
-      goalBonusDisplay = 'percent',
-      hideFrameInCombat = false,
-      hideNotificationsInCombat = false,
-      sortBy = 'name',
-      sortOrder = 'asc',
-      frameScale = 1.0,
+    profile = {
+        items = {},
+        settings = {
+            showFrame = true,
+            showTitle = true,
+            showQuantity = true,
+            includeBank = false,
+            goalNotification = true,
+            notificationDisplayDuration = 5,
+            notificationGlow = true,
+            notificationShine = true,
+            playNotificationSound = true,
+            notificationSound = SOUNDKIT.ALARM_CLOCK_WARNING_3,
+            frameLocked = false,
+            showButtons = true,
+            showGoalIndicator = true,
+            showProgressBar = true,
+            progressStyle = 'CountPercentage',
+            progressBarNoGoalColor = { r = 1, g = .8, b = 0, a = 1 },
+            progressBarGoalColor = { r = 0, g = .6, b = 0, a = 1 },
+            progressBarNoQuantityColor = { r = 0, g = .5, b = 1, a = 1 },
+            backgroundTransparency = 0.3,
+            fastTrackingMouseButton = 'LeftButton',
+            fastTrackingKeys = {
+                ctrl = false,
+                shift = false,
+                alt = true,
+            },
+            showGoalBonus = false,
+            goalBonusDisplay = 'percent',
+            hideFrameInCombat = false,
+            hideNotificationsInCombat = false,
+            sortBy = 'name',
+            sortOrder = 'asc',
+            frameScale = 1.0,
+            enableDataBrokerSupport = false,
+            showDataBrokerItemName = true,
+            dataBrokerNumItems = 2,
+        }
     }
-  }
 }
 
 -- **************************************************************************
@@ -79,6 +82,7 @@ function FarmBuddy:OnInitialize()
     -- Init addon stuff
     self:InitSettings();
     self:InitItems();
+    self:InitDataBroker();
     self:SetTitleDisplay();
     self:SetButtonDisplay();
     self:SetFrameLockStatus();
@@ -337,6 +341,8 @@ function FarmBuddy:UpdateGUI()
     local totalHeight = 0;
     local count = 0;
 
+    self:ClearDataBrokerData();
+
     for _, itemStorage in pairs(ITEM_STORAGE) do
 
         local itemInfo = self:GetItemInfo(itemStorage.itemID);
@@ -406,6 +412,8 @@ function FarmBuddy:UpdateGUI()
                 lastFrame = curFrame;
                 totalHeight = (totalHeight + curFrame:GetHeight());
                 count = count + 1;
+
+                self:AddItemToDataBroker(itemInfo, itemStorage);
             end
         end
     end
@@ -424,6 +432,8 @@ function FarmBuddy:UpdateGUI()
     if (totalHeight > 0) then
         FarmBuddyFrame:SetHeight(totalHeight);
     end
+
+    self:UpdateDataBroker(showIcon);
 end
 
 -- **************************************************************************
