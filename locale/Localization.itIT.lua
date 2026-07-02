@@ -4,258 +4,140 @@ local L = LibStub('AceLocale-3.0'):NewLocale('FarmBuddyStandalone', 'itIT', fals
 if not L then return end
 
 L = L or {}
---[[Translation missing --]]
-L["FARM_BUDDY_ABOUT"] = "About"
---[[Translation missing --]]
-L["FARM_BUDDY_ACTIONS"] = "Actions"
---[[Translation missing --]]
-L["FARM_BUDDY_ADD_ITEM_DESC"] = "Click the add item button below to add a new item."
---[[Translation missing --]]
-L["FARM_BUDDY_ADD_NEW_ITEM"] = "Add new item"
---[[Translation missing --]]
-L["FARM_BUDDY_ALERT_COUNT_USAGE"] = "An quantity for your farming goal."
---[[Translation missing --]]
-L["FARM_BUDDY_ANCHOR_HELP_TEXT"] = "Hold left mouse button to move. Right click to close."
---[[Translation missing --]]
-L["FARM_BUDDY_APPEARANCE"] = "Appearance"
---[[Translation missing --]]
-L["FARM_BUDDY_AUTHOR"] = "Author"
---[[Translation missing --]]
-L["FARM_BUDDY_BACKGROUND_TRANSPARENCY"] = "Background transparency"
---[[Translation missing --]]
-L["FARM_BUDDY_BAR_COLOR_GOAL"] = "Progress bar color (goal reached)"
---[[Translation missing --]]
-L["FARM_BUDDY_BAR_COLOR_NO_GOAL"] = "Progress bar color (Goal not reached)"
---[[Translation missing --]]
-L["FARM_BUDDY_BAR_COLOR_NO_QUANTITY"] = "Progress bar color (No goal defined)"
---[[Translation missing --]]
-L["FARM_BUDDY_BONUS_DISPLAY"] = "Bonus display style"
---[[Translation missing --]]
-L["FARM_BUDDY_CHAT_COMMANDS"] = "Chat Commands"
---[[Translation missing --]]
-L["FARM_BUDDY_COLORS"] = "Colors"
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_GOAL_ARGS"] = "Quantity"
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_GOAL_DESC"] = "Sets the goal quantity."
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_GOAL_PARAM_MISSING"] = "You have to set a quantity as second parameter."
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_HELP_DESC"] = "Prints this information."
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_LIST"] = "Prints this information."
---[[Translation missing --]]
+L["FARM_BUDDY_ABOUT"] = "Informazioni"
+L["FARM_BUDDY_ACTIONS"] = "Azioni"
+L["FARM_BUDDY_ADD_ITEM_DESC"] = "Clicca il pulsante di aggiunta qui sotto per aggiungere un nuovo oggetto."
+L["FARM_BUDDY_ADD_NEW_ITEM"] = "Aggiungi nuovo oggetto"
+L["FARM_BUDDY_ALERT_COUNT_USAGE"] = "Una quantità per il tuo obiettivo di farming."
+L["FARM_BUDDY_ANCHOR_HELP_TEXT"] = "Tieni premuto il tasto sinistro del mouse per spostare. Clic destro per chiudere."
+L["FARM_BUDDY_APPEARANCE"] = "Aspetto"
+L["FARM_BUDDY_AUTHOR"] = "Autore"
+L["FARM_BUDDY_BACKGROUND_TRANSPARENCY"] = "Trasparenza dello sfondo"
+L["FARM_BUDDY_BAR_COLOR_GOAL"] = "Colore della barra di avanzamento (obiettivo raggiunto)"
+L["FARM_BUDDY_BAR_COLOR_NO_GOAL"] = "Colore della barra di avanzamento (obiettivo non raggiunto)"
+L["FARM_BUDDY_BAR_COLOR_NO_QUANTITY"] = "Colore della barra di avanzamento (nessun obiettivo definito)"
+L["FARM_BUDDY_BONUS_DISPLAY"] = "Stile di visualizzazione del bonus"
+L["FARM_BUDDY_CHAT_COMMANDS"] = "Comandi chat"
+L["FARM_BUDDY_COLORS"] = "Colori"
+L["FARM_BUDDY_COMMAND_GOAL_ARGS"] = "Quantità"
+L["FARM_BUDDY_COMMAND_GOAL_DESC"] = "Imposta la quantità dell'obiettivo."
+L["FARM_BUDDY_COMMAND_GOAL_PARAM_MISSING"] = "Devi impostare una quantità come secondo parametro."
+L["FARM_BUDDY_COMMAND_HELP_DESC"] = "Mostra queste informazioni."
+L["FARM_BUDDY_COMMAND_LIST"] = "Mostra queste informazioni."
 L["FARM_BUDDY_COMMAND_RESET_ARGS"] = "all | items"
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_RESET_DESC"] = "Resets Farm Buddy to it's default settings."
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_SETTINGS_DESC"] = "Open up the AddOn settings page."
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_TOGGLE_DESC"] = "FARM_BUDDY_COMMAND_TOGGLE_DESC"
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_TRACK_ARGS"] = "Item ID | Item Name | Item Link"
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_TRACK_DESC"] = "Sets the tracked item."
---[[Translation missing --]]
-L["FARM_BUDDY_COMMAND_VERSION_DESC"] = "Show the current used Farm Buddy Version."
---[[Translation missing --]]
-L["FARM_BUDDY_CONFIG_RESET_MSG"] = "The configuration has been set back to the defaults."
---[[Translation missing --]]
-L["FARM_BUDDY_CONFIRM_ALL_RESET"] = "Are you sure you want to reset all settings to default values?"
---[[Translation missing --]]
-L["FARM_BUDDY_CONFIRM_RESET"] = "Are you sure you want to reset all items?"
---[[Translation missing --]]
-L["FARM_BUDDY_CONFIRM_RESET_FRAME_POSITION"] = "Are you sure you want to reset the main frame to it's default position?"
---[[Translation missing --]]
-L["FARM_BUDDY_COUNT"] = "Count only"
---[[Translation missing --]]
-L["FARM_BUDDY_COUNT_SINGLE"] = "Count"
---[[Translation missing --]]
-L["FARM_BUDDY_COUNT_WITH_PERCENTAGE"] = "Count with percentage"
---[[Translation missing --]]
-L["FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON"] = "Fast tracking mouse button"
---[[Translation missing --]]
-L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS"] = "Fast tracking shortcuts"
---[[Translation missing --]]
-L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS_DESC"] = "Combine your desired keys as a fast tracking shortcut. Fast tracking allows you to track an item from your inventory with these shortcut."
---[[Translation missing --]]
-L["FARM_BUDDY_FRAME_SCALE"] = "Frame scale"
---[[Translation missing --]]
-L["FARM_BUDDY_GERMAN"] = "German"
---[[Translation missing --]]
-L["FARM_BUDDY_GOAL_SET"] = "The goal quantity has been set."
---[[Translation missing --]]
-L["FARM_BUDDY_HIDE_FRAME_IN_COMBAT"] = "Hide frame in combat"
---[[Translation missing --]]
-L["FARM_BUDDY_HIDE_ITEM"] = "Hidden"
---[[Translation missing --]]
-L["FARM_BUDDY_HIDE_ITEM_DESC"] = "Hide item."
---[[Translation missing --]]
-L["FARM_BUDDY_HIDE_ITEM_USAGE"] = "Item will not show up on tracker or notifications"
---[[Translation missing --]]
-L["FARM_BUDDY_HIDE_NOTIFICATIONS_IN_COMBAT"] = "Hide notifications in combat"
---[[Translation missing --]]
-L["FARM_BUDDY_INCLUDE_BANK"] = "Include items in your bank"
---[[Translation missing --]]
-L["FARM_BUDDY_INCLUDE_BANK_DESC"] = "If enabled items in your bank are included when counting the farmed item."
---[[Translation missing --]]
-L["FARM_BUDDY_INVALID_NUMBER"] = "Shows a notification if the item quantity has reached."
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM"] = "Item"
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_COUNT"] = "Item Count"
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_ID"] = "Item ID"
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_NOT_ON_LIST"] = "The given item is not in the list of tracked items."
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_NOT_SET_MSG"] = "The !itemName! is already one of your tracked items!"
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_SET_MSG"] = "!itemName! has been added to the list."
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_SETTING"] = "Item ID / Item Link / Item name"
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_TO_TRACK_DESC"] = "The name of the item to track"
---[[Translation missing --]]
-L["FARM_BUDDY_ITEM_TO_TRACK_USAGE"] = [=[It's recommended to use the item ID or the item link. If you use the item name the item will show up in the list until you have seen the item in the current play session.
+L["FARM_BUDDY_COMMAND_RESET_DESC"] = "Ripristina Farm Buddy alle impostazioni predefinite."
+L["FARM_BUDDY_COMMAND_SETTINGS_DESC"] = "Apre la pagina delle impostazioni dell'AddOn."
+L["FARM_BUDDY_COMMAND_TOGGLE_DESC"] = "Mostra o nasconde la finestra principale."
+L["FARM_BUDDY_COMMAND_TRACK_ARGS"] = "ID oggetto | Nome oggetto | Link oggetto"
+L["FARM_BUDDY_COMMAND_TRACK_DESC"] = "Imposta l'oggetto da tracciare."
+L["FARM_BUDDY_COMMAND_VERSION_DESC"] = "Mostra la versione di Farm Buddy attualmente in uso."
+L["FARM_BUDDY_CONFIG_RESET_MSG"] = "La configurazione è stata ripristinata ai valori predefiniti."
+L["FARM_BUDDY_CONFIRM_ALL_RESET"] = "Sei sicuro di voler ripristinare tutte le impostazioni ai valori predefiniti?"
+L["FARM_BUDDY_CONFIRM_RESET"] = "Sei sicuro di voler ripristinare tutti gli oggetti?"
+L["FARM_BUDDY_CONFIRM_RESET_FRAME_POSITION"] = "Sei sicuro di voler ripristinare la finestra principale alla sua posizione predefinita?"
+L["FARM_BUDDY_COUNT"] = "Solo conteggio"
+L["FARM_BUDDY_COUNT_SINGLE"] = "Conteggio"
+L["FARM_BUDDY_COUNT_WITH_PERCENTAGE"] = "Conteggio con percentuale"
+L["FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON"] = "Tasto del mouse per il tracciamento rapido"
+L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS"] = "Scorciatoie di tracciamento rapido"
+L["FARM_BUDDY_FAST_TRACKING_SHORTCUTS_DESC"] = "Combina i tasti desiderati come scorciatoia di tracciamento rapido. Il tracciamento rapido ti permette di tracciare un oggetto dal tuo inventario con questa scorciatoia."
+L["FARM_BUDDY_FRAME_SCALE"] = "Scala della finestra"
+L["FARM_BUDDY_GERMAN"] = "Tedesco"
+L["FARM_BUDDY_GOAL_SET"] = "La quantità dell'obiettivo è stata impostata."
+L["FARM_BUDDY_HIDE_FRAME_IN_COMBAT"] = "Nascondi la finestra in combattimento"
+L["FARM_BUDDY_HIDE_ITEM"] = "Nascosto"
+L["FARM_BUDDY_HIDE_ITEM_DESC"] = "Nascondi oggetto."
+L["FARM_BUDDY_HIDE_ITEM_USAGE"] = "L'oggetto non apparirà nel tracker né nelle notifiche"
+L["FARM_BUDDY_HIDE_NOTIFICATIONS_IN_COMBAT"] = "Nascondi le notifiche in combattimento"
+L["FARM_BUDDY_INCLUDE_BANK"] = "Includi gli oggetti nella tua banca"
+L["FARM_BUDDY_INCLUDE_BANK_DESC"] = "Se abilitato, gli oggetti nella tua banca vengono inclusi nel conteggio dell'oggetto farmato."
+L["FARM_BUDDY_INVALID_NUMBER"] = "Mostra una notifica quando la quantità dell'oggetto è stata raggiunta."
+L["FARM_BUDDY_ITEM"] = "Oggetto"
+L["FARM_BUDDY_ITEM_COUNT"] = "Conteggio oggetti"
+L["FARM_BUDDY_ITEM_ID"] = "ID oggetto"
+L["FARM_BUDDY_ITEM_NOT_ON_LIST"] = "L'oggetto indicato non è nella lista degli oggetti tracciati."
+L["FARM_BUDDY_ITEM_NOT_SET_MSG"] = "!itemName! è già uno dei tuoi oggetti tracciati!"
+L["FARM_BUDDY_ITEM_SET_MSG"] = "!itemName! è stato aggiunto alla lista."
+L["FARM_BUDDY_ITEM_SETTING"] = "ID oggetto / Link oggetto / Nome oggetto"
+L["FARM_BUDDY_ITEM_TO_TRACK_DESC"] = "Il nome dell'oggetto da tracciare"
+L["FARM_BUDDY_ITEM_TO_TRACK_USAGE"] = [=[Si consiglia di usare l'ID oggetto o il link dell'oggetto. Se usi il nome dell'oggetto, questo apparirà nella lista solo dopo che lo avrai visto nella sessione di gioco corrente.
 
-You can track unknown item names they will appear automatically if you have the item in your inventory.
+Puoi tracciare nomi di oggetti sconosciuti; appariranno automaticamente quando avrai l'oggetto nel tuo inventario.
 
-Use the following site to obtain the desired item ID:
+Usa il seguente sito per ottenere l'ID oggetto desiderato:
 - http://www.wowhead.com]=]
---[[Translation missing --]]
-L["FARM_BUDDY_ITEMS"] = "Items"
---[[Translation missing --]]
+L["FARM_BUDDY_ITEMS"] = "Oggetti"
 L["FARM_BUDDY_KEY_ALT"] = "Alt"
---[[Translation missing --]]
 L["FARM_BUDDY_KEY_CTRL"] = "CTRL"
---[[Translation missing --]]
-L["FARM_BUDDY_KEY_LEFT_MOUSE_BUTTON"] = "Left mouse button"
---[[Translation missing --]]
-L["FARM_BUDDY_KEY_RIGHT_MOUSE_BUTTON"] = "Right mouse button"
---[[Translation missing --]]
+L["FARM_BUDDY_KEY_LEFT_MOUSE_BUTTON"] = "Tasto sinistro del mouse"
+L["FARM_BUDDY_KEY_RIGHT_MOUSE_BUTTON"] = "Tasto destro del mouse"
 L["FARM_BUDDY_KEY_SHIFT"] = "Shift"
---[[Translation missing --]]
-L["FARM_BUDDY_LOCALIZATION"] = "Localization"
---[[Translation missing --]]
-L["FARM_BUDDY_LOCK_FRAME"] = "Lock frame"
---[[Translation missing --]]
-L["FARM_BUDDY_LOCK_FRAME_DESC"] = "When this option is active the frame is locked at it's place an can't be moved."
---[[Translation missing --]]
-L["FARM_BUDDY_MOVE_NOTIFICATION"] = "Change Notification Position"
---[[Translation missing --]]
-L["FARM_BUDDY_MOVE_NOTIFICATION_DESC"] = "Change the Position of the Notification Frame."
---[[Translation missing --]]
-L["FARM_BUDDY_NAME"] = "Name"
---[[Translation missing --]]
+L["FARM_BUDDY_LOCALIZATION"] = "Localizzazione"
+L["FARM_BUDDY_LOCK_FRAME"] = "Blocca la finestra"
+L["FARM_BUDDY_LOCK_FRAME_DESC"] = "Quando questa opzione è attiva, la finestra è bloccata nella sua posizione e non può essere spostata."
+L["FARM_BUDDY_MOVE_NOTIFICATION"] = "Cambia posizione della notifica"
+L["FARM_BUDDY_MOVE_NOTIFICATION_DESC"] = "Cambia la posizione della finestra di notifica."
+L["FARM_BUDDY_NAME"] = "Nome"
 L["FARM_BUDDY_NO"] = "No"
---[[Translation missing --]]
-L["FARM_BUDDY_NO_TRACKED_ITEMS"] = "No tracked items"
---[[Translation missing --]]
-L["FARM_BUDDY_NOTIFICATION"] = "Enable Notifications"
---[[Translation missing --]]
-L["FARM_BUDDY_NOTIFICATION_DEMO_ITEM_NAME"] = "Hearthstone"
---[[Translation missing --]]
-L["FARM_BUDDY_NOTIFICATION_DESC"] = "Shows an notification if the item quantity has reached."
---[[Translation missing --]]
-L["FARM_BUDDY_NOTIFICATION_GLOW"] = "Show Glow Effect"
---[[Translation missing --]]
-L["FARM_BUDDY_NOTIFICATION_GLOW_DESC"] = "Shows a glow effect if a notification is shown."
---[[Translation missing --]]
-L["FARM_BUDDY_NOTIFICATION_SHINE"] = "Show Shine Effect"
---[[Translation missing --]]
-L["FARM_BUDDY_NOTIFICATION_SHINE_DESC"] = "Shows a shine effect if a notification is shown."
---[[Translation missing --]]
-L["FARM_BUDDY_NOTIFICATION_SOUND"] = "Notification Sound"
---[[Translation missing --]]
-L["FARM_BUDDY_NOTIFICATIONS"] = "Notifications"
---[[Translation missing --]]
-L["FARM_BUDDY_PERCENT"] = "Percent"
---[[Translation missing --]]
-L["FARM_BUDDY_PERCENTAGE"] = "Percentage only"
---[[Translation missing --]]
-L["FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION"] = "Notification Display Duration"
---[[Translation missing --]]
-L["FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION_DESC"] = "The Notification Display Duration in seconds."
---[[Translation missing --]]
-L["FARM_BUDDY_PLAY_NOTIFICATION_SOUND"] = "Play Notification Sound"
---[[Translation missing --]]
-L["FARM_BUDDY_PLAY_NOTIFICATION_SOUND_DESC"] = "Play a notification sound file if the farm goal has reached."
---[[Translation missing --]]
-L["FARM_BUDDY_PROGRESS_DISPLAY"] = "Progress display style"
---[[Translation missing --]]
-L["FARM_BUDDY_QUANTITY"] = "Quantity"
---[[Translation missing --]]
-L["FARM_BUDDY_RARITY"] = "Rarity"
---[[Translation missing --]]
-L["FARM_BUDDY_REMOVE_ITEM"] = "Remove item"
---[[Translation missing --]]
-L["FARM_BUDDY_REMOVE_ITEM_DESC"] = "Removes this item from the list."
---[[Translation missing --]]
-L["FARM_BUDDY_RESET"] = "Reset"
---[[Translation missing --]]
-L["FARM_BUDDY_RESET_ALL"] = "Reset settings to default"
---[[Translation missing --]]
-L["FARM_BUDDY_RESET_ALL_DESC"] = "Reset all settings to default values."
---[[Translation missing --]]
-L["FARM_BUDDY_RESET_ALL_ITEMS"] = "Reset all tracked Items"
---[[Translation missing --]]
-L["FARM_BUDDY_RESET_ALL_ITEMS_DESC"] = "Resets all tracked items."
---[[Translation missing --]]
-L["FARM_BUDDY_RESET_DESC"] = "Resets the tracked item."
---[[Translation missing --]]
-L["FARM_BUDDY_RESET_FRAME_POSITION"] = "Reset main frame to default position"
---[[Translation missing --]]
-L["FARM_BUDDY_RESET_FRAME_POSITION_DESC"] = "Reset the main frame position to the default position. This action is very useful if the frame is not draggable because it is blocked by another frame for example."
---[[Translation missing --]]
-L["FARM_BUDDY_SETTINGS"] = "Common"
---[[Translation missing --]]
-L["FARM_BUDDY_SHORTCUTS"] = "Shortcuts"
---[[Translation missing --]]
-L["FARM_BUDDY_SHOW_BONUS"] = "Show bonus behind item goal"
---[[Translation missing --]]
-L["FARM_BUDDY_SHOW_BONUS_DESC"] = "Shows a bonus value behind the tracking goal. The bonus is the amount over your defined goal."
---[[Translation missing --]]
-L["FARM_BUDDY_SHOW_BUTTONS"] = "Show buttons"
---[[Translation missing --]]
-L["FARM_BUDDY_SHOW_BUTTONS_DESC"] = "Show the action buttons on the titles right handed side."
---[[Translation missing --]]
-L["FARM_BUDDY_SHOW_FRAME"] = "Show frame"
---[[Translation missing --]]
-L["FARM_BUDDY_SHOW_GOAL"] = "Show Goal next to the item count"
---[[Translation missing --]]
-L["FARM_BUDDY_SHOW_GOAL_INDICATOR"] = "Show goal indicator"
---[[Translation missing --]]
-L["FARM_BUDDY_SHOW_GOAL_INDICATOR_DESC"] = "Shows the item count in green color and adds a check mark before the item count."
---[[Translation missing --]]
-L["FARM_BUDDY_SHOW_PROGRESS_BAR"] = "Show progress bar"
---[[Translation missing --]]
-L["FARM_BUDDY_SHOW_PROGRESS_BAR_DESC"] = "Shows a progress bar under the item name."
---[[Translation missing --]]
-L["FARM_BUDDY_SHOW_TITLE"] = "Show title"
---[[Translation missing --]]
-L["FARM_BUDDY_SHOW_TITLE_DESC"] = "Show the title above the item frame."
---[[Translation missing --]]
-L["FARM_BUDDY_SORT_ASC"] = "Ascending"
---[[Translation missing --]]
-L["FARM_BUDDY_SORT_BY"] = "Sort items by"
---[[Translation missing --]]
-L["FARM_BUDDY_SORT_DESC"] = "Descending"
---[[Translation missing --]]
-L["FARM_BUDDY_SORT_ORDER"] = "Sort order"
---[[Translation missing --]]
-L["FARM_BUDDY_SUPPORT"] = "Support"
---[[Translation missing --]]
+L["FARM_BUDDY_NO_TRACKED_ITEMS"] = "Nessun oggetto tracciato"
+L["FARM_BUDDY_NOTIFICATION"] = "Abilita notifiche"
+L["FARM_BUDDY_NOTIFICATION_DEMO_ITEM_NAME"] = "Pietra del ritorno"
+L["FARM_BUDDY_NOTIFICATION_DESC"] = "Mostra una notifica quando la quantità dell'oggetto è stata raggiunta."
+L["FARM_BUDDY_NOTIFICATION_GLOW"] = "Mostra effetto bagliore"
+L["FARM_BUDDY_NOTIFICATION_GLOW_DESC"] = "Mostra un effetto bagliore quando viene mostrata una notifica."
+L["FARM_BUDDY_NOTIFICATION_SHINE"] = "Mostra effetto scintillio"
+L["FARM_BUDDY_NOTIFICATION_SHINE_DESC"] = "Mostra un effetto scintillio quando viene mostrata una notifica."
+L["FARM_BUDDY_NOTIFICATION_SOUND"] = "Suono di notifica"
+L["FARM_BUDDY_NOTIFICATIONS"] = "Notifiche"
+L["FARM_BUDDY_PERCENT"] = "Percento"
+L["FARM_BUDDY_PERCENTAGE"] = "Solo percentuale"
+L["FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION"] = "Durata di visualizzazione della notifica"
+L["FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION_DESC"] = "La durata di visualizzazione della notifica in secondi."
+L["FARM_BUDDY_PLAY_NOTIFICATION_SOUND"] = "Riproduci suono di notifica"
+L["FARM_BUDDY_PLAY_NOTIFICATION_SOUND_DESC"] = "Riproduce un file audio di notifica quando l'obiettivo di farming è stato raggiunto."
+L["FARM_BUDDY_PROGRESS_DISPLAY"] = "Stile di visualizzazione dell'avanzamento"
+L["FARM_BUDDY_QUANTITY"] = "Quantità"
+L["FARM_BUDDY_RARITY"] = "Rarità"
+L["FARM_BUDDY_REMOVE_ITEM"] = "Rimuovi oggetto"
+L["FARM_BUDDY_REMOVE_ITEM_DESC"] = "Rimuove questo oggetto dalla lista."
+L["FARM_BUDDY_RESET"] = "Ripristina"
+L["FARM_BUDDY_RESET_ALL"] = "Ripristina le impostazioni predefinite"
+L["FARM_BUDDY_RESET_ALL_DESC"] = "Ripristina tutte le impostazioni ai valori predefiniti."
+L["FARM_BUDDY_RESET_ALL_ITEMS"] = "Ripristina tutti gli oggetti tracciati"
+L["FARM_BUDDY_RESET_ALL_ITEMS_DESC"] = "Ripristina tutti gli oggetti tracciati."
+L["FARM_BUDDY_RESET_DESC"] = "Ripristina l'oggetto tracciato."
+L["FARM_BUDDY_RESET_FRAME_POSITION"] = "Ripristina la finestra principale alla posizione predefinita"
+L["FARM_BUDDY_RESET_FRAME_POSITION_DESC"] = "Ripristina la posizione della finestra principale alla posizione predefinita. Questa azione è molto utile se la finestra non può essere trascinata perché bloccata da un'altra finestra, ad esempio."
+L["FARM_BUDDY_SETTINGS"] = "Generale"
+L["FARM_BUDDY_SHORTCUTS"] = "Scorciatoie"
+L["FARM_BUDDY_SHOW_BONUS"] = "Mostra il bonus dietro l'obiettivo dell'oggetto"
+L["FARM_BUDDY_SHOW_BONUS_DESC"] = "Mostra un valore bonus dietro l'obiettivo di tracciamento. Il bonus è la quantità oltre l'obiettivo definito."
+L["FARM_BUDDY_SHOW_BUTTONS"] = "Mostra pulsanti"
+L["FARM_BUDDY_SHOW_BUTTONS_DESC"] = "Mostra i pulsanti di azione sul lato destro del titolo."
+L["FARM_BUDDY_SHOW_FRAME"] = "Mostra la finestra"
+L["FARM_BUDDY_SHOW_GOAL"] = "Mostra l'obiettivo accanto al conteggio degli oggetti"
+L["FARM_BUDDY_SHOW_GOAL_INDICATOR"] = "Mostra indicatore dell'obiettivo"
+L["FARM_BUDDY_SHOW_GOAL_INDICATOR_DESC"] = "Mostra il conteggio degli oggetti in verde e aggiunge un segno di spunta prima del conteggio."
+L["FARM_BUDDY_SHOW_PROGRESS_BAR"] = "Mostra barra di avanzamento"
+L["FARM_BUDDY_SHOW_PROGRESS_BAR_DESC"] = "Mostra una barra di avanzamento sotto il nome dell'oggetto."
+L["FARM_BUDDY_SHOW_TITLE"] = "Mostra titolo"
+L["FARM_BUDDY_SHOW_TITLE_DESC"] = "Mostra il titolo sopra la finestra degli oggetti."
+L["FARM_BUDDY_SORT_ASC"] = "Crescente"
+L["FARM_BUDDY_SORT_BY"] = "Ordina oggetti per"
+L["FARM_BUDDY_SORT_DESC"] = "Decrescente"
+L["FARM_BUDDY_SORT_ORDER"] = "Ordinamento"
+L["FARM_BUDDY_SUPPORT"] = "Supporto"
 L["FARM_BUDDY_SUPPORT_TEXT"] = "patreon.com/c/keldor"
---[[Translation missing --]]
-L["FARM_BUDDY_TEST_NOTIFICATION"] = "Test Notification"
---[[Translation missing --]]
-L["FARM_BUDDY_TEST_NOTIFICATION_DESC"] = "Triggers a test for the finish notification."
---[[Translation missing --]]
-L["FARM_BUDDY_TRACK_ITEM_PARAM_MISSING"] = "You have to set an Item Name or Item Link as second parameter."
---[[Translation missing --]]
-L["FARM_BUDDY_VERSION"] = "Version"
---[[Translation missing --]]
-L["FARM_BUDDY_WAITING_FOR_DATA"] = "Waiting for data"
---[[Translation missing --]]
-L["FARM_BUDDY_YES"] = "Yes"
+L["FARM_BUDDY_TEST_NOTIFICATION"] = "Notifica di prova"
+L["FARM_BUDDY_TEST_NOTIFICATION_DESC"] = "Attiva un test per la notifica di completamento."
+L["FARM_BUDDY_TRACK_ITEM_PARAM_MISSING"] = "Devi impostare un nome oggetto o un link oggetto come secondo parametro."
+L["FARM_BUDDY_VERSION"] = "Versione"
+L["FARM_BUDDY_WAITING_FOR_DATA"] = "In attesa di dati"
+L["FARM_BUDDY_YES"] = "Sì"
+L["FARM_BUDDY_BROKER_TOOLTIP_LINE_1"] = "Clic sinistro per mostrare o nascondere la finestra di Farm Buddy."
+L["FARM_BUDDY_BROKER_TOOLTIP_LINE_2"] = "Clic destro per aprire le impostazioni."
+L["FARM_BUDDY_DATA_BROKER"] = "Plugin Broker"
+L["FARM_BUDDY_DATA_BROKER_NUM_ITEMS"] = "Numero di oggetti da mostrare"
+L["FARM_BUDDY_DATA_BROKER_NUM_ITEMS_DESC"] = "Limita il numero di oggetti da visualizzare nel plugin data broker. Se il conteggio è impostato a 0, il data broker funge da plugin di avvio."
+L["FARM_BUDDY_DATA_BROKER_SHOW_ITEM_NAME"] = "Mostra nome oggetto"
+L["FARM_BUDDY_ENABLE_DATA_BROKER_SUPPORT"] = "Abilita il supporto del plugin broker"

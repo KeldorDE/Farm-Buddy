@@ -1,3 +1,10 @@
+1.1.7
+------------------
+- Fix various grammar issues in the English translation
+- Fix various grammar issues in the German translation
+- Add French translation
+- Add Italian translation
+
 1.1.6
 ------------------
 - Remove outdated Broker functions and library
