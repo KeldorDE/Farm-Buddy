@@ -22,7 +22,6 @@ manual-changelog:
 
 ignore:
   - README.md
-  - CHANGES.txt
   - CHANGELOG.txt
   - scripts
   - .github
