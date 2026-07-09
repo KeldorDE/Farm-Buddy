@@ -9,6 +9,7 @@ local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
 local FarmBuddy = LibStub('AceAddon-3.0'):NewAddon(FARM_BUDDY_ID, 'AceConsole-3.0', 'AceEvent-3.0', 'AceTimer-3.0', 'AceHook-3.0')
 local NOTIFICATION_QUEUE = {}
 local NOTIFICATION_TRIGGERED = {}
+local NOTIFICATION_ITEM_COUNT = {}
 local ITEM_STORAGE = {}
 local ITEM_FRAMES = {}
 local PLAYER_IN_COMBAT = false
@@ -381,13 +382,26 @@ function FarmBuddy:UpdateGUI()
 
                 -- Handle notifications
                 if(itemStorage.quantity > 0 and itemCount >= itemStorage.quantity) then
-                    self:QueueNotification(itemInfo.ItemID, itemInfo.Name, itemStorage.quantity);
                     goalReached = true;
+
+                    local previousCount = NOTIFICATION_ITEM_COUNT[itemInfo.ItemID];
+
+                    if (previousCount == nil) then
+                        -- The goal was already reached when the item became known
+                        -- (e.g. on addon load), so mark it as triggered without
+                        -- raising a notification.
+                        NOTIFICATION_TRIGGERED[itemInfo.ItemID] = true;
+                    elseif (previousCount < itemStorage.quantity) then
+                        -- The goal was reached through an increase in quantity (loot).
+                        self:QueueNotification(itemInfo.ItemID, itemInfo.Name, itemStorage.quantity);
+                    end
                 else
                     NOTIFICATION_QUEUE[itemInfo.ItemID] = nil;
                     NOTIFICATION_TRIGGERED[itemInfo.ItemID] = false;
                     goalReached = false;
                 end
+
+                NOTIFICATION_ITEM_COUNT[itemInfo.ItemID] = itemCount;
 
                 curFrame:Show();
                 curFrame:ClearAllPoints();

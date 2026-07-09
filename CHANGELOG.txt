@@ -1,3 +1,7 @@
+1.1.8
+------------------
+- Fixed: Goal notification is now only triggered when the goal is reached through looting, not on every addon load
+
 1.1.7
 ------------------
 - Reverted: Removal of the Data Broker library, as it is still used by some users
