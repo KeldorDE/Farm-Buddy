@@ -62,7 +62,7 @@
     </Layers>
     <Scripts>
       <OnLoad>
-          self:GetStatusBarTexture():SetDrawLayer('BORDER');
+          self:GetStatusBarTexture():SetDrawLayer('BORDER')
       </OnLoad>
     </Scripts>
     <BarTexture file="Interface\TargetingFrame\UI-StatusBar"/>
@@ -180,16 +180,16 @@
 
     <Scripts>
       <OnLoad>
-          self:RegisterForDrag('LeftButton');
+          self:RegisterForDrag('LeftButton')
       </OnLoad>
       <OnDragStart>
         if (self.FrameLock == false) then
-          self:StartMoving();
+          self:StartMoving()
         end
       </OnDragStart>
       <OnDragStop>
         if (self.FrameLock == false) then
-          self:StopMovingOrSizing();
+          self:StopMovingOrSizing()
         end
       </OnDragStop>
     </Scripts>

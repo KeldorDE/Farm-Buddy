@@ -94,10 +94,10 @@
     </Frames>
     <Scripts>
       <OnMouseDown>
-        FarmBuddyNotification_OnMouseDown(self, button);
+        FarmBuddyNotification_OnMouseDown(self, button)
       </OnMouseDown>
       <OnMouseUp>
-        FarmBuddyNotification_OnMouseUp(self, button);
+        FarmBuddyNotification_OnMouseUp(self, button)
       </OnMouseUp>
     </Scripts>
   </Button>
@@ -117,8 +117,8 @@
 				<Alpha startDelay="4.05" fromAlpha="1" toAlpha="0" duration="1.5" parentKey="animOut">
 					<Scripts>
 						<OnFinished>
-							self:GetRegionParent():Hide();
-              FarmBuddyNotification_HideNotification();
+							self:GetRegionParent():Hide()
+              FarmBuddyNotification_HideNotification()
 						</OnFinished>
 					</Scripts>
 				</Alpha>
@@ -127,7 +127,7 @@
 				<Alpha fromAlpha="1" toAlpha="0" duration="1.5" parentKey="animOut">
 					<Scripts>
 						<OnFinished>
-							self:GetRegionParent():Hide();
+							self:GetRegionParent():Hide()
 						</OnFinished>
 					</Scripts>
 				</Alpha>
@@ -174,7 +174,7 @@
 							<Alpha fromAlpha="1" toAlpha="0" duration="0.5" order="2"/>
 							<Scripts>
 								<OnFinished>
-									self:GetParent():Hide();
+									self:GetParent():Hide()
 								</OnFinished>
 							</Scripts>
 						</AnimationGroup>
@@ -193,7 +193,7 @@
 							<Alpha startDelay="0.35" fromAlpha="1" toAlpha="0" duration="0.5" order="2"/>
 							<Scripts>
 								<OnFinished>
-									self:GetParent():Hide();
+									self:GetParent():Hide()
 								</OnFinished>
 							</Scripts>
 						</AnimationGroup>
@@ -239,7 +239,7 @@
     </Frames>
     <Scripts>
       <OnMouseDown>
-        FarmBuddyNotification_HideNotification(true);
+        FarmBuddyNotification_HideNotification(true)
       </OnMouseDown>
     </Scripts>
   </Button>

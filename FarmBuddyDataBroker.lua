@@ -23,14 +23,14 @@ function FarmBuddy:InitDataBroker()
         type = 'data source',
         icon = DATA_BROKER_ICON,
         text = '',
-    });
+    })
 
     -- Data broker click handler
     DATA_BROKER.OnClick = function(self, button)
         if (button == 'LeftButton') then
-            FarmBuddy:ToggleShowFrame();
+            FarmBuddy:ToggleShowFrame()
         elseif (button == 'RightButton') then
-            FarmBuddy:OpenSettings('tab_general');
+            FarmBuddy:OpenSettings('tab_general')
         end
     end
 
@@ -38,9 +38,9 @@ function FarmBuddy:InitDataBroker()
     DATA_BROKER.OnTooltipShow = function(tooltip)
         if not tooltip or not tooltip.AddLine then return end
 
-        tooltip:AddLine(FarmBuddy:GetColoredText(FARM_BUDDY_ADDON_NAME, FARM_BUDDY_COLOR_WHITE));
-        tooltip:AddLine(FarmBuddy:GetColoredText(L['FARM_BUDDY_BROKER_TOOLTIP_LINE_1'], FARM_BUDDY_COLOR_GREEN));
-        tooltip:AddLine(FarmBuddy:GetColoredText(L['FARM_BUDDY_BROKER_TOOLTIP_LINE_2'], FARM_BUDDY_COLOR_GREEN));
+        tooltip:AddLine(FarmBuddy:GetColoredText(FARM_BUDDY_ADDON_NAME, FARM_BUDDY_COLOR_WHITE))
+        tooltip:AddLine(FarmBuddy:GetColoredText(L['FARM_BUDDY_BROKER_TOOLTIP_LINE_1'], FARM_BUDDY_COLOR_GREEN))
+        tooltip:AddLine(FarmBuddy:GetColoredText(L['FARM_BUDDY_BROKER_TOOLTIP_LINE_2'], FARM_BUDDY_COLOR_GREEN))
     end
 end
 
@@ -49,7 +49,7 @@ end
 -- DESC : Resets the data broker item table.
 -- **************************************************************************
 function FarmBuddy:ClearDataBrokerData()
-    DATA_BROKER_ITEMS = {};
+    DATA_BROKER_ITEMS = {}
 end
 
 -- **************************************************************************
@@ -61,7 +61,7 @@ function FarmBuddy:AddItemToDataBroker(itemInfo, itemStorage)
         tinsert(DATA_BROKER_ITEMS, {
             itemInfo = itemInfo,
             itemStorage = itemStorage,
-        });
+        })
     end
 end
 
@@ -72,46 +72,46 @@ end
 function FarmBuddy:UpdateDataBroker(showIcon)
 
     if (self.db.profile.settings.enableDataBrokerSupport == true) then
-        local dataList = {};
-        local numItems = 0;
-        local totalItemCount = tonumber(self.db.profile.settings.dataBrokerNumItems);
+        local dataList = {}
+        local numItems = 0
+        local totalItemCount = tonumber(self.db.profile.settings.dataBrokerNumItems)
 
         if (totalItemCount == 0) then
-            showIcon = true;
+            showIcon = true
         end
 
         for _, v in pairs(DATA_BROKER_ITEMS) do
 
             if (numItems >= totalItemCount) then
-                break;
+                break
             end
 
-            tinsert(dataList, self:GetIconString(v.itemInfo.IconFileDataID, false));
+            tinsert(dataList, self:GetIconString(v.itemInfo.IconFileDataID, false))
 
             if (self.db.profile.settings.showDataBrokerItemName == true) then
-                tinsert(dataList, v.itemInfo.Name);
+                tinsert(dataList, v.itemInfo.Name)
             end
 
-            tinsert(dataList, self:GetCount(v.itemInfo, v.itemStorage.quantity, true) .. '  ');
+            tinsert(dataList, self:GetCount(v.itemInfo, v.itemStorage.quantity, true) .. '  ')
 
-            numItems = numItems + 1;
+            numItems = numItems + 1
         end
 
-        local icon = '';
-        local text = table.concat(dataList, ' ');
+        local icon = ''
+        local text = table.concat(dataList, ' ')
 
         if (showIcon == true) then
-            icon = DATA_BROKER_ICON;
+            icon = DATA_BROKER_ICON
         end
 
         if (text == '') then
-            text = FARM_BUDDY_ADDON_NAME;
+            text = FARM_BUDDY_ADDON_NAME
         end
 
-        DATA_BROKER.text = text;
-        DATA_BROKER.icon = icon;
+        DATA_BROKER.text = text
+        DATA_BROKER.icon = icon
     else
-        DATA_BROKER.text = '';
-        DATA_BROKER.icon = '';
+        DATA_BROKER.text = ''
+        DATA_BROKER.icon = ''
     end
 end

@@ -1,3 +1,7 @@
+1.1.9
+------------------
+- Code quality improvements
+
 1.1.8
 ------------------
 - Fixed: Goal notification is now only triggered when the goal is reached through looting, not on every addon load

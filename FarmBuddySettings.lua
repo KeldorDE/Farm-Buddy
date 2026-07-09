@@ -61,8 +61,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'toggle',
                         name = L['FARM_BUDDY_INCLUDE_BANK'],
                         desc = L['FARM_BUDDY_INCLUDE_BANK_DESC'],
-                        get = function() return self:GetSetting('includeBank', 'bool'); end,
-                        set = function(_, input) self:SetSetting('includeBank', 'bool', input, true); end,
+                        get = function() return self:GetSetting('includeBank', 'bool') end,
+                        set = function(_, input) self:SetSetting('includeBank', 'bool', input, true) end,
                         width = 'full',
                         order = self:GetOptionOrder('general'),
                     },
@@ -74,8 +74,8 @@ function FarmBuddy:GetConfigOptions()
                     general_hide_frame_in_combat = {
                         type = 'toggle',
                         name = L['FARM_BUDDY_HIDE_FRAME_IN_COMBAT'],
-                        get = function() return self:GetSetting('hideFrameInCombat', 'bool'); end,
-                        set = function(_, input) self:SetSetting('hideFrameInCombat', 'bool', input, true); end,
+                        get = function() return self:GetSetting('hideFrameInCombat', 'bool') end,
+                        set = function(_, input) self:SetSetting('hideFrameInCombat', 'bool', input, true) end,
                         width = 'full',
                         order = self:GetOptionOrder('general'),
                     },
@@ -93,8 +93,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'select',
                         style = 'radio',
                         name = L['FARM_BUDDY_FAST_TRACKING_MOUSE_BUTTON'],
-                        get = function() return self:GetSetting('fastTrackingMouseButton', 'string'); end,
-                        set = function(_, input) self:SetSetting('fastTrackingMouseButton', 'string', input, false); end,
+                        get = function() return self:GetSetting('fastTrackingMouseButton', 'string') end,
+                        set = function(_, input) self:SetSetting('fastTrackingMouseButton', 'string', input, false) end,
                         width = 'full',
                         values = {
                             LeftButton = L['FARM_BUDDY_KEY_LEFT_MOUSE_BUTTON'],
@@ -139,8 +139,8 @@ function FarmBuddy:GetConfigOptions()
                     general_enable_data_broker_support = {
                         type = 'toggle',
                         name = L['FARM_BUDDY_ENABLE_DATA_BROKER_SUPPORT'],
-                        get = function() return self:GetSetting('enableDataBrokerSupport', 'bool'); end,
-                        set = function(info, input) self:SetSetting('enableDataBrokerSupport', 'bool', input, true); end,
+                        get = function() return self:GetSetting('enableDataBrokerSupport', 'bool') end,
+                        set = function(info, input) self:SetSetting('enableDataBrokerSupport', 'bool', input, true) end,
                         width = 'full',
                         order = self:GetOptionOrder('general'),
                     },
@@ -152,8 +152,8 @@ function FarmBuddy:GetConfigOptions()
                     general_data_broker_show_item_name = {
                         type = 'toggle',
                         name = L['FARM_BUDDY_DATA_BROKER_SHOW_ITEM_NAME'],
-                        get = function() return self:GetSetting('showDataBrokerItemName', 'bool'); end,
-                        set = function(info, input) self:SetSetting('showDataBrokerItemName', 'bool', input, true); end,
+                        get = function() return self:GetSetting('showDataBrokerItemName', 'bool') end,
+                        set = function(info, input) self:SetSetting('showDataBrokerItemName', 'bool', input, true) end,
                         width = 'full',
                         order = self:GetOptionOrder('general'),
                     },
@@ -167,8 +167,8 @@ function FarmBuddy:GetConfigOptions()
                         name = L['FARM_BUDDY_DATA_BROKER_NUM_ITEMS'],
                         desc = L['FARM_BUDDY_DATA_BROKER_NUM_ITEMS_DESC'],
                         validate = 'ValidateNumber',
-                        get = function() return self:GetSetting('dataBrokerNumItems', 'string'); end,
-                        set = function(info, input) self:SetSetting('dataBrokerNumItems', 'number', input, true); end,
+                        get = function() return self:GetSetting('dataBrokerNumItems', 'string') end,
+                        set = function(info, input) self:SetSetting('dataBrokerNumItems', 'number', input, true) end,
                         width = 'double',
                         order = self:GetOptionOrder('general'),
                     },
@@ -193,7 +193,7 @@ function FarmBuddy:GetConfigOptions()
                     items_add_item = {
                         type = 'execute',
                         name = L['FARM_BUDDY_ADD_NEW_ITEM'],
-                        func = function() self:AddConfigItem(); end,
+                        func = function() self:AddConfigItem() end,
                         width = 'double',
                         order = self:GetOptionOrder('items'),
                     },
@@ -212,8 +212,8 @@ function FarmBuddy:GetConfigOptions()
                     appearance_show_frame = {
                         type = 'toggle',
                         name = L['FARM_BUDDY_SHOW_FRAME'],
-                        get = function() return self:GetSetting('showFrame', 'bool'); end,
-                        set = function(_, input) self:SetSetting('showFrame', 'bool', input, false); self:SetShowFrame() end,
+                        get = function() return self:GetSetting('showFrame', 'bool') end,
+                        set = function(_, input) self:SetSetting('showFrame', 'bool', input, false) self:SetShowFrame() end,
                         order = self:GetOptionOrder('appearance'),
                     },
                     appearance_space_1 = {
@@ -225,8 +225,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'toggle',
                         name = L['FARM_BUDDY_SHOW_TITLE'],
                         desc = L['FARM_BUDDY_SHOW_TITLE_DESC'],
-                        get = function() return self:GetSetting('showTitle', 'bool'); end,
-                        set = function(_, input) self:SetSetting('showTitle', 'bool', input, false); self:SetTitleDisplay(); end,
+                        get = function() return self:GetSetting('showTitle', 'bool') end,
+                        set = function(_, input) self:SetSetting('showTitle', 'bool', input, false) self:SetTitleDisplay() end,
                         order = self:GetOptionOrder('appearance'),
                     },
                     appearance_space_2 = {
@@ -238,8 +238,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'toggle',
                         name = L['FARM_BUDDY_SHOW_BUTTONS'],
                         desc = L['FARM_BUDDY_SHOW_BUTTONS_DESC'],
-                        get = function() return self:GetSetting('showButtons', 'bool'); end,
-                        set = function(_, input) self:SetSetting('showButtons', 'bool', input, false); self:SetButtonDisplay(); end,
+                        get = function() return self:GetSetting('showButtons', 'bool') end,
+                        set = function(_, input) self:SetSetting('showButtons', 'bool', input, false) self:SetButtonDisplay() end,
                         order = self:GetOptionOrder('appearance'),
                     },
                     appearance_space_3 = {
@@ -250,8 +250,8 @@ function FarmBuddy:GetConfigOptions()
                     appearance_show_quantity = {
                         type = 'toggle',
                         name = L['FARM_BUDDY_SHOW_GOAL'],
-                        get = function() return self:GetSetting('showQuantity', 'bool'); end,
-                        set = function(_, input) self:SetSetting('showQuantity', 'bool', input, true); end,
+                        get = function() return self:GetSetting('showQuantity', 'bool') end,
+                        set = function(_, input) self:SetSetting('showQuantity', 'bool', input, true) end,
                         width = 'full',
                         order = self:GetOptionOrder('general'),
                     },
@@ -264,8 +264,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'toggle',
                         name = L['FARM_BUDDY_SHOW_GOAL_INDICATOR'],
                         desc = L['FARM_BUDDY_SHOW_GOAL_INDICATOR_DESC'],
-                        get = function() return self:GetSetting('showGoalIndicator', 'bool'); end,
-                        set = function(_, input) self:SetSetting('showGoalIndicator', 'bool', input, true); end,
+                        get = function() return self:GetSetting('showGoalIndicator', 'bool') end,
+                        set = function(_, input) self:SetSetting('showGoalIndicator', 'bool', input, true) end,
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
@@ -278,8 +278,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'toggle',
                         name = L['FARM_BUDDY_SHOW_PROGRESS_BAR'],
                         desc = L['FARM_BUDDY_SHOW_PROGRESS_BAR_DESC'],
-                        get = function() return self:GetSetting('showProgressBar', 'bool'); end,
-                        set = function(_, input) self:SetSetting('showProgressBar', 'bool', input, true); end,
+                        get = function() return self:GetSetting('showProgressBar', 'bool') end,
+                        set = function(_, input) self:SetSetting('showProgressBar', 'bool', input, true) end,
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
@@ -292,8 +292,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'toggle',
                         name = L['FARM_BUDDY_LOCK_FRAME'],
                         desc = L['FARM_BUDDY_LOCK_FRAME_DESC'],
-                        get = function() return self:GetSetting('frameLocked', 'bool'); end,
-                        set = function(_, input) self:SetSetting('frameLocked', 'bool', input, false); self:SetFrameLockStatus(); end,
+                        get = function() return self:GetSetting('frameLocked', 'bool') end,
+                        set = function(_, input) self:SetSetting('frameLocked', 'bool', input, false) self:SetFrameLockStatus() end,
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
@@ -306,8 +306,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'select',
                         style = 'radio',
                         name = L['FARM_BUDDY_PROGRESS_DISPLAY'],
-                        get = function() return self:GetSetting('progressStyle', 'string'); end,
-                        set = function(_, input) self:SetSetting('progressStyle', 'string', input, true); end,
+                        get = function() return self:GetSetting('progressStyle', 'string') end,
+                        set = function(_, input) self:SetSetting('progressStyle', 'string', input, true) end,
                         width = 'full',
                         values = {
                             CountPercentage = L['FARM_BUDDY_COUNT_WITH_PERCENTAGE'],
@@ -325,8 +325,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'toggle',
                         name = L['FARM_BUDDY_SHOW_BONUS'],
                         desc = L['FARM_BUDDY_SHOW_BONUS_DESC'],
-                        get = function() return self:GetSetting('showGoalBonus', 'bool'); end,
-                        set = function(_, input) self:SetSetting('showGoalBonus', 'bool', input, true); end,
+                        get = function() return self:GetSetting('showGoalBonus', 'bool') end,
+                        set = function(_, input) self:SetSetting('showGoalBonus', 'bool', input, true) end,
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
@@ -339,8 +339,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'select',
                         style = 'radio',
                         name = L['FARM_BUDDY_BONUS_DISPLAY'],
-                        get = function() return self:GetSetting('goalBonusDisplay', 'string'); end,
-                        set = function(_, input) self:SetSetting('goalBonusDisplay', 'string', input, true); end,
+                        get = function() return self:GetSetting('goalBonusDisplay', 'string') end,
+                        set = function(_, input) self:SetSetting('goalBonusDisplay', 'string', input, true) end,
                         width = 'full',
                         values = {
                             percent = L['FARM_BUDDY_PERCENT'],
@@ -357,8 +357,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'select',
                         style = 'radio',
                         name = L['FARM_BUDDY_SORT_BY'],
-                        get = function() return self:GetSetting('sortBy', 'string'); end,
-                        set = function(_, input) self:SetSetting('sortBy', 'string', input, true); end,
+                        get = function() return self:GetSetting('sortBy', 'string') end,
+                        set = function(_, input) self:SetSetting('sortBy', 'string', input, true) end,
                         width = 'full',
                         values = {
                             name = L['FARM_BUDDY_NAME'],
@@ -376,8 +376,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'select',
                         style = 'radio',
                         name = L['FARM_BUDDY_SORT_ORDER'],
-                        get = function() return self:GetSetting('sortOrder', 'string'); end,
-                        set = function(_, input) self:SetSetting('sortOrder', 'string', input, true); end,
+                        get = function() return self:GetSetting('sortOrder', 'string') end,
+                        set = function(_, input) self:SetSetting('sortOrder', 'string', input, true) end,
                         width = 'full',
                         values = {
                             asc = L['FARM_BUDDY_SORT_ASC'],
@@ -399,7 +399,7 @@ function FarmBuddy:GetConfigOptions()
                         type = 'color',
                         name = L['FARM_BUDDY_BAR_COLOR_NO_GOAL'],
                         hasAlpha = false,
-                        set = function(_, r,g,b,a) self:SetColorSetting('progressBarNoGoalColor', r, g, b, a, true); end,
+                        set = function(_, r,g,b,a) self:SetColorSetting('progressBarNoGoalColor', r, g, b, a, true) end,
                         get = function() return self:GetColorSetting('progressBarNoGoalColor') end,
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
@@ -408,7 +408,7 @@ function FarmBuddy:GetConfigOptions()
                         type = 'color',
                         name = L['FARM_BUDDY_BAR_COLOR_GOAL'],
                         hasAlpha = false,
-                        set = function(_, r,g,b,a) self:SetColorSetting('progressBarGoalColor', r, g, b, a, true); end,
+                        set = function(_, r,g,b,a) self:SetColorSetting('progressBarGoalColor', r, g, b, a, true) end,
                         get = function() return self:GetColorSetting('progressBarGoalColor') end,
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
@@ -417,7 +417,7 @@ function FarmBuddy:GetConfigOptions()
                         type = 'color',
                         name = L['FARM_BUDDY_BAR_COLOR_NO_QUANTITY'],
                         hasAlpha = false,
-                        set = function(_, r,g,b,a) self:SetColorSetting('progressBarNoQuantityColor', r, g, b, a, true); end,
+                        set = function(_, r,g,b,a) self:SetColorSetting('progressBarNoQuantityColor', r, g, b, a, true) end,
                         get = function() return self:GetColorSetting('progressBarNoQuantityColor') end,
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
@@ -430,8 +430,8 @@ function FarmBuddy:GetConfigOptions()
                     appearance_background_transparency = {
                         type = 'range',
                         name = L['FARM_BUDDY_BACKGROUND_TRANSPARENCY'],
-                        get = function() return self:GetSetting('backgroundTransparency', 'number'); end,
-                        set = function(_, input) self:SetSetting('backgroundTransparency', 'number', input, false); self:SetBackgroundTransparency() end,
+                        get = function() return self:GetSetting('backgroundTransparency', 'number') end,
+                        set = function(_, input) self:SetSetting('backgroundTransparency', 'number', input, false) self:SetBackgroundTransparency() end,
                         isPercent = true,
                         bigStep  = 0.01,
                         min = 0,
@@ -447,8 +447,8 @@ function FarmBuddy:GetConfigOptions()
                     appearance_scale = {
                         type = 'range',
                         name = L['FARM_BUDDY_FRAME_SCALE'],
-                        get = function() return self:GetSetting('frameScale', 'number'); end,
-                        set = function(_, input) self:SetSetting('frameScale', 'number', input, false); self:SetScale() end,
+                        get = function() return self:GetSetting('frameScale', 'number') end,
+                        set = function(_, input) self:SetSetting('frameScale', 'number', input, false) self:SetScale() end,
                         isPercent = true,
                         bigStep  = 0.1,
                         min = 0.5,
@@ -467,8 +467,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'toggle',
                         name = L['FARM_BUDDY_NOTIFICATION'],
                         desc = L['FARM_BUDDY_NOTIFICATION_DESC'],
-                        get = function() return self:GetSetting('goalNotification', 'bool'); end,
-                        set = function(_, input) self:SetSetting('goalNotification', 'bool', input, false); end,
+                        get = function() return self:GetSetting('goalNotification', 'bool') end,
+                        set = function(_, input) self:SetSetting('goalNotification', 'bool', input, false) end,
                         width = 'full',
                         order = self:GetOptionOrder('notifications'),
                     },
@@ -480,8 +480,8 @@ function FarmBuddy:GetConfigOptions()
                     notifications_hide_in_combat = {
                         type = 'toggle',
                         name = L['FARM_BUDDY_HIDE_NOTIFICATIONS_IN_COMBAT'],
-                        get = function() return self:GetSetting('hideNotificationsInCombat', 'bool'); end,
-                        set = function(_, input) self:SetSetting('hideNotificationsInCombat', 'bool', input, true); end,
+                        get = function() return self:GetSetting('hideNotificationsInCombat', 'bool') end,
+                        set = function(_, input) self:SetSetting('hideNotificationsInCombat', 'bool', input, true) end,
                         width = 'full',
                         order = self:GetOptionOrder('notifications'),
                     },
@@ -494,8 +494,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'input',
                         name = L['FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION'],
                         desc = L['FARM_BUDDY_PLAY_NOTIFICATION_DISPLAY_DURATION_DESC'],
-                        get = function() return self:GetSetting('notificationDisplayDuration', 'string'); end,
-                        set = function(_, input) self:SetSetting('notificationDisplayDuration', 'number', input, false); end,
+                        get = function() return self:GetSetting('notificationDisplayDuration', 'string') end,
+                        set = function(_, input) self:SetSetting('notificationDisplayDuration', 'number', input, false) end,
                         validate = 'ValidateNumber',
                         width = 'double',
                         order = self:GetOptionOrder('notifications'),
@@ -509,8 +509,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'toggle',
                         name = L['FARM_BUDDY_NOTIFICATION_GLOW'],
                         desc = L['FARM_BUDDY_NOTIFICATION_GLOW_DESC'],
-                        get = function() return self:GetSetting('notificationGlow', 'bool'); end,
-                        set = function(_, input) self:SetSetting('notificationGlow', 'bool', input, false); end,
+                        get = function() return self:GetSetting('notificationGlow', 'bool') end,
+                        set = function(_, input) self:SetSetting('notificationGlow', 'bool', input, false) end,
                         width = 'full',
                         order = self:GetOptionOrder('notifications'),
                     },
@@ -523,8 +523,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'toggle',
                         name = L['FARM_BUDDY_NOTIFICATION_SHINE'],
                         desc = L['FARM_BUDDY_NOTIFICATION_SHINE_DESC'],
-                        get = function() return self:GetSetting('notificationShine', 'bool'); end,
-                        set = function(_, input) self:SetSetting('notificationShine', 'bool', input, false); end,
+                        get = function() return self:GetSetting('notificationShine', 'bool') end,
+                        set = function(_, input) self:SetSetting('notificationShine', 'bool', input, false) end,
                         width = 'full',
                         order = self:GetOptionOrder('notifications'),
                     },
@@ -537,8 +537,8 @@ function FarmBuddy:GetConfigOptions()
                         type = 'toggle',
                         name = L['FARM_BUDDY_PLAY_NOTIFICATION_SOUND'],
                         desc = L['FARM_BUDDY_PLAY_NOTIFICATION_SOUND_DESC'],
-                        get = function() return self:GetSetting('notificationSound', 'bool'); end,
-                        set = function(_, input) self:SetSetting('notificationSound', 'bool', input, false); end,
+                        get = function() return self:GetSetting('notificationSound', 'bool') end,
+                        set = function(_, input) self:SetSetting('notificationSound', 'bool', input, false) end,
                         width = 'full',
                         order = self:GetOptionOrder('notifications'),
                     },
@@ -552,8 +552,8 @@ function FarmBuddy:GetConfigOptions()
                         name = L['FARM_BUDDY_NOTIFICATION_SOUND'],
                         style = 'dropdown',
                         values = self:GetSounds(),
-                        get = function() return self:GetSetting('notificationSound', 'number'); end,
-                        set = function(_, input) PlaySound(input, 'master'); self:SetSetting('notificationSound', 'number', input, false); end,
+                        get = function() return self:GetSetting('notificationSound', 'number') end,
+                        set = function(_, input) PlaySound(input, 'master') self:SetSetting('notificationSound', 'number', input, false) end,
                         width = 'double',
                         order = self:GetOptionOrder('notifications'),
                     },
@@ -611,7 +611,7 @@ function FarmBuddy:GetConfigOptions()
                         type = 'execute',
                         name = L['FARM_BUDDY_RESET_ALL_ITEMS'],
                         desc = L['FARM_BUDDY_RESET_ALL_ITEMS_DESC'],
-                        func = function() StaticPopup_Show(FARM_BUDDY_ADDON_NAME .. 'ResetAllItemsConfirm'); end,
+                        func = function() StaticPopup_Show(FARM_BUDDY_ADDON_NAME .. 'ResetAllItemsConfirm') end,
                         width = 'double',
                         order = self:GetOptionOrder('actions'),
                     },
@@ -630,7 +630,7 @@ function FarmBuddy:GetConfigOptions()
                         type = 'execute',
                         name = L['FARM_BUDDY_RESET_FRAME_POSITION'],
                         desc = L['FARM_BUDDY_RESET_FRAME_POSITION_DESC'],
-                        func = function() StaticPopup_Show(FARM_BUDDY_ADDON_NAME .. 'ResetFramePositionConfirm'); end,
+                        func = function() StaticPopup_Show(FARM_BUDDY_ADDON_NAME .. 'ResetFramePositionConfirm') end,
                         width = 'double',
                         order = self:GetOptionOrder('actions'),
                     },
@@ -649,7 +649,7 @@ function FarmBuddy:GetConfigOptions()
                         type = 'execute',
                         name = L['FARM_BUDDY_RESET_ALL'],
                         desc = L['FARM_BUDDY_RESET_ALL_DESC'],
-                        func = function() StaticPopup_Show(FARM_BUDDY_ADDON_NAME .. 'ResetAllConfirm'); end,
+                        func = function() StaticPopup_Show(FARM_BUDDY_ADDON_NAME .. 'ResetAllConfirm') end,
                         width = 'double',
                         order = self:GetOptionOrder('actions'),
                     },
@@ -749,12 +749,12 @@ function FarmBuddy:GetConfigOptions()
                 }
             },
         }
-    };
+    }
 
     -- Order profile tab right before the about entry
-    options.args.tab_profiles.order = options.args.tab_about.order - 1;
+    options.args.tab_profiles.order = options.args.tab_about.order - 1
 
-    return options;
+    return options
 end
 
 -- **************************************************************************
@@ -763,22 +763,22 @@ end
 -- **************************************************************************
 function FarmBuddy:AddConfigItem(id, itemID, name)
 
-    local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0');
-    local itemIDText;
+    local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
+    local itemIDText
 
     if (itemID == nil or tonumber(itemID) == 0) then
-        itemID = 0;
-        itemIDText = L['FARM_BUDDY_WAITING_FOR_DATA'] .. '...';
+        itemID = 0
+        itemIDText = L['FARM_BUDDY_WAITING_FOR_DATA'] .. '...'
     else
-        itemIDText = itemID;
+        itemIDText = itemID
     end
 
     -- New item so generate a unique ID to save it in SavedVariables
     if (id == nil) then
 
-        id = self:GetRandomString(ID_LENGTH);
+        id = self:GetRandomString(ID_LENGTH)
         if (name == nil) then
-            name = '';
+            name = ''
         end
 
         if (self.db.profile.items ~= nil) then
@@ -788,11 +788,11 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
                 name = name,
                 quantity = 0,
                 rarity = 0,
-            });
+            })
         end
     end
 
-    local count = (FarmBuddy:TableLength(options.args.tab_items.args) - 4) + 1;
+    local count = (FarmBuddy:TableLength(options.args.tab_items.args) - 4) + 1
 
     options.args.tab_items.args[ITEM_PREFIX .. id] = {
         name = L['FARM_BUDDY_ITEM'] .. ' ' .. count,
@@ -804,8 +804,8 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
                 type = 'input',
                 name = L['FARM_BUDDY_ITEM_SETTING'],
                 desc = L['FARM_BUDDY_ITEM_TO_TRACK_DESC'],
-                get = function(info) return self:GetItemFromSV(info.option.unique_index, 'name', false); end,
-                set = function(info, input) self:SetItem(info.option.unique_index, input); end,
+                get = function(info) return self:GetItemFromSV(info.option.unique_index, 'name', false) end,
+                set = function(info, input) self:SetItem(info.option.unique_index, input) end,
                 width = 'double',
                 order = self:GetOptionOrder(id),
                 unique_index = id,
@@ -822,8 +822,8 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
                 desc = L['FARM_BUDDY_COMMAND_GOAL_DESC'],
                 usage = L['FARM_BUDDY_ALERT_COUNT_USAGE'],
                 validate = 'ValidateNumber',
-                get = function(info) return self:GetItemFromSV(info.option.unique_index, 'quantity', false); end,
-                set = function(info, input) self:SetItemProp(info.option.unique_index, 'quantity', input, true); end,
+                get = function(info) return self:GetItemFromSV(info.option.unique_index, 'quantity', false) end,
+                set = function(info, input) self:SetItemProp(info.option.unique_index, 'quantity', input, true) end,
                 width = 'half',
                 order = self:GetOptionOrder(id),
                 unique_index = id,
@@ -833,8 +833,8 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
                 name = L['FARM_BUDDY_HIDE_ITEM'],
                 desc = L['FARM_BUDDY_HIDE_ITEM_DESC'],
                 usage = L['FARM_BUDDY_HIDE_ITEM_USAGE'],
-                get = function(info) return self:GetItemFromSV(info.option.unique_index, 'hidden', true) == 1; end,
-                set = function(info, input) self:SetItemProp(info.option.unique_index, 'hidden', (input and 1 or 0), true); end,
+                get = function(info) return self:GetItemFromSV(info.option.unique_index, 'hidden', true) == 1 end,
+                set = function(info, input) self:SetItemProp(info.option.unique_index, 'hidden', (input and 1 or 0), true) end,
                 width = 'half',
                 order = self:GetOptionOrder(id),
                 unique_index = id,
@@ -882,7 +882,7 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
                 name = L['FARM_BUDDY_REMOVE_ITEM'],
                 desc = L['FARM_BUDDY_REMOVE_ITEM_DESC'],
                 order = self:GetOptionOrder(id),
-                func = function(info) self:RemoveItem(info); end,
+                func = function(info) self:RemoveItem(info) end,
                 unique_index = id,
             },
             ['item_spacer_line_3_' .. id] = {
@@ -898,9 +898,9 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
                 unique_index = id,
             },
         },
-    };
+    }
 
-    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
+    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
 end
 
 -- **************************************************************************
@@ -909,11 +909,11 @@ end
 -- **************************************************************************
 function FarmBuddy:LoadExistingConfigItems()
     if (self.db.profile.items ~= nil) then
-        local items = self.db.profile.items;
+        local items = self.db.profile.items
         for _, itemStorage in pairs(items) do
-            self:AddConfigItem(itemStorage.id, itemStorage.itemID);
+            self:AddConfigItem(itemStorage.id, itemStorage.itemID)
         end
-        CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
+        CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
     end
 end
 
@@ -925,12 +925,12 @@ function FarmBuddy:GetItemIndexByID(id)
     if (self.db.profile.items ~= nil) then
         for k, v in pairs(self.db.profile.items) do
             if (v.id == id) then
-                return k;
+                return k
             end
         end
     end
 
-    return nil;
+    return nil
 end
 
 -- **************************************************************************
@@ -941,12 +941,12 @@ function FarmBuddy:GetItemUniqueIDByItemID(itemID)
     if (self.db.profile.items ~= nil) then
         for _, v in pairs(self.db.profile.items) do
             if (tonumber(v.itemID) == tonumber(itemID)) then
-                return v.id;
+                return v.id
             end
         end
     end
 
-    return nil;
+    return nil
 end
 
 -- **************************************************************************
@@ -955,26 +955,26 @@ end
 -- **************************************************************************
 function FarmBuddy:GetItemFromSV(id, key, numeric)
 
-    local index = self:GetItemIndexByID(id);
+    local index = self:GetItemIndexByID(id)
 
-    local value;
+    local value
     if numeric == true then
-        value = 0;
+        value = 0
     else
-        value = '';
+        value = ''
     end
 
     if(index ~= nil and self.db.profile.items[index][key] ~= nil) then
-        value = self.db.profile.items[index][key];
+        value = self.db.profile.items[index][key]
 
         if(numeric == true) then
-            value = tonumber(value);
+            value = tonumber(value)
         else
-            value = tostring(value);
+            value = tostring(value)
         end
     end
 
-    return value;
+    return value
 end
 
 -- **************************************************************************
@@ -983,27 +983,27 @@ end
 -- **************************************************************************
 function FarmBuddy:SetItemProp(id, key, input, numeric)
 
-    local index = self:GetItemIndexByID(id);
+    local index = self:GetItemIndexByID(id)
     if(index ~= nil) then
 
         -- Set empty value based on numeric var
         if (input == '') then
             if (numeric == true) then
-                input = 0;
+                input = 0
             else
-                input = '';
+                input = ''
             end
         end
 
         if (numeric == true) then
-            input = tonumber(input);
+            input = tonumber(input)
         end
 
-        self.db.profile.items[index][key] = input;
+        self.db.profile.items[index][key] = input
     end
 
-    self:InitItems();
-    self:UpdateGUI();
+    self:InitItems()
+    self:UpdateGUI()
 end
 
 -- **************************************************************************
@@ -1012,11 +1012,11 @@ end
 -- **************************************************************************
 function FarmBuddy:SetItem(id, input)
 
-    self:SetItemProp(id, 'name', input, false);
+    self:SetItemProp(id, 'name', input, false)
 
-    local itemInfo = self:GetItemInfo(input, id);
+    local itemInfo = self:GetItemInfo(input, id)
     if (itemInfo ~= nil) then
-        self:SetReceivedItemInfo(id, itemInfo);
+        self:SetReceivedItemInfo(id, itemInfo)
     end
 end
 
@@ -1028,11 +1028,11 @@ function FarmBuddy:GetKeySetting(_, key)
 
     if (self.db.profile.settings.fastTrackingKeys ~= nil) then
         if (self.db.profile.settings.fastTrackingKeys[key] ~= nil) then
-            return self.db.profile.settings.fastTrackingKeys[key];
+            return self.db.profile.settings.fastTrackingKeys[key]
         end
     end
 
-    return false;
+    return false
 end
 
 -- **************************************************************************
@@ -1043,7 +1043,7 @@ function FarmBuddy:SetKeySetting(_, key, state)
 
     if (self.db.profile.settings.fastTrackingKeys ~= nil) then
         if (self.db.profile.settings.fastTrackingKeys[key] ~= nil) then
-            self.db.profile.settings.fastTrackingKeys[key] = state;
+            self.db.profile.settings.fastTrackingKeys[key] = state
         end
     end
 end
@@ -1054,27 +1054,27 @@ end
 -- **************************************************************************
 function FarmBuddy:RemoveItem(info)
 
-    local groupName = ITEM_PREFIX .. info.option.unique_index;
+    local groupName = ITEM_PREFIX .. info.option.unique_index
 
     -- Remove settings group for item ID
     if (info.options.args.tab_items.args[groupName] ~= nil) then
-        info.options.args.tab_items.args[groupName] = nil;
+        info.options.args.tab_items.args[groupName] = nil
     end
 
     -- Remove item from SavedVariables
-    local index = self:GetItemIndexByID(info.option.unique_index);
+    local index = self:GetItemIndexByID(info.option.unique_index)
     if(index ~= nil) then
-        tremove(self.db.profile.items, index);
+        tremove(self.db.profile.items, index)
     end
 
     -- Remove frame and redraw
-    self:RemoveItemFrame(info.option.unique_index);
-    self:InitItems();
-    self:UpdateGUI();
+    self:RemoveItemFrame(info.option.unique_index)
+    self:InitItems()
+    self:UpdateGUI()
 
     -- Update settings GUI
-    self:ReindexConfigItems();
-    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
+    self:ReindexConfigItems()
+    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
 end
 
 -- **************************************************************************
@@ -1083,15 +1083,15 @@ end
 -- **************************************************************************
 function FarmBuddy:ReindexConfigItems()
 
-    local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0');
+    local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
     if (options.args.tab_items.args ~= nil) then
         for k in pairs(options.args.tab_items.args) do
             if (string.sub(k, 1, string.len(ITEM_PREFIX)) == ITEM_PREFIX) then
-                options.args.tab_items.args[k] = nil;
+                options.args.tab_items.args[k] = nil
             end
         end
 
-        self:LoadExistingConfigItems();
+        self:LoadExistingConfigItems()
     end
 end
 
@@ -1115,19 +1115,19 @@ end
 -- **************************************************************************
 function FarmBuddy:GetSetting(name, type)
 
-    local val;
+    local val
 
     if (self.db.profile.settings ~= nil) then
         if (self.db.profile.settings[name] ~= nil) then
-            val = self.db.profile.settings[name];
+            val = self.db.profile.settings[name]
 
             if (type == 'string') then
-                val = tostring(val);
+                val = tostring(val)
             end
         end
     end
 
-    return val;
+    return val
 end
 
 -- **************************************************************************
@@ -1140,14 +1140,14 @@ function FarmBuddy:SetSetting(name, type, input, updateGUI)
         if (self.db.profile.settings[name] ~= nil) then
 
             if(type == 'number') then
-                input = tonumber(input);
+                input = tonumber(input)
             end
 
-            self.db.profile.settings[name] = input;
+            self.db.profile.settings[name] = input
 
             if (updateGUI == true) then
-                self:InitItems();
-                self:UpdateGUI();
+                self:InitItems()
+                self:UpdateGUI()
             end
         end
     end
@@ -1162,10 +1162,10 @@ function FarmBuddy:SetColorSetting(name, r, g, b, a, updateGUI)
     if (self.db.profile.settings ~= nil) then
         if (self.db.profile.settings[name] ~= nil) then
             if (r ~= nil and g ~= nil and b ~= nil) then
-                self.db.profile.settings[name] = { r = r, g = g, b = b, a = a };
+                self.db.profile.settings[name] = { r = r, g = g, b = b, a = a }
 
                 if (updateGUI == true) then
-                    self:UpdateGUI();
+                    self:UpdateGUI()
                 end
             end
         end
@@ -1180,12 +1180,12 @@ function FarmBuddy:GetColorSetting(name)
 
     if (self.db.profile.settings ~= nil) then
         if (self.db.profile.settings[name] ~= nil) then
-            local color = self.db.profile.settings[name];
-            return color.r, color.g, color.b, color.a;
+            local color = self.db.profile.settings[name]
+            return color.r, color.g, color.b, color.a
         end
     end
 
-    return nil;
+    return nil
 end
 
 -- **************************************************************************
@@ -1193,7 +1193,7 @@ end
 -- DESC : Raises a test notification.
 -- **************************************************************************
 function FarmBuddy:TestNotification()
-    self:ShowNotification(0, L['FARM_BUDDY_NOTIFICATION_DEMO_ITEM_NAME'], 200, true);
+    self:ShowNotification(0, L['FARM_BUDDY_NOTIFICATION_DEMO_ITEM_NAME'], 200, true)
 end
 
 -- **************************************************************************
@@ -1211,13 +1211,13 @@ end
 -- DESC : Generates a random string with the given length.
 -- **************************************************************************
 function FarmBuddy:GetRandomString(length)
-    local strTable = {};
+    local strTable = {}
 
     for _ = 1, length do
-        table.insert(strTable, RANDOM_CHARS[math.random(1, #RANDOM_CHARS)]);
-    end;
+        table.insert(strTable, RANDOM_CHARS[math.random(1, #RANDOM_CHARS)])
+    end
 
-    return table.concat(strTable);
+    return table.concat(strTable)
 end
 
 -- **************************************************************************
@@ -1226,13 +1226,13 @@ end
 -- **************************************************************************
 function FarmBuddy:ValidateNumber(_, input)
 
-    local number = tonumber(input);
+    local number = tonumber(input)
     if not number or number < 0 then
-        self:Print(L['FARM_BUDDY_INVALID_NUMBER']);
-        return false;
+        self:Print(L['FARM_BUDDY_INVALID_NUMBER'])
+        return false
     end
 
-    return true;
+    return true
 end
 
 -- **************************************************************************
@@ -1241,12 +1241,12 @@ end
 -- **************************************************************************
 function FarmBuddy:GetSounds()
 
-    local sounds = {};
+    local sounds = {}
     for k, v in pairs(SOUNDKIT) do
-        sounds[v] = k;
+        sounds[v] = k
     end
 
-    return sounds;
+    return sounds
 end
 
 -- **************************************************************************
@@ -1260,37 +1260,37 @@ function FarmBuddy:RegisterDialogs()
         button1 = L['FARM_BUDDY_YES'],
         button2 = L['FARM_BUDDY_NO'],
         OnAccept = function()
-            self:ResetItems(true);
+            self:ResetItems(true)
         end,
         timeout = 0,
         whileDead = true,
         hideOnEscape = true,
         preferredIndex = 3,
-    };
+    }
     StaticPopupDialogs[FARM_BUDDY_ADDON_NAME .. 'ResetAllConfirm'] = {
         text = L['FARM_BUDDY_CONFIRM_ALL_RESET'],
         button1 = L['FARM_BUDDY_YES'],
         button2 = L['FARM_BUDDY_NO'],
         OnAccept = function()
-            self:ResetConfig();
+            self:ResetConfig()
         end,
         timeout = 0,
         whileDead = true,
         hideOnEscape = true,
         preferredIndex = 3,
-    };
+    }
     StaticPopupDialogs[FARM_BUDDY_ADDON_NAME .. 'ResetFramePositionConfirm'] = {
         text = L['FARM_BUDDY_CONFIRM_RESET_FRAME_POSITION'],
         button1 = L['FARM_BUDDY_YES'],
         button2 = L['FARM_BUDDY_NO'],
         OnAccept = function()
-            self:ResetFramePosition();
+            self:ResetFramePosition()
         end,
         timeout = 0,
         whileDead = true,
         hideOnEscape = true,
         preferredIndex = 3,
-    };
+    }
 end
 
 -- **************************************************************************
@@ -1301,21 +1301,21 @@ function FarmBuddy:ResetItems(update)
 
     if (self.db.profile.items ~= nil) then
         for k, v in pairs(self.db.profile.items) do
-            self.db.profile.items[k] = nil;
-            self:RemoveItemFrame(v.id);
+            self.db.profile.items[k] = nil
+            self:RemoveItemFrame(v.id)
         end
     end
 
     -- Remove settings group for item ID
-    self:ReindexConfigItems();
+    self:ReindexConfigItems()
 
     -- Remove frame and redraw
     if (update == true) then
-        self:InitItems();
-        self:UpdateGUI();
+        self:InitItems()
+        self:UpdateGUI()
 
         -- Update settings GUI
-        CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
+        CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
     end
 end
 
@@ -1324,22 +1324,22 @@ end
 -- DESC : Resets all settings to default.
 -- **************************************************************************
 function FarmBuddy:ResetConfig()
-    self:ResetItems(false);
-    self.db:ResetProfile();
+    self:ResetItems(false)
+    self.db:ResetProfile()
 
     -- Remove frame and redraw
-    self:InitItems();
-    self:UpdateGUI();
+    self:InitItems()
+    self:UpdateGUI()
 
-    self:SetTitleDisplay();
-    self:SetButtonDisplay();
-    self:SetFrameLockStatus();
-    self:SetBackgroundTransparency();
-    self:SetShowFrame();
-    self:SetScale();
+    self:SetTitleDisplay()
+    self:SetButtonDisplay()
+    self:SetFrameLockStatus()
+    self:SetBackgroundTransparency()
+    self:SetShowFrame()
+    self:SetScale()
 
     -- Update settings GUI
-    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
+    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
 end
 
 -- **************************************************************************
@@ -1347,15 +1347,15 @@ end
 -- DESC : Sets the item ID and the correct name.
 -- **************************************************************************
 function FarmBuddy:SetReceivedItemInfo(uniqueID, info)
-    self:SetItemProp(uniqueID, 'itemID', info.ItemID, true);
-    self:SetItemProp(uniqueID, 'name', info.Name, false);
-    self:SetSettingProp(uniqueID, 'item_id', 'name', info.ItemID);
+    self:SetItemProp(uniqueID, 'itemID', info.ItemID, true)
+    self:SetItemProp(uniqueID, 'name', info.Name, false)
+    self:SetSettingProp(uniqueID, 'item_id', 'name', info.ItemID)
 
-    self:InitItems();
-    self:UpdateGUI();
+    self:InitItems()
+    self:UpdateGUI()
 
     -- Update settings GUI
-    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
+    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
 end
 
 -- **************************************************************************
@@ -1364,16 +1364,16 @@ end
 -- **************************************************************************
 function FarmBuddy:SetSettingProp(uniqueID, configKey, propKey, value)
 
-    local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0');
+    local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
     if (options.args.tab_items.args ~= nil) then
         for k in pairs(options.args.tab_items.args) do
 
-            local prefixCheck = string.sub(k, 1, string.len(ITEM_PREFIX));
-            local idCheck = string.sub(k, -string.len(uniqueID));
+            local prefixCheck = string.sub(k, 1, string.len(ITEM_PREFIX))
+            local idCheck = string.sub(k, -string.len(uniqueID))
 
             if (prefixCheck == ITEM_PREFIX and idCheck == uniqueID) then
-                options.args.tab_items.args[k].args[configKey .. '_' .. uniqueID][propKey] = tostring(value);
-                break;
+                options.args.tab_items.args[k].args[configKey .. '_' .. uniqueID][propKey] = tostring(value)
+                break
             end
         end
     end
@@ -1385,9 +1385,9 @@ end
 -- **************************************************************************
 function FarmBuddy:SetTitleDisplay()
     if (self.db.profile.settings.showTitle == true) then
-        FarmBuddyFrame.Title:Show();
+        FarmBuddyFrame.Title:Show()
     else
-        FarmBuddyFrame.Title:Hide();
+        FarmBuddyFrame.Title:Hide()
     end
 end
 
@@ -1397,9 +1397,9 @@ end
 -- **************************************************************************
 function FarmBuddy:SetButtonDisplay()
     if (self.db.profile.settings.showButtons == true) then
-        FarmBuddyFrame.AddItemButton:Show();
+        FarmBuddyFrame.AddItemButton:Show()
     else
-        FarmBuddyFrame.AddItemButton:Hide();
+        FarmBuddyFrame.AddItemButton:Hide()
     end
 end
 
@@ -1408,7 +1408,7 @@ end
 -- DESC : Set or unset the frame is locked setting.
 -- **************************************************************************
 function FarmBuddy:SetFrameLockStatus()
-    FarmBuddyFrame.FrameLock = self.db.profile.settings.frameLocked;
+    FarmBuddyFrame.FrameLock = self.db.profile.settings.frameLocked
 end
 
 -- **************************************************************************
@@ -1416,7 +1416,7 @@ end
 -- DESC : Set the background transparency based on the user setting.
 -- **************************************************************************
 function FarmBuddy:SetBackgroundTransparency()
-    FarmBuddyFrame:SetBackdropColor(0, 0, 0, self.db.profile.settings.backgroundTransparency);
+    FarmBuddyFrame:SetBackdropColor(0, 0, 0, self.db.profile.settings.backgroundTransparency)
 end
 
 -- **************************************************************************
@@ -1425,9 +1425,9 @@ end
 -- **************************************************************************
 function FarmBuddy:SetShowFrame()
     if (self.db.profile.settings.showFrame == true) then
-        FarmBuddyFrame:Show();
+        FarmBuddyFrame:Show()
     else
-        FarmBuddyFrame:Hide();
+        FarmBuddyFrame:Hide()
     end
 end
 
@@ -1437,15 +1437,15 @@ end
 -- **************************************************************************
 function FarmBuddy:ToggleShowFrame()
     if (self.db.profile.settings.showFrame == true) then
-       FarmBuddyFrame:Hide();
-     self.db.profile.settings.showFrame = false;
+       FarmBuddyFrame:Hide()
+     self.db.profile.settings.showFrame = false
     else
-      FarmBuddyFrame:Show();
-      self.db.profile.settings.showFrame = true;
+      FarmBuddyFrame:Show()
+      self.db.profile.settings.showFrame = true
     end
 
     -- Update settings GUI
-    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
+    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
 end
 
 -- **************************************************************************
@@ -1453,8 +1453,8 @@ end
 -- DESC : Resets the main frame to the center of the screen.
 -- **************************************************************************
 function FarmBuddy:ResetFramePosition()
-    FarmBuddyFrame:ClearAllPoints();
-    FarmBuddyFrame:SetPoint('CENTER');
+    FarmBuddyFrame:ClearAllPoints()
+    FarmBuddyFrame:SetPoint('CENTER')
 end
 
 -- **************************************************************************
@@ -1463,7 +1463,7 @@ end
 -- **************************************************************************
 function FarmBuddy:AddItemClick(button)
     if (button == 'LeftButton') then
-        self:OpenSettings('tab_items');
+        self:OpenSettings('tab_items')
     end
 end
 
@@ -1473,7 +1473,7 @@ end
 -- **************************************************************************
 function FarmBuddy:OpenSettings(tab)
 
-    Settings.OpenToCategory(self.optionsID);
+    Settings.OpenToCategory(self.optionsID)
 
     if (tab ~= nil) then
         LibStub('AceConfigDialog-3.0'):SelectGroup(FARM_BUDDY_ADDON_NAME, tab)
@@ -1485,7 +1485,7 @@ end
 -- DESC : Fires before changing the profile.
 -- **************************************************************************
 function FarmBuddy:OnProfileShutdown()
-    self:ResetItems(false);
+    self:ResetItems(false)
 end
 
   -- **************************************************************************
@@ -1494,14 +1494,14 @@ end
 -- **************************************************************************
 function FarmBuddy:OnProfileChanged()
 
-    self:InitItems();
-    self:SetTitleDisplay();
-    self:SetButtonDisplay();
-    self:SetFrameLockStatus();
-    self:SetBackgroundTransparency();
-    self:SetShowFrame();
+    self:InitItems()
+    self:SetTitleDisplay()
+    self:SetButtonDisplay()
+    self:SetFrameLockStatus()
+    self:SetBackgroundTransparency()
+    self:SetShowFrame()
 
     -- Update GUIs
-    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME);
-    self:UpdateGUI();
+    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
+    self:UpdateGUI()
 end

@@ -63,38 +63,38 @@ local DEFAULTS = {
 function FarmBuddy:OnInitialize()
 
     -- Init SavedVariables
-    self.db = LibStub('AceDB-3.0'):New(FARM_BUDDY_ID .. 'DB', DEFAULTS);
+    self.db = LibStub('AceDB-3.0'):New(FARM_BUDDY_ID .. 'DB', DEFAULTS)
 
     -- Register events
-    self:RegisterEvent('BAG_UPDATE_DELAYED', 'BagUpdate');
-    self:RegisterEvent('GET_ITEM_INFO_RECEIVED', 'ItemInfoReceived');
-    self:RegisterEvent('PLAYER_REGEN_DISABLED', 'PlayerRegenDisabled');
-    self:RegisterEvent('PLAYER_REGEN_ENABLED', 'PlayerRegenEnabled');
-    self:RegisterEvent('PET_BATTLE_OPENING_START', 'PlayerRegenDisabled');
-    self:RegisterEvent('PET_BATTLE_CLOSE', 'PlayerRegenEnabled');
+    self:RegisterEvent('BAG_UPDATE_DELAYED', 'BagUpdate')
+    self:RegisterEvent('GET_ITEM_INFO_RECEIVED', 'ItemInfoReceived')
+    self:RegisterEvent('PLAYER_REGEN_DISABLED', 'PlayerRegenDisabled')
+    self:RegisterEvent('PLAYER_REGEN_ENABLED', 'PlayerRegenEnabled')
+    self:RegisterEvent('PET_BATTLE_OPENING_START', 'PlayerRegenDisabled')
+    self:RegisterEvent('PET_BATTLE_CLOSE', 'PlayerRegenEnabled')
 
-    self.db.RegisterCallback(self, 'OnProfileChanged', 'OnProfileChanged');
-    self.db.RegisterCallback(self, 'OnProfileCopied', 'OnProfileChanged');
-    self.db.RegisterCallback(self, 'OnProfileReset', 'OnProfileChanged');
-    self.db.RegisterCallback(self, 'OnProfileShutdown', 'OnProfileShutdown');
+    self.db.RegisterCallback(self, 'OnProfileChanged', 'OnProfileChanged')
+    self.db.RegisterCallback(self, 'OnProfileCopied', 'OnProfileChanged')
+    self.db.RegisterCallback(self, 'OnProfileReset', 'OnProfileChanged')
+    self.db.RegisterCallback(self, 'OnProfileShutdown', 'OnProfileShutdown')
 
     Mixin(FarmBuddyFrame, BackdropTemplateMixin)
 
     -- Init addon stuff
-    self:InitSettings();
-    self:InitItems();
-    self:InitDataBroker();
-    self:SetTitleDisplay();
-    self:SetButtonDisplay();
-    self:SetFrameLockStatus();
-    self:SetBackgroundTransparency();
-    self:InitChatCommands();
-    self:SetShowFrame();
-    self:SetScale();
-    self:UpdateGUI();
+    self:InitSettings()
+    self:InitItems()
+    self:InitDataBroker()
+    self:SetTitleDisplay()
+    self:SetButtonDisplay()
+    self:SetFrameLockStatus()
+    self:SetBackgroundTransparency()
+    self:InitChatCommands()
+    self:SetShowFrame()
+    self:SetScale()
+    self:UpdateGUI()
 
     -- Set add item click event
-    FarmBuddyFrame.AddItemButton:SetScript('OnClick', function(_, button) self:AddItemClick(button) end);
+    FarmBuddyFrame.AddItemButton:SetScript('OnClick', function(_, button) self:AddItemClick(button) end)
 end
 
 -- **************************************************************************
@@ -102,9 +102,9 @@ end
 -- DESC : Is called when the Plugin gets enabled.
 -- **************************************************************************
 function FarmBuddy:OnEnable()
-    self:SecureHook('HandleModifiedItemClick', 'ModifiedClick');
-    self:ScheduleRepeatingTimer('NotificationTask', 1);
-    self:ScheduleRepeatingTimer('ItemInfoReceived', 5);
+    self:SecureHook('HandleModifiedItemClick', 'ModifiedClick')
+    self:ScheduleRepeatingTimer('NotificationTask', 1)
+    self:ScheduleRepeatingTimer('ItemInfoReceived', 5)
 end
 
 -- **************************************************************************
@@ -112,7 +112,7 @@ end
 -- DESC : Is called when the Plugin gets disabled.
 -- **************************************************************************
 function FarmBuddy:OnDisable()
-    self:CancelAllTimers();
+    self:CancelAllTimers()
 end
 
 -- **************************************************************************
@@ -120,8 +120,8 @@ end
 -- DESC : Parse events registered to plugin and act on them.
 -- **************************************************************************
 function FarmBuddy:BagUpdate()
-    self:InitItems();
-    self:UpdateGUI();
+    self:InitItems()
+    self:UpdateGUI()
 end
 
 -- **************************************************************************
@@ -131,10 +131,10 @@ end
 function FarmBuddy:PlayerRegenDisabled()
 
     if (self.db.profile.settings.hideFrameInCombat == true) then
-        FarmBuddyFrame:Hide();
+        FarmBuddyFrame:Hide()
     end
 
-    PLAYER_IN_COMBAT = true;
+    PLAYER_IN_COMBAT = true
 end
 
 -- **************************************************************************
@@ -143,10 +143,10 @@ end
 -- **************************************************************************
 function FarmBuddy:PlayerRegenEnabled()
     if (self.db.profile.settings.showFrame == true) then
-        FarmBuddyFrame:Show();
+        FarmBuddyFrame:Show()
     end
 
-    PLAYER_IN_COMBAT = false;
+    PLAYER_IN_COMBAT = false
 end
 
 -- **************************************************************************
@@ -210,7 +210,7 @@ function FarmBuddy:ModifiedClick(itemLink, itemLocation)
             end
 
             if (conditions == false) then
-                break;
+                break
             end
         elseif (key == 'ctrl') then
             if (state == true) then
@@ -220,7 +220,7 @@ function FarmBuddy:ModifiedClick(itemLink, itemLocation)
             end
 
             if (conditions == false) then
-                break;
+                break
             end
         elseif (key == 'shift') then
             if (state == true) then
@@ -230,7 +230,7 @@ function FarmBuddy:ModifiedClick(itemLink, itemLocation)
             end
 
             if (conditions == false) then
-                break;
+                break
             end
         end
     end
@@ -261,7 +261,7 @@ function FarmBuddy:GetItemIDByName(name)
     for _, item in pairs(ITEM_STORAGE) do
         if (item.name == name) then
             id = item.id
-            break;
+            break
         end
     end
 
@@ -290,7 +290,7 @@ function FarmBuddy:NotificationTask()
                 NOTIFICATION_TRIGGERED[notification.Index] = true
             end
             NOTIFICATION_QUEUE[index] = nil
-            break;
+            break
         end
     end
 end
@@ -337,117 +337,117 @@ end
 -- **************************************************************************
 function FarmBuddy:UpdateGUI()
 
-    local curFrame;
-    local lastFrame = FarmBuddyFrame;
-    local totalHeight = 0;
-    local count = 0;
+    local curFrame
+    local lastFrame = FarmBuddyFrame
+    local totalHeight = 0
+    local count = 0
 
-    self:ClearDataBrokerData();
+    self:ClearDataBrokerData()
 
     for _, itemStorage in pairs(ITEM_STORAGE) do
 
-        local itemInfo = self:GetItemInfo(itemStorage.itemID);
+        local itemInfo = self:GetItemInfo(itemStorage.itemID)
         local hidden = itemStorage.hidden and (itemStorage.hidden == 1) or false
 
         if itemInfo then
-            local frameName = FARM_BUDDY_ID .. 'Item' .. itemStorage.id;
-            local itemCount = self:GetCount(itemInfo);
-            local goalReached;
-            local progressBarFrame;
+            local frameName = FARM_BUDDY_ID .. 'Item' .. itemStorage.id
+            local itemCount = self:GetCount(itemInfo)
+            local goalReached
+            local progressBarFrame
 
             if (_G[frameName .. 'ProgressBar'] ~= nil) then
-                progressBarFrame = _G[frameName .. 'ProgressBar'];
+                progressBarFrame = _G[frameName .. 'ProgressBar']
             end
 
             -- Only add new frame if the frame does not already exists
             if (ITEM_FRAMES[frameName] == nil) then
-                local r, g, b = GetItemQualityColor(itemInfo.Rarity);
+                local r, g, b = GetItemQualityColor(itemInfo.Rarity)
 
-                curFrame = CreateFrame('Frame', frameName, FarmBuddyFrame, 'FarmBuddyItemTemplate');
-                curFrame.Title:SetText(itemStorage.name);
-                curFrame.Title:SetTextColor(r, g, b, 1);
-                curFrame.Texture:SetTexture(itemInfo.IconFileDataID);
+                curFrame = CreateFrame('Frame', frameName, FarmBuddyFrame, 'FarmBuddyItemTemplate')
+                curFrame.Title:SetText(itemStorage.name)
+                curFrame.Title:SetTextColor(r, g, b, 1)
+                curFrame.Texture:SetTexture(itemInfo.IconFileDataID)
 
-                progressBarFrame = CreateFrame('STATUSBAR', frameName .. 'ProgressBar', curFrame, 'FarmBuddyProgressBarTemplate');
-                progressBarFrame:SetPoint('TOPLEFT', curFrame, (curFrame.Texture:GetWidth() + 7), -25);
+                progressBarFrame = CreateFrame('STATUSBAR', frameName .. 'ProgressBar', curFrame, 'FarmBuddyProgressBarTemplate')
+                progressBarFrame:SetPoint('TOPLEFT', curFrame, (curFrame.Texture:GetWidth() + 7), -25)
 
-                ITEM_FRAMES[frameName] = curFrame;
+                ITEM_FRAMES[frameName] = curFrame
             else
-                curFrame = ITEM_FRAMES[frameName];
+                curFrame = ITEM_FRAMES[frameName]
             end
 
             if hidden then
-                if curFrame then curFrame:Hide(); end
+                if curFrame then curFrame:Hide() end
             else
 
                 -- Handle notifications
                 if(itemStorage.quantity > 0 and itemCount >= itemStorage.quantity) then
-                    goalReached = true;
+                    goalReached = true
 
-                    local previousCount = NOTIFICATION_ITEM_COUNT[itemInfo.ItemID];
+                    local previousCount = NOTIFICATION_ITEM_COUNT[itemInfo.ItemID]
 
                     if (previousCount == nil) then
                         -- The goal was already reached when the item became known
                         -- (e.g. on addon load), so mark it as triggered without
                         -- raising a notification.
-                        NOTIFICATION_TRIGGERED[itemInfo.ItemID] = true;
+                        NOTIFICATION_TRIGGERED[itemInfo.ItemID] = true
                     elseif (previousCount < itemStorage.quantity) then
                         -- The goal was reached through an increase in quantity (loot).
-                        self:QueueNotification(itemInfo.ItemID, itemInfo.Name, itemStorage.quantity);
+                        self:QueueNotification(itemInfo.ItemID, itemInfo.Name, itemStorage.quantity)
                     end
                 else
-                    NOTIFICATION_QUEUE[itemInfo.ItemID] = nil;
-                    NOTIFICATION_TRIGGERED[itemInfo.ItemID] = false;
-                    goalReached = false;
+                    NOTIFICATION_QUEUE[itemInfo.ItemID] = nil
+                    NOTIFICATION_TRIGGERED[itemInfo.ItemID] = false
+                    goalReached = false
                 end
 
-                NOTIFICATION_ITEM_COUNT[itemInfo.ItemID] = itemCount;
+                NOTIFICATION_ITEM_COUNT[itemInfo.ItemID] = itemCount
 
-                curFrame:Show();
-                curFrame:ClearAllPoints();
+                curFrame:Show()
+                curFrame:ClearAllPoints()
 
                 -- Set frame position
                 if (count > 0) then
-                    curFrame:SetPoint('TOPLEFT', lastFrame, 0, -(curFrame:GetHeight() + 3));
+                    curFrame:SetPoint('TOPLEFT', lastFrame, 0, -(curFrame:GetHeight() + 3))
                 else
-                    curFrame:SetPoint('TOPLEFT', FarmBuddyFrame, 0, 0);
+                    curFrame:SetPoint('TOPLEFT', FarmBuddyFrame, 0, 0)
                 end
 
                 if (self.db.profile.settings.showProgressBar == true) then
-                    progressBarFrame:Show();
-                    curFrame.Subline:Hide();
-                    self:SetupProgressBar(frameName, itemInfo, itemStorage);
+                    progressBarFrame:Show()
+                    curFrame.Subline:Hide()
+                    self:SetupProgressBar(frameName, itemInfo, itemStorage)
                 else
-                    progressBarFrame:Hide();
-                    curFrame.Subline:Show();
-                    self:SetSubline(curFrame, itemInfo, itemStorage, goalReached);
+                    progressBarFrame:Hide()
+                    curFrame.Subline:Show()
+                    self:SetSubline(curFrame, itemInfo, itemStorage, goalReached)
                 end
 
-                lastFrame = curFrame;
-                totalHeight = (totalHeight + curFrame:GetHeight());
-                count = count + 1;
+                lastFrame = curFrame
+                totalHeight = (totalHeight + curFrame:GetHeight())
+                count = count + 1
 
-                self:AddItemToDataBroker(itemInfo, itemStorage);
+                self:AddItemToDataBroker(itemInfo, itemStorage)
             end
         end
     end
 
     -- Show no tracked item text
     if (count == 0) then
-        FarmBuddyFrame.EmptyText:SetText('- ' .. L['FARM_BUDDY_NO_TRACKED_ITEMS'] .. ' -');
-        FarmBuddyFrame.EmptyText:Show();
-        totalHeight = totalHeight + FarmBuddyFrame.EmptyText:GetHeight();
+        FarmBuddyFrame.EmptyText:SetText('- ' .. L['FARM_BUDDY_NO_TRACKED_ITEMS'] .. ' -')
+        FarmBuddyFrame.EmptyText:Show()
+        totalHeight = totalHeight + FarmBuddyFrame.EmptyText:GetHeight()
     else
-        FarmBuddyFrame.EmptyText:Hide();
+        FarmBuddyFrame.EmptyText:Hide()
     end
 
     -- Set parent main frame height
-    totalHeight = totalHeight + 4; -- Add footer spacing
+    totalHeight = totalHeight + 4 -- Add footer spacing
     if (totalHeight > 0) then
-        FarmBuddyFrame:SetHeight(totalHeight);
+        FarmBuddyFrame:SetHeight(totalHeight)
     end
 
-    self:UpdateDataBroker(showIcon);
+    self:UpdateDataBroker(showIcon)
 end
 
 -- **************************************************************************
