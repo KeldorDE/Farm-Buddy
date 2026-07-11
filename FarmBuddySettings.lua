@@ -13,6 +13,18 @@ local ITEM_PREFIX = FARM_BUDDY_ID .. 'Item'
 local ID_LENGTH = 32
 local OPTION_ORDER = {}
 local RANDOM_CHARS = {}
+local NOTIFICATION_SOUNDS = {
+    [SOUNDKIT.ALARM_CLOCK_WARNING_1]        = L['FARM_BUDDY_SOUND_ALARM_1'],
+    [SOUNDKIT.ALARM_CLOCK_WARNING_2]        = L['FARM_BUDDY_SOUND_ALARM_2'],
+    [SOUNDKIT.ALARM_CLOCK_WARNING_3]        = L['FARM_BUDDY_SOUND_ALARM_3'],
+    [SOUNDKIT.READY_CHECK]                  = L['FARM_BUDDY_SOUND_READY_CHECK'],
+    [SOUNDKIT.RAID_WARNING]                 = L['FARM_BUDDY_SOUND_RAID_WARNING'],
+    [SOUNDKIT.AUCTION_WINDOW_OPEN]          = L['FARM_BUDDY_SOUND_AUCTION'],
+    [SOUNDKIT.IG_QUEST_LIST_COMPLETE]       = L['FARM_BUDDY_SOUND_QUEST_COMPLETE'],
+    [SOUNDKIT.LFG_REWARDS]                  = L['FARM_BUDDY_SOUND_DUNGEON_REWARD'],
+    [SOUNDKIT.UI_EPICLOOT_TOAST]            = L['FARM_BUDDY_SOUND_EPIC_LOOT'],
+    [SOUNDKIT.UI_LEGENDARY_LOOT_TOAST]      = L['FARM_BUDDY_SOUND_LEGENDARY_LOOT'],
+}
 
 -- **************************************************************************
 -- NAME : FarmBuddy:InitSettings()
@@ -551,9 +563,10 @@ function FarmBuddy:GetConfigOptions()
                         type = 'select',
                         name = L['FARM_BUDDY_NOTIFICATION_SOUND'],
                         style = 'dropdown',
-                        values = self:GetSounds(),
-                        get = function() return self:GetSetting('notificationSound', 'number') end,
-                        set = function(_, input) PlaySound(input, 'master') self:SetSetting('notificationSound', 'number', input, false) end,
+                        values = self:GetNotificationSounds(),
+                        sorting = self:GetNotificationSoundsSorting(),
+                        set = 'SetNotificationSound',
+                        get = 'GetNotificationSound',
                         width = 'double',
                         order = self:GetOptionOrder('notifications'),
                     },
@@ -1239,14 +1252,34 @@ end
 -- NAME : FarmBuddy:GetSounds()
 -- DESC : Get a list of available sounds.
 -- **************************************************************************
-function FarmBuddy:GetSounds()
+function FarmBuddy:GetNotificationSounds()
 
     local sounds = {}
-    for k, v in pairs(SOUNDKIT) do
-        sounds[v] = k
+
+    for k, v in pairs(NOTIFICATION_SOUNDS) do
+        sounds[k] = v
     end
 
     return sounds
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:GetNotificationSoundsSorting()
+-- DESC : Get the sound keys sorted by their label ascending.
+-- **************************************************************************
+function FarmBuddy:GetNotificationSoundsSorting()
+
+    local sorting = {}
+
+    for k in pairs(NOTIFICATION_SOUNDS) do
+        table.insert(sorting, k)
+    end
+
+    table.sort(sorting, function(a, b)
+        return NOTIFICATION_SOUNDS[a] < NOTIFICATION_SOUNDS[b]
+    end)
+
+    return sorting
 end
 
 -- **************************************************************************
@@ -1504,4 +1537,26 @@ function FarmBuddy:OnProfileChanged()
     -- Update GUIs
     CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
     self:UpdateGUI()
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SetNotificationSound()
+-- DESC : Sets the notification sound.
+-- **************************************************************************
+function FarmBuddy:SetNotificationSound(_, input)
+    self:SetSetting('notificationSound', 'number', input, false)
+    PlaySound(input, 'master')
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:GetNotificationSound()
+-- DESC : Gets the notification sound.
+-- **************************************************************************
+function FarmBuddy:GetNotificationSound()
+    local sound = self:GetSetting('notificationSound', 'number')
+    if not sound or NOTIFICATION_SOUNDS[sound] == nil then
+        return SOUNDKIT.ALARM_CLOCK_WARNING_3
+    end
+
+    return sound
 end
