@@ -7,6 +7,7 @@
 
 local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
 local FarmBuddy = LibStub('AceAddon-3.0'):NewAddon(FARM_BUDDY_ID, 'AceConsole-3.0', 'AceEvent-3.0', 'AceTimer-3.0', 'AceHook-3.0')
+local ITEM_DATA_INIT_COMPLETE = false
 local NOTIFICATION_QUEUE = {}
 local NOTIFICATION_TRIGGERED = {}
 local NOTIFICATION_ITEM_COUNT = {}
@@ -66,7 +67,8 @@ function FarmBuddy:OnInitialize()
     self.db = LibStub('AceDB-3.0'):New(FARM_BUDDY_ID .. 'DB', DEFAULTS)
 
     -- Register events
-    self:RegisterEvent('BAG_UPDATE_DELAYED', 'BagUpdate')
+    self:RegisterEvent('PLAYER_ENTERING_WORLD', 'PlayerEnteringWorld')
+    self:RegisterEvent('BAG_UPDATE_DELAYED', 'BagUpdateDelayed')
     self:RegisterEvent('GET_ITEM_INFO_RECEIVED', 'ItemInfoReceived')
     self:RegisterEvent('PLAYER_REGEN_DISABLED', 'PlayerRegenDisabled')
     self:RegisterEvent('PLAYER_REGEN_ENABLED', 'PlayerRegenEnabled')
@@ -116,10 +118,39 @@ function FarmBuddy:OnDisable()
 end
 
 -- **************************************************************************
--- NAME : FarmBuddy:BagUpdate()
+-- NAME : FarmBuddy:PlayerEnteringWorld()
+-- DESC : Is called when the player enters the world.
+-- **************************************************************************
+function FarmBuddy:PlayerEnteringWorld()
+    self:UnregisterEvent('PLAYER_ENTERING_WORLD')
+
+    -- Delayed data fetching to prevent login timing issues
+    C_Timer.After(4, function()
+        if (self.db.profile.items ~= nil) then
+            ITEM_STORAGE = self.db.profile.items
+            for _, itemStorage in pairs(ITEM_STORAGE) do
+                if (itemStorage.itemID ~= nil and itemStorage.itemID > 0) then
+                    local itemInfo = self:GetItemInfo(itemStorage.itemID, itemStorage.id)
+                    NOTIFICATION_TRIGGERED[itemStorage.itemID] = itemInfo and itemStorage.quantity > 0 and self:GetCount(itemInfo) >= itemStorage.quantity
+                end
+            end
+        end
+
+        self:UpdateGUI()
+        ITEM_DATA_INIT_COMPLETE = true
+    end)
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:BagUpdateDelayed()
 -- DESC : Parse events registered to plugin and act on them.
 -- **************************************************************************
-function FarmBuddy:BagUpdate()
+function FarmBuddy:BagUpdateDelayed()
+
+    if not ITEM_DATA_INIT_COMPLETE then
+        return
+    end
+
     self:InitItems()
     self:UpdateGUI()
 end

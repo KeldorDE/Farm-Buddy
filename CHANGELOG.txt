@@ -1,6 +1,7 @@
 1.1.10
 ------------------
 - Reduced the number of notification sounds to prevent UI lag in the settings panel
+- Fixed notifications being incorrectly triggered on login by delaying the initial item data fetch
 
 1.1.9
 ------------------
