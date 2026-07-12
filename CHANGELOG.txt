@@ -24,7 +24,7 @@
 - Remove outdated Broker functions and library
 - Fix the freeze issue after the loading screen
 - Fix error opening blizzard options from tracker/cmd/minimap icon (Thx MrFIXlT)
-- Rename misspelled API recived > received (Thx MrFIXlT)
+- Rename misspelled API received > received (Thx MrFIXlT)
 - Fixed: Animation duration setting now takes effect
 - Added updates Russian translation by Hubbotu
 
@@ -163,7 +163,7 @@
 
 1.0.11
 ------------------
-- Feature: Added frame scaling to the apperance settings.
+- Feature: Added frame scaling to the appearance settings.
 
 1.0.10
 ------------------
