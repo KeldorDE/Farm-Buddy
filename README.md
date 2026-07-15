@@ -1,7 +1,7 @@
 # Farm Buddy
 
 <p align="center">
-  <img width="280" src="assets/logo.png" alt="Projekt Logo">
+  <img width="380" src="assets/logo.png" alt="Projekt Logo">
 </p>
 
 A World of Warcraft AddOn that adds the functionality to Track multiple farmed items. A notification will appear if the defined goal quantity for an item has reached.
