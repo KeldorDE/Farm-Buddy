@@ -1,5 +1,8 @@
 # Farm Buddy
 
+<div style="text-align: center">
+    <img style="width: 280px" src="assets/logo.png" alt="Projekt Logo">
+</div>
 
 A World of Warcraft AddOn that adds the functionality to Track multiple farmed items. A notification will appear if the defined goal quantity for an item has reached.
 
@@ -30,24 +33,18 @@ If possible please use the item ID or the item link.
 * /fbs version - Show the current used Farm Buddy Version.
 * /fbs help - Shows the available chat commands.
 
-**Translations**  
-If you want to help to translate this AddOn please use the [curseforge](https://wow.curseforge.com/projects/farm-buddy/localization) localization page.
-
 **Bug Reports and Feature Requests**  
-Please use the [curseforge](https://wow.curseforge.com/projects/farm-buddy/issues) ticketing systems to submit bug reports and feature requests.
-
-**Known issues**  
-None
+Please use the [CurseForge](https://wow.curseforge.com/projects/farm-buddy/issues) ticketing systems to submit bug reports and feature requests.
 
 ---
 # Links
 **Github:** https://github.com/KeldorDE/Farm-Buddy  
-**Curseforge:** https://wow.curseforge.com/projects/farm-buddy
+**CurseForge:** https://wow.curseforge.com/projects/farm-buddy
 
 ---
-# Useful Links for Development
+# Useful Links for Development  
 **World of Warcraft Icon List:** http://www.wowhead.com/icons  
-**WowAce Documentation:** https://www.wowace.com/projects/ace3/pages/
+**WowAce Documentation:** https://www.wowace.com/projects/ace3/pages/  
 **AddOn API Documentation:**
 * http://wowwiki.wikia.com/wiki/Category:World_of_Warcraft_API
 * https://wow.gamepedia.com/World_of_Warcraft_API
