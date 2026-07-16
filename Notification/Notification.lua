@@ -8,7 +8,7 @@
 local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID)
 local FRAME_NAME = 'FarmBuddyAlertFrameTemplate'
-local FRAME = CreateFrame('Button', FRAME_NAME, UIParent, 'FarmBuddyAlertFrameTemplate')
+local FRAME = CreateFrame('Button', FRAME_NAME, UIParent, FRAME_NAME)
 local FRAME_HIDDEN = true
 
 -- **************************************************************************
