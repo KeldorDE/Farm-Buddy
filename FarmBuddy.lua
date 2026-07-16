@@ -288,8 +288,9 @@ end
 
 ---Resets the notification trigger state for the given item ID.
 ---@param itemID number
-function FarmBuddy:ResetNotificationTrigger(itemID)
-    NOTIFICATION_TRIGGERED[itemID] = false
+---@param value boolean
+function FarmBuddy:ResetNotificationTrigger(itemID, value)
+    NOTIFICATION_TRIGGERED[itemID] = value
 end
 
 ---Is called by the timer to handle the next notification.
@@ -385,7 +386,7 @@ function FarmBuddy:UpdateGUI(handleNotifications)
                 end
 
                 progressBarFrame = curFrame.ProgressBar
-                
+
                 -- Handle notifications
                 if itemStorage.quantity > 0 and itemCount >= itemStorage.quantity and NOTIFICATION_TRIGGERED[itemInfo.ItemID] == false then
                     goalReached = true

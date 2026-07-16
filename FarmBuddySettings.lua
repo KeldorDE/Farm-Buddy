@@ -1008,10 +1008,17 @@ function FarmBuddy:SetItemProp(id, key, input, numeric)
         end
 
         self.db.profile.items[index][key] = input
-    end
 
-    if key == 'quantity' then
-        self:ResetNotificationTrigger(self.db.profile.items[index].itemID)
+        -- Only reset the trigger when the new goal exceeds the current count,
+        -- so an already reached goal does not immediately notify again.
+        if (key == 'quantity') then
+            local item = self.db.profile.items[index]
+            if (input > (item.count or 0)) then
+                self:ResetNotificationTrigger(item.itemID, false)
+            else
+                self:ResetNotificationTrigger(item.itemID, true)
+            end
+        end
     end
 
     self:InitItems()
