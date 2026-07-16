@@ -41,7 +41,10 @@ function FarmBuddy:GetItemInfo(item, uniqueID)
     end
 
     local countBags = C_Item.GetItemCount(static.ItemID)
-    local countTotal = C_Item.GetItemCount(static.ItemID, true)
+    local countTotal = countBags
+    if self.db.profile.settings.includeBank then
+        countTotal = C_Item.GetItemCount(static.ItemID, true)
+    end
 
     return {
         ItemID = static.ItemID,

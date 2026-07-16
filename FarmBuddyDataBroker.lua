@@ -59,13 +59,13 @@ function FarmBuddy:AddItemToDataBroker(itemInfo, itemStorage)
 end
 
 ---Updates the data broker text and icon.
----@param showIcon? boolean Force showing the data broker icon.
-function FarmBuddy:UpdateDataBroker(showIcon)
+function FarmBuddy:UpdateDataBroker()
 
     if (self.db.profile.settings.enableDataBrokerSupport == true) then
         local dataList = {}
         local numItems = 0
         local totalItemCount = tonumber(self.db.profile.settings.dataBrokerNumItems)
+        local showIcon = false
 
         if (totalItemCount == 0) then
             showIcon = true

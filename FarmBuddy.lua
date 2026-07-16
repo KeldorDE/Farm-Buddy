@@ -169,6 +169,7 @@ function FarmBuddy:InitItems()
             if (itemStorage.itemID ~= nil and itemStorage.itemID > 0) then
                 local itemInfo = self:GetItemInfo(itemStorage.itemID, itemStorage.id)
                 if itemInfo ~= nil then
+                    itemStorage._info = itemInfo
                     ITEM_STORAGE[index].count = self:GetCount(itemInfo)
                     ITEM_STORAGE[index].rarity = itemInfo.Rarity
                 else
@@ -343,37 +344,37 @@ function FarmBuddy:UpdateGUI()
 
     for _, itemStorage in pairs(ITEM_STORAGE) do
 
-        local itemInfo = self:GetItemInfo(itemStorage.itemID)
+        local itemInfo = itemStorage._info
         local hidden = itemStorage.hidden and (itemStorage.hidden == 1) or false
 
         if itemInfo then
             local frameName = FARM_BUDDY_ID .. 'Item' .. itemStorage.id
-            local itemCount = self:GetCount(itemInfo)
-            local goalReached
-            local progressBarFrame
-
-            if (_G[frameName .. 'ProgressBar'] ~= nil) then
-                progressBarFrame = _G[frameName .. 'ProgressBar']
-            end
-
-            -- Only add new frame if the frame does not already exists
-            if (ITEM_FRAMES[frameName] == nil) then
-                curFrame = CreateFrame('Frame', frameName, FarmBuddyFrame, 'FarmBuddyItemTemplate')
-                curFrame.Title:SetText(itemStorage.name)
-                curFrame.Title:SetTextColor(itemInfo.Rarity.r, itemInfo.Rarity.g, itemInfo.Rarity.b, 1)
-                curFrame.Texture:SetTexture(itemInfo.IconFileDataID)
-
-                progressBarFrame = CreateFrame('STATUSBAR', frameName .. 'ProgressBar', curFrame, 'FarmBuddyProgressBarTemplate')
-                progressBarFrame:SetPoint('TOPLEFT', curFrame, (curFrame.Texture:GetWidth() + 7), -25)
-
-                ITEM_FRAMES[frameName] = curFrame
-            else
-                curFrame = ITEM_FRAMES[frameName]
-            end
 
             if hidden then
-                if curFrame then curFrame:Hide() end
+                if ITEM_FRAMES[frameName] then ITEM_FRAMES[frameName]:Hide() end
             else
+                local itemCount = self:GetCount(itemInfo)
+                local goalReached
+                local progressBarFrame
+
+                if (_G[frameName .. 'ProgressBar'] ~= nil) then
+                    progressBarFrame = _G[frameName .. 'ProgressBar']
+                end
+
+                -- Only add new frame if the frame does not already exists
+                if (ITEM_FRAMES[frameName] == nil) then
+                    curFrame = CreateFrame('Frame', frameName, FarmBuddyFrame, 'FarmBuddyItemTemplate')
+                    curFrame.Title:SetText(itemStorage.name)
+                    curFrame.Title:SetTextColor(itemInfo.Rarity.r, itemInfo.Rarity.g, itemInfo.Rarity.b, 1)
+                    curFrame.Texture:SetTexture(itemInfo.IconFileDataID)
+
+                    progressBarFrame = CreateFrame('STATUSBAR', frameName .. 'ProgressBar', curFrame, 'FarmBuddyProgressBarTemplate')
+                    progressBarFrame:SetPoint('TOPLEFT', curFrame, (curFrame.Texture:GetWidth() + 7), -25)
+
+                    ITEM_FRAMES[frameName] = curFrame
+                else
+                    curFrame = ITEM_FRAMES[frameName]
+                end
 
                 -- Handle notifications
                 if(itemStorage.quantity > 0 and itemCount >= itemStorage.quantity) then
@@ -411,7 +412,7 @@ function FarmBuddy:UpdateGUI()
                 if (self.db.profile.settings.showProgressBar == true) then
                     progressBarFrame:Show()
                     curFrame.Subline:Hide()
-                    self:SetupProgressBar(frameName, itemInfo, itemStorage)
+                    self:SetupProgressBar(progressBarFrame, itemInfo, itemStorage, itemCount)
                 else
                     progressBarFrame:Hide()
                     curFrame.Subline:Show()
@@ -442,7 +443,7 @@ function FarmBuddy:UpdateGUI()
         FarmBuddyFrame:SetHeight(totalHeight)
     end
 
-    self:UpdateDataBroker(showIcon)
+    self:UpdateDataBroker()
 end
 
 ---Sets the item subline based on the user settings.
@@ -467,12 +468,11 @@ function FarmBuddy:SetSubline(frame, itemInfo, itemStorage, goalReached)
 end
 
 ---Sets the values for the progress bar.
----@param frameName string Base name of the item frame.
+---@param progressBarFrame table
 ---@param itemInfo table
 ---@param itemStorage table
-function FarmBuddy:SetupProgressBar(frameName, itemInfo, itemStorage)
-    local frame = _G[frameName .. 'ProgressBar']
-    local itemCount = self:GetCount(itemInfo)
+---@param itemCount number
+function FarmBuddy:SetupProgressBar(progressBarFrame, itemInfo, itemStorage, itemCount)
     local color
     local goalCount
     local noGoal = false
@@ -492,15 +492,15 @@ function FarmBuddy:SetupProgressBar(frameName, itemInfo, itemStorage)
     end
 
     if (noGoal == true) then
-        frame:SetMinMaxValues(1, 10)
-        frame:SetValue(10)
+        progressBarFrame:SetMinMaxValues(1, 10)
+        progressBarFrame:SetValue(10)
     else
-        frame:SetMinMaxValues(0, goalCount)
-        frame:SetValue(itemCount)
+        progressBarFrame:SetMinMaxValues(0, goalCount)
+        progressBarFrame:SetValue(itemCount)
     end
 
-    frame.text:SetText(self:GetCount(itemInfo, itemStorage.quantity, true))
-    frame:SetStatusBarColor(color.r, color.g, color.b, color.a)
+    progressBarFrame.text:SetText(self:GetCount(itemInfo, itemStorage.quantity, true))
+    progressBarFrame:SetStatusBarColor(color.r, color.g, color.b, color.a)
 end
 
 ---Removes the item frame with the given ID.
