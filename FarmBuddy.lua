@@ -10,7 +10,6 @@ local FarmBuddy = LibStub('AceAddon-3.0'):NewAddon(FARM_BUDDY_ID, 'AceConsole-3.
 local ITEM_DATA_INIT_COMPLETE = false
 local NOTIFICATION_QUEUE = {}
 local NOTIFICATION_TRIGGERED = {}
-local NOTIFICATION_ITEM_COUNT = {}
 local ITEM_STORAGE = {}
 local ITEM_FRAMES = {}
 local PLAYER_IN_COMBAT = false
@@ -91,7 +90,7 @@ function FarmBuddy:OnInitialize()
     self:SetShowFrame()
     self:SetScale()
     self:RestoreFramePosition()
-    self:UpdateGUI()
+    self:UpdateGUI(false)
 
     FarmBuddyFrame:HookScript('OnDragStop', function() self:SaveFramePosition() end)
     FarmBuddyFrame.AddItemButton:SetScript('OnClick', function(_, button) self:AddItemClick(button) end)
@@ -125,6 +124,7 @@ function FarmBuddy:PlayerEnteringWorld()
             end
         end
 
+        self:InitItems()
         self:UpdateGUI()
         ITEM_DATA_INIT_COMPLETE = true
     end)
@@ -286,6 +286,12 @@ function FarmBuddy:QueueNotification(index, itemName, itemIconFileDataID, quanti
     }
 end
 
+---Resets the notification trigger state for the given item ID.
+---@param itemID number
+function FarmBuddy:ResetNotificationTrigger(itemID)
+    NOTIFICATION_TRIGGERED[itemID] = false
+end
+
 ---Is called by the timer to handle the next notification.
 function FarmBuddy:NotificationTask()
     if FarmBuddyNotification_Shown() == false then
@@ -310,7 +316,7 @@ end
 ---@param demo? boolean Force showing the notification (preview), bypassing the triggered state.
 function FarmBuddy:ShowNotification(index, name, icon, quantity, demo)
     local notificationEnabled = self.db.profile.settings.goalNotification
-    if (notificationEnabled and not NOTIFICATION_TRIGGERED[index]) or demo then
+    if (notificationEnabled) or demo then
 
         local playSound = self.db.profile.settings.playNotificationSound
         local notificationDisplayDuration = tonumber(self.db.profile.settings.notificationDisplayDuration)
@@ -333,7 +339,11 @@ function FarmBuddy:ShowNotification(index, name, icon, quantity, demo)
 end
 
 ---Updates the GUI elements.
-function FarmBuddy:UpdateGUI()
+function FarmBuddy:UpdateGUI(handleNotifications)
+
+    if handleNotifications == nil then
+        handleNotifications = true
+    end
 
     local curFrame
     local lastFrame = FarmBuddyFrame
@@ -375,28 +385,18 @@ function FarmBuddy:UpdateGUI()
                 end
 
                 progressBarFrame = curFrame.ProgressBar
-
+                
                 -- Handle notifications
-                if(itemStorage.quantity > 0 and itemCount >= itemStorage.quantity) then
+                if itemStorage.quantity > 0 and itemCount >= itemStorage.quantity and NOTIFICATION_TRIGGERED[itemInfo.ItemID] == false then
                     goalReached = true
 
-                    local previousCount = NOTIFICATION_ITEM_COUNT[itemInfo.ItemID]
-                    if (previousCount == nil) then
-                        -- The goal was already reached when the item became known
-                        -- (e.g. on addon load), so mark it as triggered without
-                        -- raising a notification.
-                        NOTIFICATION_TRIGGERED[itemInfo.ItemID] = true
-                    elseif (previousCount < itemStorage.quantity) then
-                        -- The goal was reached through an increase in quantity (loot).
+                    if handleNotifications then
                         self:QueueNotification(itemInfo.ItemID, itemInfo.Name, itemInfo.IconFileDataID, itemStorage.quantity)
                     end
                 else
                     NOTIFICATION_QUEUE[itemInfo.ItemID] = nil
-                    NOTIFICATION_TRIGGERED[itemInfo.ItemID] = false
                     goalReached = false
                 end
-
-                NOTIFICATION_ITEM_COUNT[itemInfo.ItemID] = itemCount
 
                 curFrame:Show()
                 curFrame:ClearAllPoints()

@@ -377,10 +377,10 @@ function FarmBuddy:GetConfigOptions()
                         },
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_11 = {type = 'description',
-                                                               name = '',
-                                                               order = self:
-                        GetOptionOrder('appearance'),
+                    appearance_space_11 = {
+                        type = 'description',
+                        name = '',
+                        order = self:GetOptionOrder('appearance'),
                     },
                     appearance_sort_order = {
                         type = 'select',
@@ -1008,6 +1008,10 @@ function FarmBuddy:SetItemProp(id, key, input, numeric)
         end
 
         self.db.profile.items[index][key] = input
+    end
+
+    if key == 'quantity' then
+        self:ResetNotificationTrigger(self.db.profile.items[index].itemID)
     end
 
     self:InitItems()
