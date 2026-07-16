@@ -13,6 +13,9 @@ local ITEM_PREFIX = FARM_BUDDY_ID .. 'Item'
 local ID_LENGTH = 32
 local OPTION_ORDER = {}
 local RANDOM_CHARS = {}
+local POPUP_KEY_RESET_ALL_ITEMS_CONFIRM = FARM_BUDDY_ADDON_NAME .. 'ResetAllItemsConfirm'
+local POPUP_KEY_RESET_ALL_CONFIRM = FARM_BUDDY_ADDON_NAME .. 'ResetAllConfirm'
+local POPUP_KEY_RESET_FRAME_POSITION_CONFIRM = FARM_BUDDY_ADDON_NAME .. 'ResetFramePositionConfirm'
 local NOTIFICATION_SOUNDS = {
     [SOUNDKIT.ALARM_CLOCK_WARNING_1]        = L['FARM_BUDDY_SOUND_ALARM_1'],
     [SOUNDKIT.ALARM_CLOCK_WARNING_2]        = L['FARM_BUDDY_SOUND_ALARM_2'],
@@ -619,7 +622,7 @@ function FarmBuddy:GetConfigOptions()
                         type = 'execute',
                         name = L['FARM_BUDDY_RESET_ALL_ITEMS'],
                         desc = L['FARM_BUDDY_RESET_ALL_ITEMS_DESC'],
-                        func = function() StaticPopup_Show(FARM_BUDDY_ADDON_NAME .. 'ResetAllItemsConfirm') end,
+                        func = function() StaticPopup_Show(POPUP_KEY_RESET_ALL_ITEMS_CONFIRM) end,
                         width = 'double',
                         order = self:GetOptionOrder('actions'),
                     },
@@ -638,7 +641,7 @@ function FarmBuddy:GetConfigOptions()
                         type = 'execute',
                         name = L['FARM_BUDDY_RESET_FRAME_POSITION'],
                         desc = L['FARM_BUDDY_RESET_FRAME_POSITION_DESC'],
-                        func = function() StaticPopup_Show(FARM_BUDDY_ADDON_NAME .. 'ResetFramePositionConfirm') end,
+                        func = function() StaticPopup_Show(POPUP_KEY_RESET_FRAME_POSITION_CONFIRM) end,
                         width = 'double',
                         order = self:GetOptionOrder('actions'),
                     },
@@ -657,7 +660,7 @@ function FarmBuddy:GetConfigOptions()
                         type = 'execute',
                         name = L['FARM_BUDDY_RESET_ALL'],
                         desc = L['FARM_BUDDY_RESET_ALL_DESC'],
-                        func = function() StaticPopup_Show(FARM_BUDDY_ADDON_NAME .. 'ResetAllConfirm') end,
+                        func = function() StaticPopup_Show(POPUP_KEY_RESET_ALL_CONFIRM) end,
                         width = 'double',
                         order = self:GetOptionOrder('actions'),
                     },
@@ -1266,7 +1269,7 @@ end
 ---Registers the addons dialog boxes.
 function FarmBuddy:RegisterDialogs()
 
-    StaticPopupDialogs[FARM_BUDDY_ADDON_NAME .. 'ResetAllItemsConfirm'] = {
+    StaticPopupDialogs[POPUP_KEY_RESET_ALL_ITEMS_CONFIRM] = {
         text = L['FARM_BUDDY_CONFIRM_RESET'],
         button1 = L['FARM_BUDDY_YES'],
         button2 = L['FARM_BUDDY_NO'],
@@ -1278,7 +1281,7 @@ function FarmBuddy:RegisterDialogs()
         hideOnEscape = true,
         preferredIndex = 3,
     }
-    StaticPopupDialogs[FARM_BUDDY_ADDON_NAME .. 'ResetAllConfirm'] = {
+    StaticPopupDialogs[POPUP_KEY_RESET_ALL_CONFIRM] = {
         text = L['FARM_BUDDY_CONFIRM_ALL_RESET'],
         button1 = L['FARM_BUDDY_YES'],
         button2 = L['FARM_BUDDY_NO'],
@@ -1290,7 +1293,7 @@ function FarmBuddy:RegisterDialogs()
         hideOnEscape = true,
         preferredIndex = 3,
     }
-    StaticPopupDialogs[FARM_BUDDY_ADDON_NAME .. 'ResetFramePositionConfirm'] = {
+    StaticPopupDialogs[POPUP_KEY_RESET_FRAME_POSITION_CONFIRM] = {
         text = L['FARM_BUDDY_CONFIRM_RESET_FRAME_POSITION'],
         button1 = L['FARM_BUDDY_YES'],
         button2 = L['FARM_BUDDY_NO'],
