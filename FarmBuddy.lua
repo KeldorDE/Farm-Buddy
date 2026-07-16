@@ -93,9 +93,10 @@ function FarmBuddy:OnInitialize()
     self:InitChatCommands()
     self:SetShowFrame()
     self:SetScale()
+    self:RestoreFramePosition()
     self:UpdateGUI()
 
-    -- Set add item click event
+    FarmBuddyFrame:HookScript('OnDragStop', function() self:SaveFramePosition() end)
     FarmBuddyFrame.AddItemButton:SetScript('OnClick', function(_, button) self:AddItemClick(button) end)
 end
 
@@ -555,5 +556,30 @@ end
 function FarmBuddy:SetScale()
     if (self.db.profile.settings.frameScale) then
         FarmBuddyFrame:SetScale(self.db.profile.settings.frameScale)
+    end
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:SaveFramePosition()
+-- DESC : Saves the current position of the frame.
+-- **************************************************************************
+function FarmBuddy:SaveFramePosition()
+    local point, _, relativePoint, x, y = FarmBuddyFrame:GetPoint()
+    self.db.profile.framePosition = {
+        point = point, relativePoint = relativePoint, x = x, y = y,
+    }
+end
+
+-- **************************************************************************
+-- NAME : FarmBuddy:RestoreFramePosition()
+-- DESC : Restores the saved position of the frame.
+-- **************************************************************************
+function FarmBuddy:RestoreFramePosition()
+    local pos = self.db.profile.framePosition
+    FarmBuddyFrame:ClearAllPoints()
+    if pos and pos.point then
+        FarmBuddyFrame:SetPoint(pos.point, UIParent, pos.relativePoint, pos.x, pos.y)
+    else
+        FarmBuddyFrame:SetPoint('CENTER')
     end
 end

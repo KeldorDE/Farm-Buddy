@@ -1,8 +1,9 @@
 NOT_YET_RELEASED
 ------------------
-- Optimized different parts of the code
-- Updated item info retrieval to use C_Item API
+- Optimized various parts of the code
+- Updated item info retrieval to use the C_Item API
 - Improved performance when displaying tracked items
+- Fixed restoring the saved window position
 
 1.1.10
 ------------------

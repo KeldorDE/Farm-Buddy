@@ -94,11 +94,7 @@ end
 -- DESC : Gets an icon string.
 -- **************************************************************************
 function FarmBuddy:GetIconString(icon, space)
-    local str = '|T' .. icon .. ':16|t'
-    if space == true then
-        str = str .. ' '
-    end
-    return str
+    return string.format('|T%s:%d|t%s', icon, 16, space and ' ' or '')
 end
 
 -- **************************************************************************
@@ -106,6 +102,5 @@ end
 -- DESC : Gets the item link without the brackets.
 -- **************************************************************************
 function FarmBuddy:GetNameFromItemLink(itemLink)
-    local itemLinkNoBrackets = itemLink:gsub("%[(.-)%]", "%1")
-    return itemLinkNoBrackets
+    return (itemLink:gsub("%[(.-)%]", "%1"))
 end

@@ -1486,6 +1486,7 @@ end
 -- DESC : Resets the main frame to the center of the screen.
 -- **************************************************************************
 function FarmBuddy:ResetFramePosition()
+    self.db.profile.framePosition = nil
     FarmBuddyFrame:ClearAllPoints()
     FarmBuddyFrame:SetPoint('CENTER')
 end
@@ -1533,6 +1534,7 @@ function FarmBuddy:OnProfileChanged()
     self:SetFrameLockStatus()
     self:SetBackgroundTransparency()
     self:SetShowFrame()
+    self:RestoreFramePosition()
 
     -- Update GUIs
     CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
