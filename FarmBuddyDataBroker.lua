@@ -12,10 +12,7 @@ local DATA_BROKER_ITEMS
 local DATA_BROKER_ICON = 'Interface\\AddOns\\FarmBuddy\\FarmBuddy.tga'
 
 
--- **************************************************************************
--- NAME : FarmBuddy:InitDataBroker()
--- DESC : Inits the data broker items.
--- **************************************************************************
+---Inits the data broker items.
 function FarmBuddy:InitDataBroker()
 
     -- Init data broker
@@ -44,18 +41,14 @@ function FarmBuddy:InitDataBroker()
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:ClearDataBrokerData()
--- DESC : Resets the data broker item table.
--- **************************************************************************
+---Resets the data broker item table.
 function FarmBuddy:ClearDataBrokerData()
     DATA_BROKER_ITEMS = {}
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:AddItemToDataBroker()
--- DESC : Adds an item to the data broker list.
--- **************************************************************************
+---Adds an item to the data broker list.
+---@param itemInfo table
+---@param itemStorage table
 function FarmBuddy:AddItemToDataBroker(itemInfo, itemStorage)
     if (self.db.profile.settings.enableDataBrokerSupport == true) then
         tinsert(DATA_BROKER_ITEMS, {
@@ -65,10 +58,8 @@ function FarmBuddy:AddItemToDataBroker(itemInfo, itemStorage)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:UpdateDataBroker()
--- DESC : Updates the data broker text and icon.
--- **************************************************************************
+---Updates the data broker text and icon.
+---@param showIcon? boolean Force showing the data broker icon.
 function FarmBuddy:UpdateDataBroker(showIcon)
 
     if (self.db.profile.settings.enableDataBrokerSupport == true) then

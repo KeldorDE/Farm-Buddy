@@ -7,18 +7,17 @@
 
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID)
 
--- **************************************************************************
--- NAME : FarmBuddy:GetColoredText()
--- DESC : Gets a colored string.
--- **************************************************************************
+---Gets a colored string.
+---@param text string
+---@param color string Hex color string (e.g. 'FF00FF00').
+---@return string
 function FarmBuddy:GetColoredText(text, color)
     return '|c' .. color .. text .. '|r'
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:TableLength()
--- DESC : Gets the table item count.
--- **************************************************************************
+---Gets the table item count.
+---@param T table
+---@return number
 function FarmBuddy:TableLength(T)
     local count = 0
     for _ in pairs(T) do
@@ -27,10 +26,11 @@ function FarmBuddy:TableLength(T)
     return count
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetPercent()
--- DESC : Gets the percent value.
--- **************************************************************************
+---Gets the percent value.
+---@param p number Current value.
+---@param g number Goal value.
+---@param capCheck boolean Clamp the result between 0 and 100 when true.
+---@return number
 function FarmBuddy:GetPercent(p, g, capCheck)
     local percent = 0
 
@@ -51,10 +51,11 @@ function FarmBuddy:GetPercent(p, g, capCheck)
     return percent
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetBonus()
--- DESC : Gets the bonus based on the given quantity value in percent or as item count.
--- **************************************************************************
+---Gets the bonus based on the given quantity value in percent or as item count.
+---@param p number Current value.
+---@param g number Goal value.
+---@param inPercent boolean Return the bonus as a percentage when true, otherwise as an item count.
+---@return number
 function FarmBuddy:GetBonus(p, g, inPercent)
     local bonus = 0
     local percent = self:GetPercent(p, g, false)
@@ -70,10 +71,11 @@ function FarmBuddy:GetBonus(p, g, inPercent)
     return bonus
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SortItemsByKey()
--- DESC : Sort items by the given key.
--- **************************************************************************
+---Sort items by the given key.
+---@param a table
+---@param b table
+---@param key string Table key to sort by.
+---@return boolean
 function FarmBuddy:SortItemsByKey(a, b, key)
     if (self.db.profile.settings.sortOrder == 'asc') then
         return a[key] < b[key]
@@ -82,10 +84,11 @@ function FarmBuddy:SortItemsByKey(a, b, key)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetCount()
--- DESC : Gets the item count.
--- **************************************************************************
+---Gets the item count.
+---@param itemInfo table
+---@param quantity? number Goal quantity.
+---@param showIndicator? boolean Append an 'x' indicator when no goal is set.
+---@return number|string count Numeric count, or a formatted string when a goal/indicator is shown.
 function FarmBuddy:GetCount(itemInfo, quantity, showIndicator)
     local includeBank = self.db.profile.settings.includeBank
     local count = itemInfo.CountBags

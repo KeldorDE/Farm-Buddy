@@ -9,10 +9,10 @@ local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID)
 local ITEM_QUEUE = {}
 local ITEM_INFO_CACHE = {}
 
--- **************************************************************************
--- NAME : FarmBuddy:GetItemInfo()
--- DESC : Gets information for the given item name.
--- **************************************************************************
+---Gets information for the given item name.
+---@param item number|string Item ID, name or item link.
+---@param uniqueID? string Unique storage ID used to queue the item if not yet cached.
+---@return table? itemInfo Item information, or nil if the item data is not available yet.
 function FarmBuddy:GetItemInfo(item, uniqueID)
     if not item then
         return nil
@@ -54,10 +54,9 @@ function FarmBuddy:GetItemInfo(item, uniqueID)
     }
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:AddItemToQueue()
--- DESC : Adds the item to the receive queue.
--- **************************************************************************
+---Adds the item to the receive queue.
+---@param uniqueID string Unique storage ID of the item.
+---@param item number|string Item ID, name or item link.
 function FarmBuddy:AddItemToQueue(uniqueID, item)
     for _, v in pairs(ITEM_QUEUE) do
         if v.uniqueID == uniqueID then return end
@@ -69,10 +68,7 @@ function FarmBuddy:AddItemToQueue(uniqueID, item)
     })
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:ItemInfoReceived()
--- DESC : Called when the item info has received.
--- **************************************************************************
+---Called when the item info has received.
 function FarmBuddy:ItemInfoReceived()
     local queue = {}
     for k, v in pairs(ITEM_QUEUE) do
@@ -88,18 +84,17 @@ function FarmBuddy:ItemInfoReceived()
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetIconString()
--- DESC : Gets an icon string.
--- **************************************************************************
+---Gets an icon string.
+---@param icon number|string Icon file data ID or texture path.
+---@param space? boolean Append a trailing space when true.
+---@return string
 function FarmBuddy:GetIconString(icon, space)
     return string.format('|T%s:%d|t%s', icon, 16, space and ' ' or '')
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetNameFromItemLink()
--- DESC : Gets the item link without the brackets.
--- **************************************************************************
+---Gets the item link without the brackets.
+---@param itemLink string
+---@return string
 function FarmBuddy:GetNameFromItemLink(itemLink)
     return (itemLink:gsub("%[(.-)%]", "%1"))
 end

@@ -11,10 +11,14 @@ local FRAME_NAME = 'FarmBuddyAlertFrameTemplate'
 local FRAME = CreateFrame('Button', FRAME_NAME, UIParent, FRAME_NAME)
 local FRAME_HIDDEN = true
 
--- **************************************************************************
--- NAME : FarmBuddyNotification_Show()
--- DESC : Shows a notification frame for the given item link.
--- **************************************************************************
+---Shows a notification frame for the given item link.
+---@param name string Item name.
+---@param icon number|string Icon file data ID or texture path.
+---@param goal number|string Goal quantity shown before the name.
+---@param sound? number|string Sound to play, or nil for no sound.
+---@param duration number Display duration in seconds.
+---@param glow boolean Show the glow animation.
+---@param shine boolean Show the shine animation.
 function FarmBuddyNotification_Show(name, icon, goal, sound, duration, glow, shine)
 
     FarmBuddyNotification_HideNotification(false)
@@ -63,10 +67,8 @@ function FarmBuddyNotification_Show(name, icon, goal, sound, duration, glow, shi
     FRAME.waitAndAnimOut:Play()
 end
 
--- **************************************************************************
--- NAME : FarmBuddyNotification_HideNotification()
--- DESC : Resets the timer and hides the notification.
--- **************************************************************************
+---Resets the timer and hides the notification.
+---@param click? boolean Play the out-animation when triggered by a click.
 function FarmBuddyNotification_HideNotification(click)
     FRAME_HIDDEN = true
     FRAME.waitAndAnimOut:Stop()
@@ -75,42 +77,33 @@ function FarmBuddyNotification_HideNotification(click)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddyNotification_SetTitle()
--- DESC : Sets the notification title.
--- **************************************************************************
+---Sets the notification title.
+---@param title string
 function FarmBuddyNotification_SetTitle(title)
     FRAME.unlocked:SetText(title)
 end
 
--- **************************************************************************
--- NAME : FarmBuddyNotification_SetText()
--- DESC : Sets the notification text.
--- **************************************************************************
+---Sets the notification text.
+---@param text string
 function FarmBuddyNotification_SetText(text)
     FRAME.Name:SetText(text)
 end
 
--- **************************************************************************
--- NAME : FarmBuddyNotification_SetIcon()
--- DESC : Sets the notification icon.
--- **************************************************************************
+---Sets the notification icon.
+---@param icon number|string Icon file data ID or texture path.
 function FarmBuddyNotification_SetIcon(icon)
     FRAME.Icon.Texture:SetTexture(icon)
 end
 
--- **************************************************************************
--- NAME : FarmBuddyNotification_SetWidth()
--- DESC : Sets the notification frame width.
--- **************************************************************************
+---Sets the notification frame width.
+---@param width number
 function FarmBuddyNotification_SetWidth(width)
     FRAME:SetWidth(width)
 end
 
--- **************************************************************************
--- NAME : FarmBuddyNotification_OnMouseDown()
--- DESC : Handles the OnMouseDown event for the FarmBuddyAnchor frame.
--- **************************************************************************
+---Handles the OnMouseDown event for the FarmBuddyAnchor frame.
+---@param self table The anchor frame.
+---@param button string Mouse button that was pressed.
 function FarmBuddyNotification_OnMouseDown(self, button)
     if button == 'LeftButton' and not self.isMoving then
         self:StartMoving()
@@ -123,10 +116,9 @@ function FarmBuddyNotification_OnMouseDown(self, button)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddyNotification_OnMouseUp()
--- DESC : Handles the OnMouseUp event for the FarmBuddyAnchor frame.
--- **************************************************************************
+---Handles the OnMouseUp event for the FarmBuddyAnchor frame.
+---@param self table The anchor frame.
+---@param button string Mouse button that was released.
 function FarmBuddyNotification_OnMouseUp(self, button)
     if button == 'LeftButton' and self.isMoving then
         self:StopMovingOrSizing()
@@ -134,10 +126,7 @@ function FarmBuddyNotification_OnMouseUp(self, button)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddyNotification_ShowAnchor()
--- DESC : Shows the Notification Anchor frame.
--- **************************************************************************
+---Shows the Notification Anchor frame.
 function FarmBuddyNotification_ShowAnchor()
     -- Set Scale for Anchor frame
     FarmBuddyAnchor:SetScale(FRAME:GetEffectiveScale())
@@ -146,10 +135,8 @@ function FarmBuddyNotification_ShowAnchor()
     FarmBuddyAnchor:Show()
 end
 
--- **************************************************************************
--- NAME : FarmBuddyNotification_Shown()
--- DESC : Gets the notification is currently shown status.
--- **************************************************************************
+---Gets the notification is currently shown status.
+---@return boolean shown True while a notification is currently displayed.
 function FarmBuddyNotification_Shown()
     if FRAME_HIDDEN == false then
         return true

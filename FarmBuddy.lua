@@ -57,10 +57,7 @@ local DEFAULTS = {
     }
 }
 
--- **************************************************************************
--- NAME : FarmBuddy:OnInitialize()
--- DESC : Is called by AceAddon when the addon is first loaded.
--- **************************************************************************
+---Is called by AceAddon when the addon is first loaded.
 function FarmBuddy:OnInitialize()
 
     -- Init SavedVariables
@@ -100,28 +97,19 @@ function FarmBuddy:OnInitialize()
     FarmBuddyFrame.AddItemButton:SetScript('OnClick', function(_, button) self:AddItemClick(button) end)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:OnEnable()
--- DESC : Is called when the Plugin gets enabled.
--- **************************************************************************
+---Is called when the Plugin gets enabled.
 function FarmBuddy:OnEnable()
     self:SecureHook('HandleModifiedItemClick', 'ModifiedClick')
     self:ScheduleRepeatingTimer('NotificationTask', 1)
     self:ScheduleRepeatingTimer('ItemInfoReceived', 5)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:OnDisable()
--- DESC : Is called when the Plugin gets disabled.
--- **************************************************************************
+---Is called when the Plugin gets disabled.
 function FarmBuddy:OnDisable()
     self:CancelAllTimers()
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:PlayerEnteringWorld()
--- DESC : Is called when the player enters the world.
--- **************************************************************************
+---Is called when the player enters the world.
 function FarmBuddy:PlayerEnteringWorld()
     self:UnregisterEvent('PLAYER_ENTERING_WORLD')
 
@@ -142,10 +130,7 @@ function FarmBuddy:PlayerEnteringWorld()
     end)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:BagUpdateDelayed()
--- DESC : Parse events registered to plugin and act on them.
--- **************************************************************************
+---Parse events registered to plugin and act on them.
 function FarmBuddy:BagUpdateDelayed()
 
     if not ITEM_DATA_INIT_COMPLETE then
@@ -156,10 +141,7 @@ function FarmBuddy:BagUpdateDelayed()
     self:UpdateGUI()
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:PlayerRegenDisabled()
--- DESC : Fires when the player enters combat.
--- **************************************************************************
+---Fires when the player enters combat.
 function FarmBuddy:PlayerRegenDisabled()
 
     if (self.db.profile.settings.hideFrameInCombat == true) then
@@ -169,10 +151,7 @@ function FarmBuddy:PlayerRegenDisabled()
     PLAYER_IN_COMBAT = true
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:PlayerRegenDisabled()
--- DESC : Fires if the player leaves combat.
--- **************************************************************************
+---Fires if the player leaves combat.
 function FarmBuddy:PlayerRegenEnabled()
     if (self.db.profile.settings.showFrame == true) then
         FarmBuddyFrame:Show()
@@ -181,10 +160,7 @@ function FarmBuddy:PlayerRegenEnabled()
     PLAYER_IN_COMBAT = false
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:InitItems()
--- DESC : Init all items including counts.
--- **************************************************************************
+---Init all items including counts.
 function FarmBuddy:InitItems()
     -- Copy saved items to temp storage to track counts
     if (self.db.profile.items ~= nil) then
@@ -209,20 +185,16 @@ function FarmBuddy:InitItems()
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SortItems()
--- DESC : Sort items by the given setting.
--- **************************************************************************
+---Sort items by the given setting.
 function FarmBuddy:SortItems()
     table.sort(ITEM_STORAGE, function (a, b)
         return self:SortItemsByKey(a, b, self.db.profile.settings.sortBy)
     end)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:ModifiedClick()
--- DESC : Is called when an item is clicked with modifier key.
--- **************************************************************************
+---Is called when an item is clicked with modifier key.
+---@param itemLink string
+---@param itemLocation? table Item location (ItemLocationMixin) or nil for bags/bank/mail.
 function FarmBuddy:ModifiedClick(itemLink, itemLocation)
     -- item location can be nil for bags/bank/mail and is not nil for inventory slots, make an explicit check
     if itemLocation and itemLocation.IsBagAndSlot and (not itemLocation:IsBagAndSlot()) then
@@ -283,10 +255,9 @@ function FarmBuddy:ModifiedClick(itemLink, itemLocation)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetItemIDByName()
--- DESC : Get the unique item ID by item name.
--- **************************************************************************
+---Get the unique item ID by item name.
+---@param name string
+---@return string? id Unique storage ID, or nil if the item is not tracked.
 function FarmBuddy:GetItemIDByName(name)
     local id
 
@@ -300,10 +271,11 @@ function FarmBuddy:GetItemIDByName(name)
     return id
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:QueueNotification()
--- DESC : Queues a notification.
--- **************************************************************************
+---Queues a notification.
+---@param index number Item ID used as the queue key.
+---@param itemName string
+---@param itemIconFileDataID number
+---@param quantity number Goal quantity.
 function FarmBuddy:QueueNotification(index, itemName, itemIconFileDataID, quantity)
     NOTIFICATION_QUEUE[index] = {
         Index = index,
@@ -313,10 +285,7 @@ function FarmBuddy:QueueNotification(index, itemName, itemIconFileDataID, quanti
     }
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:NotificationTask()
--- DESC : Is called by the timer to handle the next notification.
--- **************************************************************************
+---Is called by the timer to handle the next notification.
 function FarmBuddy:NotificationTask()
     if FarmBuddyNotification_Shown() == false then
         local hideInCombat = self.db.profile.settings.hideNotificationsInCombat
@@ -332,10 +301,12 @@ function FarmBuddy:NotificationTask()
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:ShowNotification()
--- DESC : Raises a notification.
--- **************************************************************************
+---Raises a notification.
+---@param index number Item ID used as the trigger key.
+---@param name string Item name.
+---@param icon number Icon file data ID.
+---@param quantity number Goal quantity.
+---@param demo? boolean Force showing the notification (preview), bypassing the triggered state.
 function FarmBuddy:ShowNotification(index, name, icon, quantity, demo)
     local notificationEnabled = self.db.profile.settings.goalNotification
     if (notificationEnabled and not NOTIFICATION_TRIGGERED[index]) or demo then
@@ -360,10 +331,7 @@ function FarmBuddy:ShowNotification(index, name, icon, quantity, demo)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:UpdateGUI()
--- DESC : Updates the GUI elements.
--- **************************************************************************
+---Updates the GUI elements.
 function FarmBuddy:UpdateGUI()
 
     local curFrame
@@ -477,10 +445,11 @@ function FarmBuddy:UpdateGUI()
     self:UpdateDataBroker(showIcon)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetSubline()
--- DESC : Sets the item subline based on the user settings.
--- **************************************************************************
+---Sets the item subline based on the user settings.
+---@param frame table Item frame containing the Subline and Complete regions.
+---@param itemInfo table
+---@param itemStorage table
+---@param goalReached boolean
 function FarmBuddy:SetSubline(frame, itemInfo, itemStorage, goalReached)
     local point, _, _, _, yOfs = frame.Subline:GetPoint()
 
@@ -497,10 +466,10 @@ function FarmBuddy:SetSubline(frame, itemInfo, itemStorage, goalReached)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetupProgressBar()
--- DESC : Sets the values for the progress bar.
--- **************************************************************************
+---Sets the values for the progress bar.
+---@param frameName string Base name of the item frame.
+---@param itemInfo table
+---@param itemStorage table
 function FarmBuddy:SetupProgressBar(frameName, itemInfo, itemStorage)
     local frame = _G[frameName .. 'ProgressBar']
     local itemCount = self:GetCount(itemInfo)
@@ -534,10 +503,8 @@ function FarmBuddy:SetupProgressBar(frameName, itemInfo, itemStorage)
     frame:SetStatusBarColor(color.r, color.g, color.b, color.a)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:RemoveItemFrame()
--- DESC : Removes the item frame with the given ID.
--- **************************************************************************
+---Removes the item frame with the given ID.
+---@param id string Unique storage ID of the item.
 function FarmBuddy:RemoveItemFrame(id)
     local frameName = FARM_BUDDY_ID .. 'Item' .. id
     if (ITEM_FRAMES[frameName] ~= nil) then
@@ -546,20 +513,14 @@ function FarmBuddy:RemoveItemFrame(id)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetScale()
--- DESC : Removes the item frame with the given ID.
--- **************************************************************************
+---Applies the configured frame scale.
 function FarmBuddy:SetScale()
     if (self.db.profile.settings.frameScale) then
         FarmBuddyFrame:SetScale(self.db.profile.settings.frameScale)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SaveFramePosition()
--- DESC : Saves the current position of the frame.
--- **************************************************************************
+---Saves the current position of the frame.
 function FarmBuddy:SaveFramePosition()
     local point, _, relativePoint, x, y = FarmBuddyFrame:GetPoint()
     self.db.profile.framePosition = {
@@ -567,10 +528,7 @@ function FarmBuddy:SaveFramePosition()
     }
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:RestoreFramePosition()
--- DESC : Restores the saved position of the frame.
--- **************************************************************************
+---Restores the saved position of the frame.
 function FarmBuddy:RestoreFramePosition()
     local pos = self.db.profile.framePosition
     FarmBuddyFrame:ClearAllPoints()

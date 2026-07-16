@@ -39,18 +39,14 @@ local CHAT_COMMANDS = {
     }
 }
 
--- **************************************************************************
--- NAME : FarmBuddy:InitChatCommands()
--- DESC : Creates the chat commands.
--- **************************************************************************
+---Creates the chat commands.
 function FarmBuddy:InitChatCommands()
     self:RegisterChatCommand(CHAT_COMMAND, 'ChatCommand')
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetChatCommandsHelp()
--- DESC : Returns the help text of the chat commands.
--- **************************************************************************
+---Returns the help text of the chat commands.
+---@param printOut boolean
+---@return string
 function FarmBuddy:GetChatCommandsHelp(printOut)
     local helpStr = ''
 
@@ -72,10 +68,8 @@ function FarmBuddy:GetChatCommandsHelp(printOut)
     return helpStr
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:ChatCommand()
--- DESC : Handles AddOn commands.
--- **************************************************************************
+---Handles AddOn commands.
+---@param input string
 function FarmBuddy:ChatCommand(input)
     local cmd, value, arg1 = self:GetArgs(input, 3)
 
@@ -109,27 +103,19 @@ function FarmBuddy:ChatCommand(input)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:CmdGetHelp()
--- DESC : Handles the help chat command.
--- **************************************************************************
+---Handles the help chat command.
 function FarmBuddy:CmdGetHelp()
     self:Print(L['FARM_BUDDY_COMMAND_LIST'] .. '\n')
     self:GetChatCommandsHelp(true)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:CmdVersion()
--- DESC : Handles the version chat command.
--- **************************************************************************
+---Handles the version chat command.
 function FarmBuddy:CmdVersion()
     self:Print(C_AddOns.GetAddOnMetadata('FarmBuddy', 'Version'))
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:CmdReset()
--- DESC : Handles the reset chat command.
--- **************************************************************************
+---Handles the reset chat command.
+---@param value string
 function FarmBuddy:CmdReset(value)
     if value == 'all' then
         self:ResetConfig()
@@ -143,10 +129,9 @@ function FarmBuddy:CmdReset(value)
     self:Print(L['FARM_BUDDY_CONFIG_RESET_MSG'])
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:CmdTrack()
--- DESC : Handles the track chat command.
--- **************************************************************************
+---Handles the track chat command.
+---@param item string
+---@param quantity string|number
 function FarmBuddy:CmdTrack(item, quantity)
     if item ~= nil then
         -- Convert item link to name
@@ -176,10 +161,9 @@ function FarmBuddy:CmdTrack(item, quantity)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:CmdQuantity()
--- DESC : Handles the quantity chat command.
--- **************************************************************************
+---Handles the quantity chat command.
+---@param item string
+---@param quantity string|number
 function FarmBuddy:CmdQuantity(item, quantity)
     if item ~= nil then
         local status = self:ValidateNumber(nil, quantity)
@@ -203,26 +187,19 @@ function FarmBuddy:CmdQuantity(item, quantity)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:CmdToggle()
--- DESC : Handles the toggle chat command.
--- **************************************************************************
+---Handles the toggle chat command.
 function FarmBuddy:CmdToggle()
     self:ToggleShowFrame()
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:CmdSettings()
--- DESC : Handles the settings chat command.
--- **************************************************************************
+---Handles the settings chat command.
 function FarmBuddy:CmdSettings()
     self:OpenSettings('tab_general')
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:ItemLinkToName()
--- DESC : Converts a item link to item name.
--- **************************************************************************
+---Converts a item link to item ID.
+---@param item string
+---@return string
 function FarmBuddy:ItemLinkToID(item)
     local itemID = item:match("item:(%d+)")
     if (itemID ~= nil) then

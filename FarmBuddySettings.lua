@@ -26,10 +26,7 @@ local NOTIFICATION_SOUNDS = {
     [SOUNDKIT.UI_LEGENDARY_LOOT_TOAST]      = L['FARM_BUDDY_SOUND_LEGENDARY_LOOT'],
 }
 
--- **************************************************************************
--- NAME : FarmBuddy:InitSettings()
--- DESC : Creates the configuration page.
--- **************************************************************************
+---Creates the configuration page.
 function FarmBuddy:InitSettings()
     LibStub('AceConfig-3.0'):RegisterOptionsTable(FARM_BUDDY_ADDON_NAME, self:GetConfigOptions())
     self.optionsFrame, self.optionsID = LibStub('AceConfigDialog-3.0'):AddToBlizOptions(FARM_BUDDY_ADDON_NAME)
@@ -38,10 +35,8 @@ function FarmBuddy:InitSettings()
     self:RegisterDialogs()
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetConfigOption()
--- DESC : Gets the configuration array for the AceConfig lib.
--- **************************************************************************
+---Gets the configuration array for the AceConfig lib.
+---@return table
 function FarmBuddy:GetConfigOptions()
     local options = {
         name = FARM_BUDDY_ADDON_NAME,
@@ -770,10 +765,10 @@ function FarmBuddy:GetConfigOptions()
     return options
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:AddConfigItem()
--- DESC : Adds a new config item row to tree.
--- **************************************************************************
+---Adds a new config item row to tree.
+---@param id string|nil
+---@param itemID number|string
+---@param name string|nil
 function FarmBuddy:AddConfigItem(id, itemID, name)
 
     local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
@@ -916,10 +911,7 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
     CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:LoadExistingConfigItems()
--- DESC : Loads existing items from SavedVariables.
--- **************************************************************************
+---Loads existing items from SavedVariables.
 function FarmBuddy:LoadExistingConfigItems()
     if (self.db.profile.items ~= nil) then
         local items = self.db.profile.items
@@ -930,10 +922,9 @@ function FarmBuddy:LoadExistingConfigItems()
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetItemIndexByID()
--- DESC : Gets the SavedVariables index for the given item ID.
--- **************************************************************************
+---Gets the SavedVariables index for the given item ID.
+---@param id string
+---@return number?
 function FarmBuddy:GetItemIndexByID(id)
     if (self.db.profile.items ~= nil) then
         for k, v in pairs(self.db.profile.items) do
@@ -946,10 +937,9 @@ function FarmBuddy:GetItemIndexByID(id)
     return nil
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetItemUniqueIDByItemID()
--- DESC : Gets the unique ID from the SavedVariables by item ID.
--- **************************************************************************
+---Gets the unique ID from the SavedVariables by item ID.
+---@param itemID number|string
+---@return string?
 function FarmBuddy:GetItemUniqueIDByItemID(itemID)
     if (self.db.profile.items ~= nil) then
         for _, v in pairs(self.db.profile.items) do
@@ -962,10 +952,11 @@ function FarmBuddy:GetItemUniqueIDByItemID(itemID)
     return nil
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetItemFromSV()
--- DESC : Gets the key value from the SavedVariables item list.
--- **************************************************************************
+---Gets the key value from the SavedVariables item list.
+---@param id string
+---@param key string
+---@param numeric boolean
+---@return number|string
 function FarmBuddy:GetItemFromSV(id, key, numeric)
 
     local index = self:GetItemIndexByID(id)
@@ -990,10 +981,11 @@ function FarmBuddy:GetItemFromSV(id, key, numeric)
     return value
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetItemProp()
--- DESC : Saves the item with the given ID and key to the SavedVariables.
--- **************************************************************************
+---Saves the item with the given ID and key to the SavedVariables.
+---@param id string
+---@param key string
+---@param input string|number
+---@param numeric boolean
 function FarmBuddy:SetItemProp(id, key, input, numeric)
 
     local index = self:GetItemIndexByID(id)
@@ -1019,10 +1011,9 @@ function FarmBuddy:SetItemProp(id, key, input, numeric)
     self:UpdateGUI()
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetItem()
--- DESC : Receive item info or fetch info from the server.
--- **************************************************************************
+---Receive item info or fetch info from the server.
+---@param id string
+---@param input string
 function FarmBuddy:SetItem(id, input)
 
     self:SetItemProp(id, 'name', input, false)
@@ -1033,10 +1024,10 @@ function FarmBuddy:SetItem(id, input)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetKeySetting()
--- DESC : Get the active status for the given key from the SavedVariables.
--- **************************************************************************
+---Get the active status for the given key from the SavedVariables.
+---@param _ table
+---@param key string
+---@return boolean
 function FarmBuddy:GetKeySetting(_, key)
 
     if (self.db.profile.settings.fastTrackingKeys ~= nil) then
@@ -1048,10 +1039,10 @@ function FarmBuddy:GetKeySetting(_, key)
     return false
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetKeySetting()
--- DESC : Sets the status for the given key from the SavedVariables.
--- **************************************************************************
+---Sets the status for the given key from the SavedVariables.
+---@param _ table
+---@param key string
+---@param state boolean
 function FarmBuddy:SetKeySetting(_, key, state)
 
     if (self.db.profile.settings.fastTrackingKeys ~= nil) then
@@ -1061,10 +1052,8 @@ function FarmBuddy:SetKeySetting(_, key, state)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:RemoveItem()
--- DESC : Removes the item with the given ID from the settings GUI and SavedVariables.
--- **************************************************************************
+---Removes the item with the given ID from the settings GUI and SavedVariables.
+---@param info table
 function FarmBuddy:RemoveItem(info)
 
     local groupName = ITEM_PREFIX .. info.option.unique_index
@@ -1090,10 +1079,7 @@ function FarmBuddy:RemoveItem(info)
     CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:ReindexConfigItems()
--- DESC : Number item entries by it's new order.
--- **************************************************************************
+---Number item entries by it's new order.
 function FarmBuddy:ReindexConfigItems()
 
     local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
@@ -1108,10 +1094,9 @@ function FarmBuddy:ReindexConfigItems()
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetOptionOrder()
--- DESC : A helper function to order the option items in the order as listed in the array.
--- **************************************************************************
+---A helper function to order the option items in the order as listed in the array.
+---@param category string
+---@return number
 function FarmBuddy:GetOptionOrder(category)
     if not OPTION_ORDER[category] then
         OPTION_ORDER[category] = 0
@@ -1122,10 +1107,10 @@ function FarmBuddy:GetOptionOrder(category)
     return OPTION_ORDER[category]
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetSetting()
--- DESC : Gets the setting value.
--- **************************************************************************
+---Gets the setting value.
+---@param name string
+---@param type string
+---@return any
 function FarmBuddy:GetSetting(name, type)
 
     local val
@@ -1143,10 +1128,11 @@ function FarmBuddy:GetSetting(name, type)
     return val
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetSetting()
--- DESC : Sets the setting value.
--- **************************************************************************
+---Sets the setting value.
+---@param name string
+---@param type string
+---@param input any
+---@param updateGUI boolean
 function FarmBuddy:SetSetting(name, type, input, updateGUI)
 
     if (self.db.profile.settings ~= nil) then
@@ -1166,10 +1152,13 @@ function FarmBuddy:SetSetting(name, type, input, updateGUI)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetColorSetting()
--- DESC : Sets the color setting value.
--- **************************************************************************
+---Sets the color setting value.
+---@param name string
+---@param r number
+---@param g number
+---@param b number
+---@param a number
+---@param updateGUI boolean
 function FarmBuddy:SetColorSetting(name, r, g, b, a, updateGUI)
 
     if (self.db.profile.settings ~= nil) then
@@ -1185,10 +1174,12 @@ function FarmBuddy:SetColorSetting(name, r, g, b, a, updateGUI)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetColorSetting()
--- DESC : Gets the color setting value.
--- **************************************************************************
+---Gets the color setting value.
+---@param name string
+---@return number? r
+---@return number? g
+---@return number? b
+---@return number? a
 function FarmBuddy:GetColorSetting(name)
 
     if (self.db.profile.settings ~= nil) then
@@ -1201,29 +1192,22 @@ function FarmBuddy:GetColorSetting(name)
     return nil
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:TestNotification()
--- DESC : Raises a test notification.
--- **************************************************************************
+---Raises a test notification.
 function FarmBuddy:TestNotification()
     local itemInfo = self:GetItemInfo(L['FARM_BUDDY_NOTIFICATION_DEMO_ITEM_NAME'])
     self:ShowNotification(0, itemInfo.Name, itemInfo.IconFileDataID, 200, true)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GenerateChars()
--- DESC : Generates a table of random chars.
--- **************************************************************************
+---Generates a table of random chars.
 function FarmBuddy:GenerateChars()
     for i = 48, 57 do table.insert(RANDOM_CHARS, string.char(i)) end
     for i = 65, 90 do table.insert(RANDOM_CHARS, string.char(i)) end
     for i = 97, 122 do table.insert(RANDOM_CHARS, string.char(i)) end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetRandomString()
--- DESC : Generates a random string with the given length.
--- **************************************************************************
+---Generates a random string with the given length.
+---@param length number
+---@return string
 function FarmBuddy:GetRandomString(length)
     local strTable = {}
 
@@ -1234,10 +1218,10 @@ function FarmBuddy:GetRandomString(length)
     return table.concat(strTable)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:ValidateNumber()
--- DESC : Checks if the entered value a valid and positive number.
--- **************************************************************************
+---Checks if the entered value a valid and positive number.
+---@param _ table
+---@param input string
+---@return boolean
 function FarmBuddy:ValidateNumber(_, input)
 
     local number = tonumber(input)
@@ -1249,10 +1233,8 @@ function FarmBuddy:ValidateNumber(_, input)
     return true
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetSounds()
--- DESC : Get a list of available sounds.
--- **************************************************************************
+---Get a list of available sounds.
+---@return table
 function FarmBuddy:GetNotificationSounds()
 
     local sounds = {}
@@ -1264,10 +1246,8 @@ function FarmBuddy:GetNotificationSounds()
     return sounds
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetNotificationSoundsSorting()
--- DESC : Get the sound keys sorted by their label ascending.
--- **************************************************************************
+---Get the sound keys sorted by their label ascending.
+---@return table
 function FarmBuddy:GetNotificationSoundsSorting()
 
     local sorting = {}
@@ -1283,10 +1263,7 @@ function FarmBuddy:GetNotificationSoundsSorting()
     return sorting
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:RegisterDialogs()
--- DESC : Registers the addons dialog boxes.
--- **************************************************************************
+---Registers the addons dialog boxes.
 function FarmBuddy:RegisterDialogs()
 
     StaticPopupDialogs[FARM_BUDDY_ADDON_NAME .. 'ResetAllItemsConfirm'] = {
@@ -1327,10 +1304,8 @@ function FarmBuddy:RegisterDialogs()
     }
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:ResetItems()
--- DESC : Resets all tracked items.
--- **************************************************************************
+---Resets all tracked items.
+---@param update boolean
 function FarmBuddy:ResetItems(update)
 
     if (self.db.profile.items ~= nil) then
@@ -1353,10 +1328,7 @@ function FarmBuddy:ResetItems(update)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:ResetConfig()
--- DESC : Resets all settings to default.
--- **************************************************************************
+---Resets all settings to default.
 function FarmBuddy:ResetConfig()
     self:ResetItems(false)
     self.db:ResetProfile()
@@ -1376,10 +1348,9 @@ function FarmBuddy:ResetConfig()
     CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetReceivedItemInfo()
--- DESC : Sets the item ID and the correct name.
--- **************************************************************************
+---Sets the item ID and the correct name.
+---@param uniqueID string
+---@param info table
 function FarmBuddy:SetReceivedItemInfo(uniqueID, info)
     self:SetItemProp(uniqueID, 'itemID', info.ItemID, true)
     self:SetItemProp(uniqueID, 'name', info.Name, false)
@@ -1392,10 +1363,11 @@ function FarmBuddy:SetReceivedItemInfo(uniqueID, info)
     CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetSettingProp()
--- DESC : Sets the settings item.
--- **************************************************************************
+---Sets the settings item.
+---@param uniqueID string
+---@param configKey string
+---@param propKey string
+---@param value any
 function FarmBuddy:SetSettingProp(uniqueID, configKey, propKey, value)
 
     local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
@@ -1413,10 +1385,7 @@ function FarmBuddy:SetSettingProp(uniqueID, configKey, propKey, value)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetTitleDisplay()
--- DESC : Shows or hides the addon title bases on the showTitle setting.
--- **************************************************************************
+---Shows or hides the addon title bases on the showTitle setting.
 function FarmBuddy:SetTitleDisplay()
     if (self.db.profile.settings.showTitle == true) then
         FarmBuddyFrame.Title:Show()
@@ -1425,10 +1394,7 @@ function FarmBuddy:SetTitleDisplay()
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetButtonDisplay()
--- DESC : Shows or hides the addon buttons bases on the showButtons setting.
--- **************************************************************************
+---Shows or hides the addon buttons bases on the showButtons setting.
 function FarmBuddy:SetButtonDisplay()
     if (self.db.profile.settings.showButtons == true) then
         FarmBuddyFrame.AddItemButton:Show()
@@ -1437,26 +1403,17 @@ function FarmBuddy:SetButtonDisplay()
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetFrameLockStatus()
--- DESC : Set or unset the frame is locked setting.
--- **************************************************************************
+---Set or unset the frame is locked setting.
 function FarmBuddy:SetFrameLockStatus()
     FarmBuddyFrame.FrameLock = self.db.profile.settings.frameLocked
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetBackgroundTransparency()
--- DESC : Set the background transparency based on the user setting.
--- **************************************************************************
+---Set the background transparency based on the user setting.
 function FarmBuddy:SetBackgroundTransparency()
     FarmBuddyFrame:SetBackdropColor(0, 0, 0, self.db.profile.settings.backgroundTransparency)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetShowFrame()
--- DESC : Sets frame display.
--- **************************************************************************
+---Sets frame display.
 function FarmBuddy:SetShowFrame()
     if (self.db.profile.settings.showFrame == true) then
         FarmBuddyFrame:Show()
@@ -1465,10 +1422,7 @@ function FarmBuddy:SetShowFrame()
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:ToggleShowFrame()
--- DESC : Toggles frame display.
--- **************************************************************************
+---Toggles frame display.
 function FarmBuddy:ToggleShowFrame()
     if (self.db.profile.settings.showFrame == true) then
        FarmBuddyFrame:Hide()
@@ -1482,30 +1436,23 @@ function FarmBuddy:ToggleShowFrame()
     CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:ResetFramePosition()
--- DESC : Resets the main frame to the center of the screen.
--- **************************************************************************
+---Resets the main frame to the center of the screen.
 function FarmBuddy:ResetFramePosition()
     self.db.profile.framePosition = nil
     FarmBuddyFrame:ClearAllPoints()
     FarmBuddyFrame:SetPoint('CENTER')
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:AddItemClick()
--- DESC : Opens the FarmBuddy Settings GUI with focus on the items tab.
--- **************************************************************************
+---Opens the FarmBuddy Settings GUI with focus on the items tab.
+---@param button string
 function FarmBuddy:AddItemClick(button)
     if (button == 'LeftButton') then
         self:OpenSettings('tab_items')
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:OpenSettings()
--- DESC : Opens the FarmBuddy settings GUI.
--- **************************************************************************
+---Opens the FarmBuddy settings GUI.
+---@param tab string|nil
 function FarmBuddy:OpenSettings(tab)
 
     Settings.OpenToCategory(self.optionsID)
@@ -1515,18 +1462,12 @@ function FarmBuddy:OpenSettings(tab)
     end
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:OnProfileShutdown()
--- DESC : Fires before changing the profile.
--- **************************************************************************
+---Fires before changing the profile.
 function FarmBuddy:OnProfileShutdown()
     self:ResetItems(false)
 end
 
-  -- **************************************************************************
--- NAME : FarmBuddy:OnProfileChanged()
--- DESC : Fires after changing the profile.
--- **************************************************************************
+---Fires after changing the profile.
 function FarmBuddy:OnProfileChanged()
 
     self:InitItems()
@@ -1542,19 +1483,16 @@ function FarmBuddy:OnProfileChanged()
     self:UpdateGUI()
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:SetNotificationSound()
--- DESC : Sets the notification sound.
--- **************************************************************************
+---Sets the notification sound.
+---@param _ table
+---@param input number
 function FarmBuddy:SetNotificationSound(_, input)
     self:SetSetting('notificationSound', 'number', input, false)
     PlaySound(input, 'master')
 end
 
--- **************************************************************************
--- NAME : FarmBuddy:GetNotificationSound()
--- DESC : Gets the notification sound.
--- **************************************************************************
+---Gets the notification sound.
+---@return number
 function FarmBuddy:GetNotificationSound()
     local sound = self:GetSetting('notificationSound', 'number')
     if not sound or NOTIFICATION_SOUNDS[sound] == nil then
