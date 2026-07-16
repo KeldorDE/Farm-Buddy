@@ -7,41 +7,52 @@
 
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID)
 local ITEM_QUEUE = {}
+local ITEM_INFO_CACHE = {}
 
 -- **************************************************************************
 -- NAME : FarmBuddy:GetItemInfo()
 -- DESC : Gets information for the given item name.
 -- **************************************************************************
 function FarmBuddy:GetItemInfo(item, uniqueID)
-    if item then
-        local itemName, itemLink, itemRarity = GetItemInfo(item)
+    if not item then
+        return nil
+    end
 
-        if itemLink == nil then
-            if (uniqueID ~= nil) then
+    local static = ITEM_INFO_CACHE[item]
+    if not static then
+        local itemName, itemLink, itemRarity = C_Item.GetItemInfo(item)
+        if not itemLink then
+            if uniqueID ~= nil then
                 self:AddItemToQueue(uniqueID, item)
             end
             return nil
-        else
-            local itemID = GetItemInfoInstant(item)
-            local countBags = GetItemCount(itemLink)
-            local countTotal = GetItemCount(itemLink, true)
-
-            local info = {
-                ItemID = itemID,
-                Name = itemName,
-                Link = itemLink,
-                Rarity = itemRarity,
-                IconFileDataID = GetItemIcon(itemLink),
-                CountBags = countBags,
-                CountTotal = countTotal,
-                CountBank = (countTotal - countBags)
-            }
-
-            return info
         end
+
+        local itemID, _, _, _, itemIcon = C_Item.GetItemInfoInstant(item)
+        local r, g, b = C_Item.GetItemQualityColor(itemRarity)
+        static = {
+            ItemID = itemID,
+            Name = itemName,
+            Link = itemLink,
+            Rarity = {r = r, g = g, b = b},
+            IconFileDataID = itemIcon,
+        }
+        ITEM_INFO_CACHE[item] = static
     end
 
-    return nil
+    local countBags = C_Item.GetItemCount(static.ItemID)
+    local countTotal = C_Item.GetItemCount(static.ItemID, true)
+
+    return {
+        ItemID = static.ItemID,
+        Name = static.Name,
+        Link = static.Link,
+        IconFileDataID = static.IconFileDataID,
+        Rarity = static.Rarity,
+        CountBags = countBags,
+        CountTotal = countTotal,
+        CountBank = (countTotal - countBags),
+    }
 end
 
 -- **************************************************************************

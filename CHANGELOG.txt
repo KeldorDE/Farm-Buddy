@@ -1,3 +1,9 @@
+NOT_YET_RELEASED
+------------------
+- Optimized different parts of the code
+- Updated item info retrieval to use C_Item API
+- Improved performance when displaying tracked items
+
 1.1.10
 ------------------
 - Reduced the number of notification sounds to prevent UI lag in the settings panel

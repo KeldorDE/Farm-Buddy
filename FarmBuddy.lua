@@ -392,11 +392,9 @@ function FarmBuddy:UpdateGUI()
 
             -- Only add new frame if the frame does not already exists
             if (ITEM_FRAMES[frameName] == nil) then
-                local r, g, b = GetItemQualityColor(itemInfo.Rarity)
-
                 curFrame = CreateFrame('Frame', frameName, FarmBuddyFrame, 'FarmBuddyItemTemplate')
                 curFrame.Title:SetText(itemStorage.name)
-                curFrame.Title:SetTextColor(r, g, b, 1)
+                curFrame.Title:SetTextColor(itemInfo.Rarity.r, itemInfo.Rarity.g, itemInfo.Rarity.b, 1)
                 curFrame.Texture:SetTexture(itemInfo.IconFileDataID)
 
                 progressBarFrame = CreateFrame('STATUSBAR', frameName .. 'ProgressBar', curFrame, 'FarmBuddyProgressBarTemplate')
