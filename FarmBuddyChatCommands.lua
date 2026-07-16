@@ -154,7 +154,7 @@ function FarmBuddy:CmdTrack(item, quantity)
         item = self:ItemLinkToID(item)
 
         -- Add the item
-        self:AddConfigItem(nil, item, FarmBuddy:GetNameFromItemLink(origItem))
+        self:AddConfigItem(nil, item, self:GetNameFromItemLink(origItem))
 
         if (quantity ~= nil) then
             local status = self:ValidateNumber(nil, quantity)

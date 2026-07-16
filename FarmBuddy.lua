@@ -272,7 +272,7 @@ function FarmBuddy:ModifiedClick(itemLink, itemLocation)
             local itemInfo = self:GetItemInfo(itemLink)
             if (itemInfo ~= nil) then
                 -- Add the item
-                self:AddConfigItem(nil, itemInfo.ItemID, FarmBuddy:GetNameFromItemLink(itemLink))
+                self:AddConfigItem(nil, itemInfo.ItemID, self:GetNameFromItemLink(itemLink))
                 self:InitItems()
                 self:UpdateGUI()
 

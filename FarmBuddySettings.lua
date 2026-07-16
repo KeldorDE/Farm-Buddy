@@ -31,7 +31,7 @@ local NOTIFICATION_SOUNDS = {
 -- DESC : Creates the configuration page.
 -- **************************************************************************
 function FarmBuddy:InitSettings()
-    LibStub('AceConfig-3.0'):RegisterOptionsTable(FARM_BUDDY_ADDON_NAME, FarmBuddy:GetConfigOptions())
+    LibStub('AceConfig-3.0'):RegisterOptionsTable(FARM_BUDDY_ADDON_NAME, self:GetConfigOptions())
     self.optionsFrame, self.optionsID = LibStub('AceConfigDialog-3.0'):AddToBlizOptions(FARM_BUDDY_ADDON_NAME)
     self:GenerateChars()
     self:LoadExistingConfigItems()
@@ -805,7 +805,7 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
         end
     end
 
-    local count = (FarmBuddy:TableLength(options.args.tab_items.args) - 4) + 1
+    local count = (self:TableLength(options.args.tab_items.args) - 4) + 1
 
     options.args.tab_items.args[ITEM_PREFIX .. id] = {
         name = L['FARM_BUDDY_ITEM'] .. ' ' .. count,
