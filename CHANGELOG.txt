@@ -1,4 +1,4 @@
-NOT_YET_RELEASED
+1.1.11
 ------------------
 - Optimized various parts of the code
 - Updated item info retrieval to use the C_Item API
