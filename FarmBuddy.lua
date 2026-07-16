@@ -349,39 +349,38 @@ function FarmBuddy:UpdateGUI()
 
         if itemInfo then
             local frameName = FARM_BUDDY_ID .. 'Item' .. itemStorage.id
+            curFrame = ITEM_FRAMES[frameName]
 
             if hidden then
-                if ITEM_FRAMES[frameName] then ITEM_FRAMES[frameName]:Hide() end
+                if curFrame then curFrame:Hide() end
             else
                 local itemCount = self:GetCount(itemInfo)
                 local goalReached
                 local progressBarFrame
 
-                if (_G[frameName .. 'ProgressBar'] ~= nil) then
-                    progressBarFrame = _G[frameName .. 'ProgressBar']
-                end
-
                 -- Only add new frame if the frame does not already exists
-                if (ITEM_FRAMES[frameName] == nil) then
+                if (not curFrame) then
+
                     curFrame = CreateFrame('Frame', frameName, FarmBuddyFrame, 'FarmBuddyItemTemplate')
                     curFrame.Title:SetText(itemStorage.name)
                     curFrame.Title:SetTextColor(itemInfo.Rarity.r, itemInfo.Rarity.g, itemInfo.Rarity.b, 1)
                     curFrame.Texture:SetTexture(itemInfo.IconFileDataID)
 
-                    progressBarFrame = CreateFrame('STATUSBAR', frameName .. 'ProgressBar', curFrame, 'FarmBuddyProgressBarTemplate')
-                    progressBarFrame:SetPoint('TOPLEFT', curFrame, (curFrame.Texture:GetWidth() + 7), -25)
+                    curFrame.ProgressBar = CreateFrame('STATUSBAR', frameName .. 'ProgressBar', curFrame, 'FarmBuddyProgressBarTemplate')
+                    curFrame.ProgressBar:SetPoint('TOPLEFT', curFrame, (curFrame.Texture:GetWidth() + 7), -25)
 
                     ITEM_FRAMES[frameName] = curFrame
                 else
                     curFrame = ITEM_FRAMES[frameName]
                 end
 
+                progressBarFrame = curFrame.ProgressBar
+
                 -- Handle notifications
                 if(itemStorage.quantity > 0 and itemCount >= itemStorage.quantity) then
                     goalReached = true
 
                     local previousCount = NOTIFICATION_ITEM_COUNT[itemInfo.ItemID]
-
                     if (previousCount == nil) then
                         -- The goal was already reached when the item became known
                         -- (e.g. on addon load), so mark it as triggered without
