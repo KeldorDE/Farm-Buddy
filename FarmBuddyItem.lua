@@ -51,7 +51,6 @@ function FarmBuddy:GetItemInfo(item, uniqueID)
         Rarity = static.Rarity,
         CountBags = countBags,
         CountTotal = countTotal,
-        CountBank = (countTotal - countBags),
     }
 end
 

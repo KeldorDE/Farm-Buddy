@@ -304,8 +304,13 @@ end
 -- NAME : FarmBuddy:QueueNotification()
 -- DESC : Queues a notification.
 -- **************************************************************************
-function FarmBuddy:QueueNotification(index, item, quantity)
-    NOTIFICATION_QUEUE[index] = { Index = index, Item = item, Quantity = quantity }
+function FarmBuddy:QueueNotification(index, itemName, itemIconFileDataID, quantity)
+    NOTIFICATION_QUEUE[index] = {
+        Index = index,
+        Name = itemName,
+        Icon = itemIconFileDataID,
+        Quantity = quantity
+    }
 end
 
 -- **************************************************************************
@@ -317,7 +322,7 @@ function FarmBuddy:NotificationTask()
         local hideInCombat = self.db.profile.settings.hideNotificationsInCombat
         for index, notification in pairs(NOTIFICATION_QUEUE) do
             if (hideInCombat == false or (hideInCombat == true and PLAYER_IN_COMBAT == false)) then
-                self:ShowNotification(notification.Index, notification.Item, notification.Quantity, false)
+                self:ShowNotification(notification.Index, notification.Name, notification.Icon, notification.Quantity, false)
             else
                 NOTIFICATION_TRIGGERED[notification.Index] = true
             end
@@ -331,34 +336,26 @@ end
 -- NAME : FarmBuddy:ShowNotification()
 -- DESC : Raises a notification.
 -- **************************************************************************
-function FarmBuddy:ShowNotification(index, item, quantity, demo)
-    local triggerStatus = true
-    if (NOTIFICATION_TRIGGERED[index] == nil or NOTIFICATION_TRIGGERED[index] == false) then
-        triggerStatus = false
-    end
-
+function FarmBuddy:ShowNotification(index, name, icon, quantity, demo)
     local notificationEnabled = self.db.profile.settings.goalNotification
-    if (notificationEnabled == true and triggerStatus == false) or demo == true then
+    if (notificationEnabled and not NOTIFICATION_TRIGGERED[index]) or demo then
+
         local playSound = self.db.profile.settings.playNotificationSound
         local notificationDisplayDuration = tonumber(self.db.profile.settings.notificationDisplayDuration)
         local notificationGlow = self.db.profile.settings.notificationGlow
         local notificationShine = self.db.profile.settings.notificationShine
-        local sound = nil
+        local sound
 
-        if demo == true then
-            item = L['FARM_BUDDY_NOTIFICATION_DEMO_ITEM_NAME']
-        end
-
-        if playSound == true then
+        if playSound then
             sound = self.db.profile.settings.notificationSound
         end
 
-        if demo == false then
+        if not demo then
             NOTIFICATION_TRIGGERED[index] = true
         end
 
         FarmBuddyNotification_Show(
-            item, quantity, sound, notificationDisplayDuration, notificationGlow, notificationShine
+            name, icon, quantity, sound, notificationDisplayDuration, notificationGlow, notificationShine
         )
     end
 end
@@ -423,7 +420,7 @@ function FarmBuddy:UpdateGUI()
                         NOTIFICATION_TRIGGERED[itemInfo.ItemID] = true
                     elseif (previousCount < itemStorage.quantity) then
                         -- The goal was reached through an increase in quantity (loot).
-                        self:QueueNotification(itemInfo.ItemID, itemInfo.Name, itemStorage.quantity)
+                        self:QueueNotification(itemInfo.ItemID, itemInfo.Name, itemInfo.IconFileDataID, itemStorage.quantity)
                     end
                 else
                     NOTIFICATION_QUEUE[itemInfo.ItemID] = nil

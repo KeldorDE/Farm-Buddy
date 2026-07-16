@@ -1206,7 +1206,8 @@ end
 -- DESC : Raises a test notification.
 -- **************************************************************************
 function FarmBuddy:TestNotification()
-    self:ShowNotification(0, L['FARM_BUDDY_NOTIFICATION_DEMO_ITEM_NAME'], 200, true)
+    local itemInfo = self:GetItemInfo(L['FARM_BUDDY_NOTIFICATION_DEMO_ITEM_NAME'])
+    self:ShowNotification(0, itemInfo.Name, itemInfo.IconFileDataID, 200, true)
 end
 
 -- **************************************************************************
