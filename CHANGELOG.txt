@@ -1,3 +1,7 @@
+1.1.13
+------------------
+- Fixed a settings bug
+
 1.1.12
 ------------------
 - Optimized code conditionals

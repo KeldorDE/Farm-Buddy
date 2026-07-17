@@ -4,7 +4,7 @@
 ## Notes: Adds the functionality to track farmed items in a movable window.|n|cffbbbbbbBy Keldor|r|n|nSupport:|n|cff82c5ff- patreon.com/c/keldor|r|n|n
 ## Author: Keldor (https://www.devil-coding.de)
 ## SavedVariables: FarmBuddyStandaloneDB
-## Version: 1.1.12
+## Version: 1.1.13
 ## Category: Inventory
 ## Category-deDE: Inventar
 

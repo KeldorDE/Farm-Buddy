@@ -776,7 +776,7 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
     local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
     local itemIDText
 
-    if not itemID then
+    if (itemID == nil or tonumber(itemID) == 0) then
         itemID = 0
         itemIDText = L['FARM_BUDDY_WAITING_FOR_DATA'] .. '...'
     else
@@ -784,14 +784,14 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
     end
 
     -- New item so generate a unique ID to save it in SavedVariables
-    if not id then
+    if (id == nil) then
 
         id = self:GetRandomString(ID_LENGTH)
-        if not name then
+        if (name == nil) then
             name = ''
         end
 
-        if self.db.profile.items then
+        if (self.db.profile.items ~= nil) then
             tinsert(self.db.profile.items, {
                 id = id,
                 itemID = tonumber(itemID),
@@ -915,7 +915,7 @@ end
 
 ---Loads existing items from SavedVariables.
 function FarmBuddy:LoadExistingConfigItems()
-    if self.db.profile.items then
+    if (self.db.profile.items ~= nil) then
         local items = self.db.profile.items
         for _, itemStorage in pairs(items) do
             self:AddConfigItem(itemStorage.id, itemStorage.itemID)
@@ -928,9 +928,9 @@ end
 ---@param id string
 ---@return number?
 function FarmBuddy:GetItemIndexByID(id)
-    if self.db.profile.items then
+    if (self.db.profile.items ~= nil) then
         for k, v in pairs(self.db.profile.items) do
-            if v.id == id then
+            if (v.id == id) then
                 return k
             end
         end
@@ -943,9 +943,9 @@ end
 ---@param itemID number|string
 ---@return string?
 function FarmBuddy:GetItemUniqueIDByItemID(itemID)
-    if self.db.profile.items then
+    if (self.db.profile.items ~= nil) then
         for _, v in pairs(self.db.profile.items) do
-            if tonumber(v.itemID) == tonumber(itemID) then
+            if (tonumber(v.itemID) == tonumber(itemID)) then
                 return v.id
             end
         end
@@ -962,17 +962,16 @@ end
 function FarmBuddy:GetItemFromSV(id, key, numeric)
     local index = self:GetItemIndexByID(id)
     local value
-
-    if numeric then
+    if numeric == true then
         value = 0
     else
         value = ''
     end
 
-    if index and self.db.profile.items[index][key] then
+    if(index ~= nil and self.db.profile.items[index][key] ~= nil) then
         value = self.db.profile.items[index][key]
 
-        if numeric then
+        if(numeric == true) then
             value = tonumber(value)
         else
             value = tostring(value)
@@ -989,18 +988,18 @@ end
 ---@param numeric boolean
 function FarmBuddy:SetItemProp(id, key, input, numeric)
     local index = self:GetItemIndexByID(id)
-    if index then
+    if(index ~= nil) then
 
         -- Set empty value based on numeric var
-        if input == '' then
-            if numeric then
+        if (input == '') then
+            if (numeric == true) then
                 input = 0
             else
                 input = ''
             end
         end
 
-        if numeric then
+        if (numeric == true) then
             input = tonumber(input)
         end
 
@@ -1008,9 +1007,9 @@ function FarmBuddy:SetItemProp(id, key, input, numeric)
 
         -- Only reset the trigger when the new goal exceeds the current count,
         -- so an already reached goal does not immediately notify again.
-        if key == 'quantity' then
+        if (key == 'quantity') then
             local item = self.db.profile.items[index]
-            if input > (item.count or 0) then
+            if (input > (item.count or 0)) then
                 self:ResetNotificationTrigger(item.itemID, false)
             else
                 self:ResetNotificationTrigger(item.itemID, true)
@@ -1029,7 +1028,7 @@ function FarmBuddy:SetItem(id, input)
     self:SetItemProp(id, 'name', input, false)
 
     local itemInfo = self:GetItemInfo(input, id)
-    if itemInfo then
+    if (itemInfo ~= nil) then
         self:SetReceivedItemInfo(id, itemInfo)
     end
 end
@@ -1039,8 +1038,11 @@ end
 ---@param key string
 ---@return boolean
 function FarmBuddy:GetKeySetting(_, key)
-    if self.db.profile.settings.fastTrackingKeys and self.db.profile.settings.fastTrackingKeys[key] then
-        return self.db.profile.settings.fastTrackingKeys[key]
+
+    if (self.db.profile.settings.fastTrackingKeys ~= nil) then
+        if (self.db.profile.settings.fastTrackingKeys[key] ~= nil) then
+            return self.db.profile.settings.fastTrackingKeys[key]
+        end
     end
 
     return false
@@ -1051,8 +1053,11 @@ end
 ---@param key string
 ---@param state boolean
 function FarmBuddy:SetKeySetting(_, key, state)
-    if self.db.profile.settings.fastTrackingKeys and self.db.profile.settings.fastTrackingKeys[key] then
-        self.db.profile.settings.fastTrackingKeys[key] = state
+
+    if (self.db.profile.settings.fastTrackingKeys ~= nil) then
+        if (self.db.profile.settings.fastTrackingKeys[key] ~= nil) then
+            self.db.profile.settings.fastTrackingKeys[key] = state
+        end
     end
 end
 
@@ -1062,13 +1067,13 @@ function FarmBuddy:RemoveItem(info)
     local groupName = ITEM_PREFIX .. info.option.unique_index
 
     -- Remove settings group for item ID
-    if info.options.args.tab_items.args[groupName] then
+    if (info.options.args.tab_items.args[groupName] ~= nil) then
         info.options.args.tab_items.args[groupName] = nil
     end
 
     -- Remove item from SavedVariables
     local index = self:GetItemIndexByID(info.option.unique_index)
-    if index then
+    if(index ~= nil) then
         tremove(self.db.profile.items, index)
     end
 
@@ -1085,9 +1090,9 @@ end
 ---Number item entries by it's new order.
 function FarmBuddy:ReindexConfigItems()
     local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
-    if options.args.tab_items.args then
+    if (options.args.tab_items.args ~= nil) then
         for k in pairs(options.args.tab_items.args) do
-            if string.sub(k, 1, string.len(ITEM_PREFIX)) == ITEM_PREFIX then
+            if (string.sub(k, 1, string.len(ITEM_PREFIX)) == ITEM_PREFIX) then
                 options.args.tab_items.args[k] = nil
             end
         end
@@ -1117,11 +1122,13 @@ function FarmBuddy:GetSetting(name, type)
 
     local val
 
-    if self.db.profile.settings and self.db.profile.settings[name] then
-        val = self.db.profile.settings[name]
+    if (self.db.profile.settings ~= nil) then
+        if (self.db.profile.settings[name] ~= nil) then
+            val = self.db.profile.settings[name]
 
-        if type == 'string' then
-            val = tostring(val)
+            if (type == 'string') then
+                val = tostring(val)
+            end
         end
     end
 
@@ -1135,17 +1142,19 @@ end
 ---@param updateGUI boolean
 function FarmBuddy:SetSetting(name, type, input, updateGUI)
 
-    if self.db.profile.settings and self.db.profile.settings[name] then
+    if (self.db.profile.settings ~= nil) then
+        if (self.db.profile.settings[name] ~= nil) then
 
-        if type == 'number' then
-            input = tonumber(input)
-        end
+            if(type == 'number') then
+                input = tonumber(input)
+            end
 
-        self.db.profile.settings[name] = input
+            self.db.profile.settings[name] = input
 
-        if updateGUI then
-            self:InitItems()
-            self:UpdateGUI()
+            if (updateGUI == true) then
+                self:InitItems()
+                self:UpdateGUI()
+            end
         end
     end
 end
@@ -1159,11 +1168,15 @@ end
 ---@param updateGUI boolean
 function FarmBuddy:SetColorSetting(name, r, g, b, a, updateGUI)
 
-    if self.db.profile.settings and self.db.profile.settings[name] and r and g and b then
-        self.db.profile.settings[name] = { r = r, g = g, b = b, a = a }
+    if (self.db.profile.settings ~= nil) then
+        if (self.db.profile.settings[name] ~= nil) then
+            if (r ~= nil and g ~= nil and b ~= nil) then
+                self.db.profile.settings[name] = { r = r, g = g, b = b, a = a }
 
-        if updateGUI then
-            self:UpdateGUI()
+                if (updateGUI == true) then
+                    self:UpdateGUI()
+                end
+            end
         end
     end
 end
@@ -1176,9 +1189,11 @@ end
 ---@return number? a
 function FarmBuddy:GetColorSetting(name)
 
-    if self.db.profile.settings and self.db.profile.settings[name] then
-        local color = self.db.profile.settings[name]
-        return color.r, color.g, color.b, color.a
+    if (self.db.profile.settings ~= nil) then
+        if (self.db.profile.settings[name] ~= nil) then
+            local color = self.db.profile.settings[name]
+            return color.r, color.g, color.b, color.a
+        end
     end
 
     return nil
@@ -1300,7 +1315,7 @@ end
 ---@param update boolean
 function FarmBuddy:ResetItems(update)
 
-    if self.db.profile.items then
+    if (self.db.profile.items ~= nil) then
         for k, v in pairs(self.db.profile.items) do
             self.db.profile.items[k] = nil
             self:RemoveItemFrame(v.id)
@@ -1311,7 +1326,7 @@ function FarmBuddy:ResetItems(update)
     self:ReindexConfigItems()
 
     -- Remove frame and redraw
-    if update then
+    if (update == true) then
         self:InitItems()
         self:UpdateGUI()
 
@@ -1363,13 +1378,13 @@ end
 function FarmBuddy:SetSettingProp(uniqueID, configKey, propKey, value)
 
     local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
-    if options.args.tab_items.args then
+    if (options.args.tab_items.args ~= nil) then
         for k in pairs(options.args.tab_items.args) do
 
             local prefixCheck = string.sub(k, 1, string.len(ITEM_PREFIX))
             local idCheck = string.sub(k, -string.len(uniqueID))
 
-            if prefixCheck == ITEM_PREFIX and idCheck == uniqueID then
+            if (prefixCheck == ITEM_PREFIX and idCheck == uniqueID) then
                 options.args.tab_items.args[k].args[configKey .. '_' .. uniqueID][propKey] = tostring(value)
                 break
             end
@@ -1379,7 +1394,7 @@ end
 
 ---Shows or hides the addon title bases on the showTitle setting.
 function FarmBuddy:SetTitleDisplay()
-    if self.db.profile.settings.showTitle then
+    if (self.db.profile.settings.showTitle == true) then
         FarmBuddyFrame.Title:Show()
     else
         FarmBuddyFrame.Title:Hide()
@@ -1388,7 +1403,7 @@ end
 
 ---Shows or hides the addon buttons bases on the showButtons setting.
 function FarmBuddy:SetButtonDisplay()
-    if self.db.profile.settings.showButtons then
+    if (self.db.profile.settings.showButtons == true) then
         FarmBuddyFrame.AddItemButton:Show()
     else
         FarmBuddyFrame.AddItemButton:Hide()
@@ -1407,7 +1422,7 @@ end
 
 ---Sets frame display.
 function FarmBuddy:SetShowFrame()
-    if self.db.profile.settings.showFrame then
+    if (self.db.profile.settings.showFrame == true) then
         FarmBuddyFrame:Show()
     else
         FarmBuddyFrame:Hide()
@@ -1416,7 +1431,7 @@ end
 
 ---Toggles frame display.
 function FarmBuddy:ToggleShowFrame()
-    if self.db.profile.settings.showFrame then
+    if (self.db.profile.settings.showFrame == true) then
        FarmBuddyFrame:Hide()
      self.db.profile.settings.showFrame = false
     else
@@ -1438,7 +1453,7 @@ end
 ---Opens the FarmBuddy Settings GUI with focus on the items tab.
 ---@param button string
 function FarmBuddy:AddItemClick(button)
-    if button == 'LeftButton' then
+    if (button == 'LeftButton') then
         self:OpenSettings('tab_items')
     end
 end
@@ -1449,7 +1464,7 @@ function FarmBuddy:OpenSettings(tab)
 
     Settings.OpenToCategory(self.optionsID)
 
-    if tab then
+    if (tab ~= nil) then
         LibStub('AceConfigDialog-3.0'):SelectGroup(FARM_BUDDY_ADDON_NAME, tab)
     end
 end
