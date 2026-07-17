@@ -2,6 +2,8 @@
 ------------------
 - Optimized code conditionals
 - Simplified checks in code
+- Fixed a bug in the data broker implementation
+- Fixed notification triggering when adding an item via shortcut before item initialization
 
 1.1.11
 ------------------

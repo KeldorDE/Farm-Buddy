@@ -15,6 +15,8 @@ local DATA_BROKER_ICON = 'Interface\\AddOns\\FarmBuddy\\FarmBuddy.tga'
 ---Inits the data broker items.
 function FarmBuddy:InitDataBroker()
 
+    local addon = self
+
     -- Init data broker
     DATA_BROKER = ldb:NewDataObject('FarmBuddyBroker', {
         type = 'data source',
@@ -23,11 +25,11 @@ function FarmBuddy:InitDataBroker()
     })
 
     -- Data broker click handler
-    DATA_BROKER.OnClick = function(self, button)
+    DATA_BROKER.OnClick = function(_, button)
         if button == 'LeftButton' then
-            self:ToggleShowFrame()
+            addon:ToggleShowFrame()
         elseif button == 'RightButton' then
-            self:OpenSettings('tab_general')
+            addon:OpenSettings('tab_general')
         end
     end
 
@@ -35,9 +37,9 @@ function FarmBuddy:InitDataBroker()
     DATA_BROKER.OnTooltipShow = function(tooltip)
         if not tooltip or not tooltip.AddLine then return end
 
-        tooltip:AddLine(self:GetColoredText(FARM_BUDDY_ADDON_NAME, FARM_BUDDY_COLOR_WHITE))
-        tooltip:AddLine(self:GetColoredText(L['FARM_BUDDY_BROKER_TOOLTIP_LINE_1'], FARM_BUDDY_COLOR_GREEN))
-        tooltip:AddLine(self:GetColoredText(L['FARM_BUDDY_BROKER_TOOLTIP_LINE_2'], FARM_BUDDY_COLOR_GREEN))
+        tooltip:AddLine(addon:GetColoredText(FARM_BUDDY_ADDON_NAME, FARM_BUDDY_COLOR_WHITE))
+        tooltip:AddLine(addon:GetColoredText(L['FARM_BUDDY_BROKER_TOOLTIP_LINE_1'], FARM_BUDDY_COLOR_GREEN))
+        tooltip:AddLine(addon:GetColoredText(L['FARM_BUDDY_BROKER_TOOLTIP_LINE_2'], FARM_BUDDY_COLOR_GREEN))
     end
 end
 

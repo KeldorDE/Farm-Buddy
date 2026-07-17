@@ -214,7 +214,7 @@ function FarmBuddy:ModifiedClick(itemLink, itemLocation)
     for key, state in pairs(db.fastTrackingKeys) do
         local isKeyDown = modifierChecks[key]
         if isKeyDown then
-            conditions = isKeyDown() == (state == true)
+            conditions = isKeyDown() == state
             if not conditions then
                 break
             end
@@ -335,13 +335,11 @@ function FarmBuddy:UpdateGUI(handleNotifications)
     for _, itemStorage in pairs(ITEM_STORAGE) do
 
         local itemInfo = itemStorage._info
-        local hidden = itemStorage.hidden and (itemStorage.hidden == 1) or false
-
         if itemInfo then
             local frameName = FARM_BUDDY_ID .. 'Item' .. itemStorage.id
             curFrame = ITEM_FRAMES[frameName]
 
-            if hidden then
+            if itemStorage.hidden == 1 then
                 if curFrame then
                     curFrame:Hide()
                 end
@@ -362,8 +360,6 @@ function FarmBuddy:UpdateGUI(handleNotifications)
                     curFrame.ProgressBar:SetPoint('TOPLEFT', curFrame, (curFrame.Texture:GetWidth() + 7), -25)
 
                     ITEM_FRAMES[frameName] = curFrame
-                else
-                    curFrame = ITEM_FRAMES[frameName]
                 end
 
                 progressBarFrame = curFrame.ProgressBar
@@ -372,7 +368,7 @@ function FarmBuddy:UpdateGUI(handleNotifications)
                 if itemStorage.quantity > 0 and itemCount >= itemStorage.quantity and not NOTIFICATION_TRIGGERED[itemInfo.ItemID] then
                     goalReached = true
 
-                    if handleNotifications then
+                    if handleNotifications and ITEM_DATA_INIT_COMPLETE then
                         self:QueueNotification(itemInfo.ItemID, itemInfo.Name, itemInfo.IconFileDataID, itemStorage.quantity)
                     end
                 else

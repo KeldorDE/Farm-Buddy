@@ -34,6 +34,10 @@ end
 function FarmBuddy:GetPercent(p, g, capCheck)
     local percent = 0
 
+    if g == 0 then
+        return 0
+    end
+
     if capCheck and p > g then
         percent = 100
     else
