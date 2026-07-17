@@ -33,7 +33,7 @@ function FarmBuddyNotification_Show(name, icon, goal, sound, duration, glow, shi
     end
 
     if glow then
-        FRAME.glow:SetTexture("Interface\\AchievementFrame\\UI-Achievement-Guild")
+        FRAME.glow:SetTexture('Interface\\AchievementFrame\\UI-Achievement-Guild')
         FRAME.glow:SetTexCoord(0.00195313, 0.74804688, 0.19531250, 0.49609375)
         FRAME.glow:SetVertexColor(1, 1, 1)
         FRAME.glow:Show()
@@ -42,9 +42,9 @@ function FarmBuddyNotification_Show(name, icon, goal, sound, duration, glow, shi
     end
 
     if shine then
-        FRAME.shine:SetTexture("Interface\\AchievementFrame\\UI-Achievement-Guild")
+        FRAME.shine:SetTexture('Interface\\AchievementFrame\\UI-Achievement-Guild')
         FRAME.shine:SetTexCoord(0.75195313, 0.91601563, 0.19531250, 0.35937500)
-        FRAME.shine:SetPoint("BOTTOMLEFT", 0, 16)
+        FRAME.shine:SetPoint('BOTTOMLEFT', 0, 16)
         FRAME.shine:Show()
     else
         FRAME.shine:Hide()
