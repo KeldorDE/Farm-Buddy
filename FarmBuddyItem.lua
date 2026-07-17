@@ -22,7 +22,7 @@ function FarmBuddy:GetItemInfo(item, uniqueID)
     if not static then
         local itemName, itemLink, itemRarity = C_Item.GetItemInfo(item)
         if not itemLink then
-            if uniqueID ~= nil then
+            if uniqueID then
                 self:AddItemToQueue(uniqueID, item)
             end
             return nil
@@ -80,7 +80,7 @@ function FarmBuddy:ItemInfoReceived()
 
     for k, v in pairs(queue) do
         local itemInfo = self:GetItemInfo(v.itemValue)
-        if itemInfo ~= nil then
+        if itemInfo then
             ITEM_QUEUE[k] = nil
             self:SetReceivedItemInfo(v.uniqueID, itemInfo)
         end

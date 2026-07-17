@@ -65,8 +65,7 @@ L["FARM_BUDDY_ITEM_TO_TRACK_USAGE"] = [=[Es wird empfohlen einen Item Link oder 
 Du kannst allerdings auch nicht bekannte Gegenstände aufnehmen, diese erscheinen automatisch in der Liste, sobald du diese das erste Mal im Inventar hast.
 
 Die Item ID kann auf folgenden Seiten gefunden werden:
-- http://de.wowhead.com
-- http://wowdata.buffed.de]=]
+- https://de.wowhead.com]=]
 L["FARM_BUDDY_ITEMS"] = "Gegenstände"
 L["FARM_BUDDY_KEY_ALT"] = "Alt"
 L["FARM_BUDDY_KEY_CTRL"] = "Strg"

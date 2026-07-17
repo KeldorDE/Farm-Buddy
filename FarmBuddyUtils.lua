@@ -34,16 +34,16 @@ end
 function FarmBuddy:GetPercent(p, g, capCheck)
     local percent = 0
 
-    if (capCheck == true and p > g) then
+    if capCheck and p > g then
         percent = 100
     else
         percent = math.floor((p * 100) / g)
     end
 
-    if (capCheck == true) then
-        if (percent < 0) then
+    if capCheck then
+        if percent < 0 then
             percent = 0
-        elseif (percent > 100) then
+        elseif percent > 100 then
             percent = 100
         end
     end
@@ -60,8 +60,8 @@ function FarmBuddy:GetBonus(p, g, inPercent)
     local bonus = 0
     local percent = self:GetPercent(p, g, false)
 
-    if (percent > 100) then
-        if (inPercent == true) then
+    if percent > 100 then
+        if inPercent then
             bonus = percent - 100
         else
             bonus = p - g
@@ -77,7 +77,7 @@ end
 ---@param key string Table key to sort by.
 ---@return boolean
 function FarmBuddy:SortItemsByKey(a, b, key)
-    if (self.db.profile.settings.sortOrder == 'asc') then
+    if self.db.profile.settings.sortOrder == 'asc' then
         return a[key] < b[key]
     else
         return a[key] > b[key]
@@ -94,37 +94,37 @@ function FarmBuddy:GetCount(itemInfo, quantity, showIndicator)
     local count = itemInfo.CountBags
     local displayStyle = self.db.profile.settings.progressStyle
 
-    if includeBank == 1 or includeBank == true then
+    if includeBank then
         count = itemInfo.CountTotal
     end
 
-    if (self.db.profile.settings.showQuantity == true and quantity ~= nil and quantity > 0) then
+    if self.db.profile.settings.showQuantity and quantity and quantity > 0 then
         -- Handle bonus display
         local bonus = ''
-        if (self.db.profile.settings.showGoalBonus == true) then
+        if self.db.profile.settings.showGoalBonus then
             local bonusInPercent = true
             local bonusUnit = '%'
-            if (self.db.profile.settings.goalBonusDisplay == 'count') then
+            if self.db.profile.settings.goalBonusDisplay == 'count' then
                 bonusInPercent = false
                 bonusUnit = ''
             end
 
             local bonusValue = self:GetBonus(count, quantity, bonusInPercent)
-            if (bonusValue > 0) then
+            if bonusValue > 0 then
                 bonus = ' ' .. self:GetColoredText('+' .. bonusValue .. bonusUnit, FARM_BUDDY_COLOR_GREEN)
             end
         end
 
-        if (displayStyle == 'CountPercentage') then
+        if displayStyle == 'CountPercentage' then
             count = count .. ' / ' .. quantity .. ' (' .. self:GetPercent(count, quantity, true) .. '%)'
-        elseif (displayStyle == 'Percentage') then
+        elseif displayStyle == 'Percentage' then
             count = self:GetPercent(count, quantity, true) .. '%'
         else
             count = count .. ' / ' .. quantity
         end
 
         count = count .. bonus
-    elseif (showIndicator == true) then
+    elseif showIndicator then
         count = count .. 'x'
     end
 

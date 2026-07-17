@@ -24,9 +24,9 @@ function FarmBuddy:InitDataBroker()
 
     -- Data broker click handler
     DATA_BROKER.OnClick = function(self, button)
-        if (button == 'LeftButton') then
+        if button == 'LeftButton' then
             self:ToggleShowFrame()
-        elseif (button == 'RightButton') then
+        elseif button == 'RightButton' then
             self:OpenSettings('tab_general')
         end
     end
@@ -50,7 +50,7 @@ end
 ---@param itemInfo table
 ---@param itemStorage table
 function FarmBuddy:AddItemToDataBroker(itemInfo, itemStorage)
-    if (self.db.profile.settings.enableDataBrokerSupport == true) then
+    if self.db.profile.settings.enableDataBrokerSupport then
         tinsert(DATA_BROKER_ITEMS, {
             itemInfo = itemInfo,
             itemStorage = itemStorage,
@@ -61,25 +61,25 @@ end
 ---Updates the data broker text and icon.
 function FarmBuddy:UpdateDataBroker()
 
-    if (self.db.profile.settings.enableDataBrokerSupport == true) then
+    if self.db.profile.settings.enableDataBrokerSupport then
         local dataList = {}
         local numItems = 0
         local totalItemCount = tonumber(self.db.profile.settings.dataBrokerNumItems)
         local showIcon = false
 
-        if (totalItemCount == 0) then
+        if totalItemCount == 0 then
             showIcon = true
         end
 
         for _, v in pairs(DATA_BROKER_ITEMS) do
 
-            if (numItems >= totalItemCount) then
+            if numItems >= totalItemCount then
                 break
             end
 
             tinsert(dataList, self:GetIconString(v.itemInfo.IconFileDataID, false))
 
-            if (self.db.profile.settings.showDataBrokerItemName == true) then
+            if self.db.profile.settings.showDataBrokerItemName then
                 tinsert(dataList, v.itemInfo.Name)
             end
 
@@ -91,11 +91,11 @@ function FarmBuddy:UpdateDataBroker()
         local icon = ''
         local text = table.concat(dataList, ' ')
 
-        if (showIcon == true) then
+        if showIcon then
             icon = DATA_BROKER_ICON
         end
 
-        if (text == '') then
+        if text == '' then
             text = FARM_BUDDY_ADDON_NAME
         end
 

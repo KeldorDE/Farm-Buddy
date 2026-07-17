@@ -133,7 +133,7 @@ end
 ---@param item string
 ---@param quantity string|number
 function FarmBuddy:CmdTrack(item, quantity)
-    if item ~= nil then
+    if item then
         -- Convert item link to name
         local origItem = item
         item = self:ItemLinkToID(item)
@@ -141,11 +141,11 @@ function FarmBuddy:CmdTrack(item, quantity)
         -- Add the item
         self:AddConfigItem(nil, item, self:GetNameFromItemLink(origItem))
 
-        if (quantity ~= nil) then
+        if quantity then
             local status = self:ValidateNumber(nil, quantity)
-            if (status == true) then
+            if status then
                 local itemID = self:GetItemIDByName(item)
-                if (itemID ~= nil) then
+                if itemID then
                     self:SetItemProp(itemID, 'quantity', tonumber(quantity), true)
                 end
             end
@@ -165,14 +165,14 @@ end
 ---@param item string
 ---@param quantity string|number
 function FarmBuddy:CmdQuantity(item, quantity)
-    if item ~= nil then
+    if item then
         local status = self:ValidateNumber(nil, quantity)
-        if (status == true) then
+        if status then
             -- Convert item link to ID
             local itemID = self:ItemLinkToID(item)
-            if (itemID ~= nil) then
+            if itemID then
                 local uniqueID = self:GetItemUniqueIDByItemID(itemID)
-                if (uniqueID ~= nil) then
+                if uniqueID then
                     self:SetItemProp(uniqueID, 'quantity', tonumber(quantity), true)
                     self:Print(L['FARM_BUDDY_GOAL_SET'])
                 else
@@ -202,7 +202,7 @@ end
 ---@return string
 function FarmBuddy:ItemLinkToID(item)
     local itemID = item:match("item:(%d+)")
-    if (itemID ~= nil) then
+    if itemID then
         item = itemID
     end
 

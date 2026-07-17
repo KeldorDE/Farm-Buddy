@@ -72,7 +72,7 @@ end
 function FarmBuddyNotification_HideNotification(click)
     FRAME_HIDDEN = true
     FRAME.waitAndAnimOut:Stop()
-    if click == true then
+    if click then
         FRAME.animOut:Play()
     end
 end
@@ -138,8 +138,5 @@ end
 ---Gets the notification is currently shown status.
 ---@return boolean shown True while a notification is currently displayed.
 function FarmBuddyNotification_Shown()
-    if FRAME_HIDDEN == false then
-        return true
-    end
-    return false
+    return not FRAME_HIDDEN and true or false
 end

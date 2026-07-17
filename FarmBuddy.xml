@@ -183,12 +183,12 @@
           self:RegisterForDrag('LeftButton')
       </OnLoad>
       <OnDragStart>
-        if (self.FrameLock == false) then
+        if not self.FrameLock then
           self:StartMoving()
         end
       </OnDragStart>
       <OnDragStop>
-        if (self.FrameLock == false) then
+        if not self.FrameLock then
           self:StopMovingOrSizing()
         end
       </OnDragStop>

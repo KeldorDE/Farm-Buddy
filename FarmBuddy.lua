@@ -114,10 +114,10 @@ function FarmBuddy:PlayerEnteringWorld()
 
     -- Delayed data fetching to prevent login timing issues
     C_Timer.After(4, function()
-        if (self.db.profile.items ~= nil) then
+        if self.db.profile.items then
             ITEM_STORAGE = self.db.profile.items
             for _, itemStorage in pairs(ITEM_STORAGE) do
-                if (itemStorage.itemID ~= nil and itemStorage.itemID > 0) then
+                if itemStorage.itemID and itemStorage.itemID > 0 then
                     local itemInfo = self:GetItemInfo(itemStorage.itemID, itemStorage.id)
                     NOTIFICATION_TRIGGERED[itemStorage.itemID] = itemInfo and itemStorage.quantity > 0 and self:GetCount(itemInfo) >= itemStorage.quantity
                 end
@@ -144,7 +144,7 @@ end
 ---Fires when the player enters combat.
 function FarmBuddy:PlayerRegenDisabled()
 
-    if (self.db.profile.settings.hideFrameInCombat == true) then
+    if self.db.profile.settings.hideFrameInCombat then
         FarmBuddyFrame:Hide()
     end
 
@@ -153,7 +153,7 @@ end
 
 ---Fires if the player leaves combat.
 function FarmBuddy:PlayerRegenEnabled()
-    if (self.db.profile.settings.showFrame == true) then
+    if self.db.profile.settings.showFrame then
         FarmBuddyFrame:Show()
     end
 
@@ -163,12 +163,12 @@ end
 ---Init all items including counts.
 function FarmBuddy:InitItems()
     -- Copy saved items to temp storage to track counts
-    if (self.db.profile.items ~= nil) then
+    if self.db.profile.items then
         ITEM_STORAGE = self.db.profile.items
         for index, itemStorage in pairs(ITEM_STORAGE) do
-            if (itemStorage.itemID ~= nil and itemStorage.itemID > 0) then
+            if itemStorage.itemID and itemStorage.itemID > 0 then
                 local itemInfo = self:GetItemInfo(itemStorage.itemID, itemStorage.id)
-                if itemInfo ~= nil then
+                if itemInfo then
                     itemStorage._info = itemInfo
                     ITEM_STORAGE[index].count = self:GetCount(itemInfo)
                     ITEM_STORAGE[index].rarity = itemInfo.Rarity
@@ -203,48 +203,28 @@ function FarmBuddy:ModifiedClick(itemLink, itemLocation)
     end
 
     local db = self.db.profile.settings
+    local modifierChecks = {
+        alt = IsAltKeyDown,
+        ctrl = IsControlKeyDown,
+        shift = IsShiftKeyDown,
+    }
     local conditions = false
 
     -- Check modifier keys
     for key, state in pairs(db.fastTrackingKeys) do
-        if (key == 'alt') then
-            if (state == true) then
-                conditions = IsAltKeyDown()
-            else
-                conditions = not IsAltKeyDown()
-            end
-
-            if (conditions == false) then
-                break
-            end
-        elseif (key == 'ctrl') then
-            if (state == true) then
-                conditions = IsControlKeyDown()
-            else
-                conditions = not IsControlKeyDown()
-            end
-
-            if (conditions == false) then
-                break
-            end
-        elseif (key == 'shift') then
-            if (state == true) then
-                conditions = IsShiftKeyDown()
-            else
-                conditions = not IsShiftKeyDown()
-            end
-
-            if (conditions == false) then
+        local isKeyDown = modifierChecks[key]
+        if isKeyDown then
+            conditions = isKeyDown() == (state == true)
+            if not conditions then
                 break
             end
         end
     end
 
-    if GetMouseButtonClicked() == db.fastTrackingMouseButton and not CursorHasItem() and conditions == true then
-        if itemLink ~= nil then
+    if GetMouseButtonClicked() == db.fastTrackingMouseButton and not CursorHasItem() and conditions then
+        if itemLink then
             local itemInfo = self:GetItemInfo(itemLink)
-            if (itemInfo ~= nil) then
-                -- Add the item
+            if itemInfo then
                 self:AddConfigItem(nil, itemInfo.ItemID, self:GetNameFromItemLink(itemLink))
                 self:InitItems()
                 self:UpdateGUI()
@@ -263,7 +243,7 @@ function FarmBuddy:GetItemIDByName(name)
     local id
 
     for _, item in pairs(ITEM_STORAGE) do
-        if (item.name == name) then
+        if item.name == name then
             id = item.id
             break
         end
@@ -295,10 +275,10 @@ end
 
 ---Is called by the timer to handle the next notification.
 function FarmBuddy:NotificationTask()
-    if FarmBuddyNotification_Shown() == false then
+    if not FarmBuddyNotification_Shown() then
         local hideInCombat = self.db.profile.settings.hideNotificationsInCombat
         for index, notification in pairs(NOTIFICATION_QUEUE) do
-            if (hideInCombat == false or (hideInCombat == true and PLAYER_IN_COMBAT == false)) then
+            if not hideInCombat or (hideInCombat and not PLAYER_IN_COMBAT) then
                 self:ShowNotification(notification.Index, notification.Name, notification.Icon, notification.Quantity, false)
             else
                 NOTIFICATION_TRIGGERED[notification.Index] = true
@@ -316,8 +296,7 @@ end
 ---@param quantity number Goal quantity.
 ---@param demo? boolean Force showing the notification (preview), bypassing the triggered state.
 function FarmBuddy:ShowNotification(index, name, icon, quantity, demo)
-    local notificationEnabled = self.db.profile.settings.goalNotification
-    if (notificationEnabled) or demo then
+    if self.db.profile.settings.goalNotification or demo then
 
         local playSound = self.db.profile.settings.playNotificationSound
         local notificationDisplayDuration = tonumber(self.db.profile.settings.notificationDisplayDuration)
@@ -363,14 +342,16 @@ function FarmBuddy:UpdateGUI(handleNotifications)
             curFrame = ITEM_FRAMES[frameName]
 
             if hidden then
-                if curFrame then curFrame:Hide() end
+                if curFrame then
+                    curFrame:Hide()
+                end
             else
                 local itemCount = self:GetCount(itemInfo)
                 local goalReached
                 local progressBarFrame
 
                 -- Only add new frame if the frame does not already exists
-                if (not curFrame) then
+                if not curFrame then
 
                     curFrame = CreateFrame('Frame', frameName, FarmBuddyFrame, 'FarmBuddyItemTemplate')
                     curFrame.Title:SetText(itemStorage.name)
@@ -388,7 +369,7 @@ function FarmBuddy:UpdateGUI(handleNotifications)
                 progressBarFrame = curFrame.ProgressBar
 
                 -- Handle notifications
-                if itemStorage.quantity > 0 and itemCount >= itemStorage.quantity and NOTIFICATION_TRIGGERED[itemInfo.ItemID] == false then
+                if itemStorage.quantity > 0 and itemCount >= itemStorage.quantity and not NOTIFICATION_TRIGGERED[itemInfo.ItemID] then
                     goalReached = true
 
                     if handleNotifications then
@@ -403,13 +384,13 @@ function FarmBuddy:UpdateGUI(handleNotifications)
                 curFrame:ClearAllPoints()
 
                 -- Set frame position
-                if (count > 0) then
+                if count > 0 then
                     curFrame:SetPoint('TOPLEFT', lastFrame, 0, -(curFrame:GetHeight() + 3))
                 else
                     curFrame:SetPoint('TOPLEFT', FarmBuddyFrame, 0, 0)
                 end
 
-                if (self.db.profile.settings.showProgressBar == true) then
+                if self.db.profile.settings.showProgressBar then
                     progressBarFrame:Show()
                     curFrame.Subline:Hide()
                     self:SetupProgressBar(progressBarFrame, itemInfo, itemStorage, itemCount)
@@ -429,7 +410,7 @@ function FarmBuddy:UpdateGUI(handleNotifications)
     end
 
     -- Show no tracked item text
-    if (count == 0) then
+    if count == 0 then
         FarmBuddyFrame.EmptyText:SetText('- ' .. L['FARM_BUDDY_NO_TRACKED_ITEMS'] .. ' -')
         FarmBuddyFrame.EmptyText:Show()
         totalHeight = totalHeight + FarmBuddyFrame.EmptyText:GetHeight()
@@ -439,7 +420,7 @@ function FarmBuddy:UpdateGUI(handleNotifications)
 
     -- Set parent main frame height
     totalHeight = totalHeight + 4 -- Add footer spacing
-    if (totalHeight > 0) then
+    if totalHeight > 0 then
         FarmBuddyFrame:SetHeight(totalHeight)
     end
 
@@ -456,7 +437,7 @@ function FarmBuddy:SetSubline(frame, itemInfo, itemStorage, goalReached)
 
     frame.Subline:SetText(self:GetCount(itemInfo, itemStorage.quantity, true))
 
-    if (goalReached == true and self.db.profile.settings.showGoalIndicator == true) then
+    if goalReached and self.db.profile.settings.showGoalIndicator then
         frame.Subline:SetPoint(point, 54, yOfs)
         frame.Complete:Show()
         frame.Subline:SetTextColor(0, 0.9, 0, 1.0)
@@ -477,21 +458,21 @@ function FarmBuddy:SetupProgressBar(progressBarFrame, itemInfo, itemStorage, ite
     local goalCount
     local noGoal = false
 
-    if (self.db.profile.settings.showQuantity == true and itemStorage.quantity > 0) then
+    if self.db.profile.settings.showQuantity and itemStorage.quantity > 0 then
         goalCount = itemStorage.quantity
     else
         noGoal = true
     end
 
-    if (noGoal == true) then
+    if noGoal then
         color = self.db.profile.settings.progressBarNoQuantityColor
-    elseif (itemCount >= goalCount) then
+    elseif itemCount >= goalCount then
         color = self.db.profile.settings.progressBarGoalColor
     else
         color = self.db.profile.settings.progressBarNoGoalColor
     end
 
-    if (noGoal == true) then
+    if noGoal then
         progressBarFrame:SetMinMaxValues(1, 10)
         progressBarFrame:SetValue(10)
     else
@@ -507,7 +488,7 @@ end
 ---@param id string Unique storage ID of the item.
 function FarmBuddy:RemoveItemFrame(id)
     local frameName = FARM_BUDDY_ID .. 'Item' .. id
-    if (ITEM_FRAMES[frameName] ~= nil) then
+    if ITEM_FRAMES[frameName] then
         ITEM_FRAMES[frameName]:Hide()
         ITEM_FRAMES[frameName] = nil
     end
@@ -515,7 +496,7 @@ end
 
 ---Applies the configured frame scale.
 function FarmBuddy:SetScale()
-    if (self.db.profile.settings.frameScale) then
+    if self.db.profile.settings.frameScale then
         FarmBuddyFrame:SetScale(self.db.profile.settings.frameScale)
     end
 end
