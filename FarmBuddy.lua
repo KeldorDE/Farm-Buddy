@@ -58,7 +58,6 @@ local DEFAULTS = {
 
 ---Is called by AceAddon when the addon is first loaded.
 function FarmBuddy:OnInitialize()
-
     -- Init SavedVariables
     self.db = LibStub('AceDB-3.0'):New(FARM_BUDDY_ID .. 'DB', DEFAULTS)
 
@@ -132,7 +131,6 @@ end
 
 ---Parse events registered to plugin and act on them.
 function FarmBuddy:BagUpdateDelayed()
-
     if not ITEM_DATA_INIT_COMPLETE then
         return
     end
@@ -143,7 +141,6 @@ end
 
 ---Fires when the player enters combat.
 function FarmBuddy:PlayerRegenDisabled()
-
     if self.db.profile.settings.hideFrameInCombat then
         FarmBuddyFrame:Hide()
     end
@@ -320,7 +317,6 @@ end
 
 ---Updates the GUI elements.
 function FarmBuddy:UpdateGUI(handleNotifications)
-
     if handleNotifications == nil then
         handleNotifications = true
     end

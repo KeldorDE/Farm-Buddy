@@ -773,7 +773,6 @@ end
 ---@param itemID number|string
 ---@param name string|nil
 function FarmBuddy:AddConfigItem(id, itemID, name)
-
     local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
     local itemIDText
 
@@ -961,10 +960,9 @@ end
 ---@param numeric boolean
 ---@return number|string
 function FarmBuddy:GetItemFromSV(id, key, numeric)
-
     local index = self:GetItemIndexByID(id)
-
     local value
+
     if numeric then
         value = 0
     else
@@ -990,7 +988,6 @@ end
 ---@param input string|number
 ---@param numeric boolean
 function FarmBuddy:SetItemProp(id, key, input, numeric)
-
     local index = self:GetItemIndexByID(id)
     if index then
 
@@ -1029,7 +1026,6 @@ end
 ---@param id string
 ---@param input string
 function FarmBuddy:SetItem(id, input)
-
     self:SetItemProp(id, 'name', input, false)
 
     local itemInfo = self:GetItemInfo(input, id)
@@ -1043,7 +1039,6 @@ end
 ---@param key string
 ---@return boolean
 function FarmBuddy:GetKeySetting(_, key)
-
     if self.db.profile.settings.fastTrackingKeys and self.db.profile.settings.fastTrackingKeys[key] then
         return self.db.profile.settings.fastTrackingKeys[key]
     end
@@ -1056,7 +1051,6 @@ end
 ---@param key string
 ---@param state boolean
 function FarmBuddy:SetKeySetting(_, key, state)
-
     if self.db.profile.settings.fastTrackingKeys and self.db.profile.settings.fastTrackingKeys[key] then
         self.db.profile.settings.fastTrackingKeys[key] = state
     end
@@ -1065,7 +1059,6 @@ end
 ---Removes the item with the given ID from the settings GUI and SavedVariables.
 ---@param info table
 function FarmBuddy:RemoveItem(info)
-
     local groupName = ITEM_PREFIX .. info.option.unique_index
 
     -- Remove settings group for item ID
@@ -1091,7 +1084,6 @@ end
 
 ---Number item entries by it's new order.
 function FarmBuddy:ReindexConfigItems()
-
     local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
     if options.args.tab_items.args then
         for k in pairs(options.args.tab_items.args) do

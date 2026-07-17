@@ -14,7 +14,6 @@ local DATA_BROKER_ICON = 'Interface\\AddOns\\FarmBuddy\\FarmBuddy.tga'
 
 ---Inits the data broker items.
 function FarmBuddy:InitDataBroker()
-
     local addon = self
 
     -- Init data broker
@@ -62,7 +61,6 @@ end
 
 ---Updates the data broker text and icon.
 function FarmBuddy:UpdateDataBroker()
-
     if self.db.profile.settings.enableDataBrokerSupport then
         local dataList = {}
         local numItems = 0
