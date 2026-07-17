@@ -4,48 +4,54 @@
   <img width="380" src="assets/logo.png" alt="Projekt Logo">
 </p>
 
-A World of Warcraft AddOn that adds the functionality to Track multiple farmed items. A notification will appear if the defined goal quantity for an item has reached.
+**Farm Buddy** is a World of Warcraft AddOn that helps you track items while farming.
 
-**Quickstart**  
-Alt + left-click on an Item in your Bags or Bank to start tracking.
-You can also enter the name of the desired Item in the AddOn settings.
+Track an item from your inventory or bank, set an optional target quantity, and follow your progress through a configurable progress bar or text display. Farm Buddy notifies you when you reach your goal and shows any amount collected beyond it.
 
-**Features**  
-* Track farmed Items
-* Track inventory or inventory and bank quantity
-* Define an optional quantity for the farmed item
-* Show a bonus to your defined goal if you get more than 100% progress
-* Shows a notification if the item quantity has reached
-* Select an optional sound for the notification
-* Customize notification effects
-* Localized (English and German)
-* Show a progress bar or text
-* Define a shortcut for fast tracking (Default: ALT + left click)
+> **Quickstart:** Hold **Alt** and **left-click** an item in your bags or bank to start tracking it.  
+> You can change this shortcut or enter an item manually in the AddOn settings.
 
-**Please note:** Through the limitation of the API functions it is currently only possible to track known items by name. That means the items have to be in your data cache (Inventory or Bank)
-If possible please use the item ID or the item link.
+## Features
 
-**Chat Commands**  
-* /fbs track < Item ID | Item Name | Item Link > (< Quantity >) - Sets the tracked item.
-* /fbs quantity Item ID | Item Name | Item Link < Quantity > - Sets the goal quantity.
-* /fbs reset < all | items > - Resets Farm Buddy to its default settings.
-* /fbs settings - Open up the AddOn settings page.
-* /fbs version - Show the current used Farm Buddy Version.
-* /fbs help - Shows the available chat commands.
+*   Track farmed items and monitor your progress while playing
+*   Count items in your inventory only, or in both inventory and bank
+*   Set an optional target quantity for each tracked item
+*   Display progress as a progress bar or text
+*   Show the amount collected beyond 100% of your target
+*   Receive a notification when a target quantity is reached
+*   Select an optional notification sound
+*   Customize notification effects
+*   Configure a custom shortcut for quick tracking (default: **Alt + left-click**)
+*   Available in English and German
 
-**Bug Reports and Feature Requests**  
-Please use the [CurseForge](https://wow.curseforge.com/projects/farm-buddy/issues) ticketing systems to submit bug reports and feature requests.
+## How to Use
 
----
-# Links
-**Github:** https://github.com/KeldorDE/Farm-Buddy  
-**CurseForge:** https://wow.curseforge.com/projects/farm-buddy
+1.  Install **Farm Buddy** and log in to the game.
+2.  Hold **Alt** and left-click an item in your bags or bank to start tracking it.
+3.  Alternatively, open the Farm Buddy settings and enter an item name, item ID, or item link manually.
+4.  Choose whether Farm Buddy should count your inventory only or both inventory and bank.
+5.  Optionally set a target quantity, progress display mode, notification effect, and sound.
+6.  Continue farming and watch your progress in the Farm Buddy display.
 
----
-# Useful Links for Development  
-**World of Warcraft Icon List:** http://www.wowhead.com/icons  
-**WowAce Documentation:** https://www.wowace.com/projects/ace3/pages/  
-**AddOn API Documentation:**
-* http://wowwiki.wikia.com/wiki/Category:World_of_Warcraft_API
-* https://wow.gamepedia.com/World_of_Warcraft_API
-* https://www.townlong-yak.com/framexml/live
+## Important Note
+
+Due to World of Warcraft API limitations, Farm Buddy can only track items already known to your game client.
+
+Items are typically known after they have appeared in your inventory, bank, or an item tooltip. When adding an item manually, using an **item ID** or **item link** is recommended because it is more reliable than entering an item name.
+
+## Chat Commands
+
+*   `/fbs track <item ID | item name | item link> (<quantity>)` — Sets the tracked item and, optionally, its target quantity
+*   `/fbs quantity <item ID | item name | item link> <quantity>` — Sets the target quantity for an item
+*   `/fbs settings` — Opens the AddOn settings
+*   `/fbs reset <all | items>` — Resets all Farm Buddy settings or only the tracked items
+*   `/fbs version` — Shows the installed Farm Buddy version
+*   `/fbs help` — Shows all available chat commands
+
+## Bug Reports and Feature Requests
+
+Please use the [CurseForge issue tracker](https://wow.curseforge.com/projects/farm-buddy/issues) to report bugs or request features.
+
+## Support
+
+If you would like to support the development of Farm Buddy, you can do so on [Patreon](https://www.patreon.com/c/keldor).
