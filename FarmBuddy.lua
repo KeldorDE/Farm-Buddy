@@ -80,6 +80,7 @@ function FarmBuddy:OnInitialize()
     -- Init addon stuff
     self:InitSettings()
     self:InitItems()
+    self:RegisterDialogs()
     self:InitDataBroker()
     self:SetTitleDisplay()
     self:SetButtonDisplay()
@@ -127,6 +128,75 @@ function FarmBuddy:PlayerEnteringWorld()
         self:UpdateGUI()
         ITEM_DATA_INIT_COMPLETE = true
     end)
+end
+
+---Registers the addon's dialog boxes.
+function FarmBuddy:RegisterDialogs()
+    StaticPopupDialogs[FARM_BUDDY_DIALOG_SET_ITEM_GOAL] = {
+        text = L['FARM_BUDDY_POPUP_SET_GOAL_AMOUNT'],
+        button1 = L['FARM_BUDDY_OK'],
+        button2 = L['FARM_BUDDY_CANCEL'],
+        hasEditBox = true,
+        OnShow = function(dialog, data)
+            local quantity = self:GetItemFromSV(data, 'quantity', true)
+            if quantity and quantity > 0 then
+                dialog:GetEditBox():SetText(tostring(quantity))
+                dialog:GetEditBox():HighlightText()
+            end
+        end,
+        OnAccept = function(dialog, data)
+            self:ApplyItemGoal(data, dialog:GetEditBox():GetText())
+            self:SetItemProp(data, 'quantity', dialog:GetEditBox():GetText(), true)
+        end,
+        EditBoxOnEnterPressed = function(editBox)
+            local dialog = editBox:GetParent()
+            self:ApplyItemGoal(dialog.data, dialog:GetEditBox():GetText())
+            dialog:Hide()
+        end,
+        EditBoxOnEscapePressed = function(editBox)
+            editBox:GetParent():Hide()
+        end,
+        timeout = 0,
+        whileDead = true,
+        hideOnEscape = true,
+        preferredIndex = 3,
+    }
+    StaticPopupDialogs[FARM_BUDDY_DIALOG_RESET_ALL_ITEMS_CONFIRM] = {
+        text = L['FARM_BUDDY_CONFIRM_RESET'],
+        button1 = L['FARM_BUDDY_YES'],
+        button2 = L['FARM_BUDDY_NO'],
+        OnAccept = function()
+            self:ResetItems(true)
+        end,
+        timeout = 0,
+        whileDead = true,
+        hideOnEscape = true,
+        preferredIndex = 3,
+    }
+    StaticPopupDialogs[FARM_BUDDY_DIALOG_RESET_ALL_CONFIRM] = {
+        text = L['FARM_BUDDY_CONFIRM_ALL_RESET'],
+        button1 = L['FARM_BUDDY_YES'],
+        button2 = L['FARM_BUDDY_NO'],
+        OnAccept = function()
+            self:ResetConfig()
+        end,
+        timeout = 0,
+        whileDead = true,
+        hideOnEscape = true,
+        preferredIndex = 3,
+    }
+    StaticPopupDialogs[FARM_BUDDY_DIALOG_RESET_FRAME_POSITION_CONFIRM] = {
+        text = L['FARM_BUDDY_CONFIRM_RESET_FRAME_POSITION'],
+        button1 = L['FARM_BUDDY_YES'],
+        button2 = L['FARM_BUDDY_NO'],
+        OnAccept = function()
+            self:ResetFramePosition()
+        end,
+        timeout = 0,
+        whileDead = true,
+        hideOnEscape = true,
+        preferredIndex = 3,
+    }
 end
 
 ---Parse events registered to plugin and act on them.
@@ -181,6 +251,13 @@ function FarmBuddy:InitItems()
 
         self:SortItems()
     end
+end
+
+---Applies the item goal for the given item ID.
+---@param id string Unique storage ID of the item.
+---@param value number Goal quantity.
+function FarmBuddy:ApplyItemGoal(id, value)
+    self:SetItemProp(id, 'quantity', value, true)
 end
 
 ---Sort items by the given setting.
@@ -348,6 +425,7 @@ function FarmBuddy:UpdateGUI(handleNotifications)
                 if not curFrame then
 
                     curFrame = CreateFrame('Frame', frameName, FarmBuddyFrame, 'FarmBuddyItemTemplate')
+                    curFrame.storageID = itemStorage.id
                     curFrame.Title:SetText(itemStorage.name)
                     curFrame.Title:SetTextColor(itemInfo.Rarity.r, itemInfo.Rarity.g, itemInfo.Rarity.b, 1)
                     curFrame.Texture:SetTexture(itemInfo.IconFileDataID)
@@ -510,4 +588,43 @@ function FarmBuddy:RestoreFramePosition()
     else
         FarmBuddyFrame:SetPoint('CENTER')
     end
+end
+
+---Hides the specified item.
+---@param itemFrame table
+function FarmBuddy:HideItem(itemFrame)
+    self:SetItemProp(itemFrame.storageID, 'hidden', 1, true)
+    self:NotifySettingsChanged()
+end
+
+---Shows the specified item.
+---@param self table
+---@param button string
+function FarmBuddy_ItemOnMouseUp(self, button)
+    if button == "RightButton" then
+        FarmBuddy:ShowItemContextMenu(self)
+    end
+end
+
+---Shows the context menu for the specified item.
+---@param _ table
+---@param itemFrame table
+function FarmBuddy:ShowItemContextMenu(itemFrame)
+    MenuUtil.CreateContextMenu(itemFrame, function(_, rootDescription)
+        rootDescription:CreateTitle(itemFrame.Title:GetText())
+
+        rootDescription:CreateButton(L["FARM_BUDDY_ITEM_CONTEXT_MENU_SET_GOAL"], function()
+            StaticPopup_Show(FARM_BUDDY_DIALOG_SET_ITEM_GOAL, itemFrame.Title:GetText(), nil, itemFrame.storageID)
+        end)
+
+        rootDescription:CreateButton(L["FARM_BUDDY_ITEM_CONTEXT_MENU_HIDE"], function()
+            self:HideItem(itemFrame)
+        end)
+
+        rootDescription:CreateDivider()
+
+        rootDescription:CreateButton(L["FARM_BUDDY_ITEM_CONTEXT_MENU_REMOVE"], function()
+            self:RemoveItem(itemFrame.storageID)
+        end)
+    end)
 end

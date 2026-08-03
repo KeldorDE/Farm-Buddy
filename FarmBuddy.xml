@@ -69,9 +69,9 @@
   </StatusBar>
 
   <!-- Template for a tracked item -->
-  <Frame name="FarmBuddyItemTemplate" virtual="true">
+  <Frame name="FarmBuddyItemTemplate" virtual="true" enableMouse="true">
     <Size>
-      <AbsDimension x="36" y="38" />
+      <AbsDimension x="314" y="38" />
     </Size>
 
     <Anchors>
@@ -87,7 +87,7 @@
         <!-- Placeholder icon -->
         <Texture name="$parentTexture" parentKey="Texture" file="INTERFACE\ICONS\Inv_misc_coin_01">
           <Anchors>
-            <Anchor point="CENTER">
+            <Anchor point="LEFT">
               <Offset>
                 <AbsDimension x="0" y="-6" />
               </Offset>
@@ -125,6 +125,10 @@
         </FontString>
       </Layer>
     </Layers>
+
+    <Scripts>
+      <OnMouseUp function="FarmBuddy_ItemOnMouseUp"/>
+    </Scripts>
   </Frame>
 
   <!-- FarmBuddy Frame -->

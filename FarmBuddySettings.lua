@@ -13,9 +13,6 @@ local ITEM_PREFIX = FARM_BUDDY_ID .. 'Item'
 local ID_LENGTH = 32
 local OPTION_ORDER = {}
 local RANDOM_CHARS = {}
-local POPUP_KEY_RESET_ALL_ITEMS_CONFIRM = FARM_BUDDY_ADDON_NAME .. 'ResetAllItemsConfirm'
-local POPUP_KEY_RESET_ALL_CONFIRM = FARM_BUDDY_ADDON_NAME .. 'ResetAllConfirm'
-local POPUP_KEY_RESET_FRAME_POSITION_CONFIRM = FARM_BUDDY_ADDON_NAME .. 'ResetFramePositionConfirm'
 local NOTIFICATION_SOUNDS = {
     [SOUNDKIT.ALARM_CLOCK_WARNING_1]        = L['FARM_BUDDY_SOUND_ALARM_1'],
     [SOUNDKIT.ALARM_CLOCK_WARNING_2]        = L['FARM_BUDDY_SOUND_ALARM_2'],
@@ -35,7 +32,6 @@ function FarmBuddy:InitSettings()
     self.optionsFrame, self.optionsID = LibStub('AceConfigDialog-3.0'):AddToBlizOptions(FARM_BUDDY_ADDON_NAME)
     self:GenerateChars()
     self:LoadExistingConfigItems()
-    self:RegisterDialogs()
 end
 
 ---Gets the configuration array for the AceConfig lib.
@@ -622,7 +618,7 @@ function FarmBuddy:GetConfigOptions()
                         type = 'execute',
                         name = L['FARM_BUDDY_RESET_ALL_ITEMS'],
                         desc = L['FARM_BUDDY_RESET_ALL_ITEMS_DESC'],
-                        func = function() StaticPopup_Show(POPUP_KEY_RESET_ALL_ITEMS_CONFIRM) end,
+                        func = function() StaticPopup_Show(FARM_BUDDY_DIALOG_RESET_ALL_ITEMS_CONFIRM) end,
                         width = 'double',
                         order = self:GetOptionOrder('actions'),
                     },
@@ -641,7 +637,7 @@ function FarmBuddy:GetConfigOptions()
                         type = 'execute',
                         name = L['FARM_BUDDY_RESET_FRAME_POSITION'],
                         desc = L['FARM_BUDDY_RESET_FRAME_POSITION_DESC'],
-                        func = function() StaticPopup_Show(POPUP_KEY_RESET_FRAME_POSITION_CONFIRM) end,
+                        func = function() StaticPopup_Show(FARM_BUDDY_DIALOG_RESET_FRAME_POSITION_CONFIRM) end,
                         width = 'double',
                         order = self:GetOptionOrder('actions'),
                     },
@@ -660,7 +656,7 @@ function FarmBuddy:GetConfigOptions()
                         type = 'execute',
                         name = L['FARM_BUDDY_RESET_ALL'],
                         desc = L['FARM_BUDDY_RESET_ALL_DESC'],
-                        func = function() StaticPopup_Show(POPUP_KEY_RESET_ALL_CONFIRM) end,
+                        func = function() StaticPopup_Show(FARM_BUDDY_DIALOG_RESET_ALL_CONFIRM) end,
                         width = 'double',
                         order = self:GetOptionOrder('actions'),
                     },
@@ -892,7 +888,7 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
                 name = L['FARM_BUDDY_REMOVE_ITEM'],
                 desc = L['FARM_BUDDY_REMOVE_ITEM_DESC'],
                 order = self:GetOptionOrder(id),
-                func = function(info) self:RemoveItem(info) end,
+                func = function(info) self:RemoveItem(info.option.unique_index) end,
                 unique_index = id,
             },
             ['item_spacer_line_3_' .. id] = {
@@ -910,7 +906,7 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
         },
     }
 
-    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
+    self:NotifySettingsChanged()
 end
 
 ---Loads existing items from SavedVariables.
@@ -920,7 +916,7 @@ function FarmBuddy:LoadExistingConfigItems()
         for _, itemStorage in pairs(items) do
             self:AddConfigItem(itemStorage.id, itemStorage.itemID)
         end
-        CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
+        self:NotifySettingsChanged()
     end
 end
 
@@ -1062,29 +1058,30 @@ function FarmBuddy:SetKeySetting(_, key, state)
 end
 
 ---Removes the item with the given ID from the settings GUI and SavedVariables.
----@param info table
-function FarmBuddy:RemoveItem(info)
-    local groupName = ITEM_PREFIX .. info.option.unique_index
+---@param id number|string
+function FarmBuddy:RemoveItem(id)
+    local groupName = ITEM_PREFIX .. id
+    local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
 
     -- Remove settings group for item ID
-    if (info.options.args.tab_items.args[groupName] ~= nil) then
-        info.options.args.tab_items.args[groupName] = nil
+    if (options.args.tab_items.args[groupName] ~= nil) then
+        options.args.tab_items.args[groupName] = nil
     end
 
     -- Remove item from SavedVariables
-    local index = self:GetItemIndexByID(info.option.unique_index)
-    if(index ~= nil) then
+    local index = self:GetItemIndexByID(id)
+    if (index ~= nil) then
         tremove(self.db.profile.items, index)
     end
 
     -- Remove frame and redraw
-    self:RemoveItemFrame(info.option.unique_index)
+    self:RemoveItemFrame(id)
     self:InitItems()
     self:UpdateGUI()
 
     -- Update settings GUI
     self:ReindexConfigItems()
-    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
+    self:NotifySettingsChanged()
 end
 
 ---Number item entries by it's new order.
@@ -1270,47 +1267,6 @@ function FarmBuddy:GetNotificationSoundsSorting()
     return sorting
 end
 
----Registers the addons dialog boxes.
-function FarmBuddy:RegisterDialogs()
-
-    StaticPopupDialogs[POPUP_KEY_RESET_ALL_ITEMS_CONFIRM] = {
-        text = L['FARM_BUDDY_CONFIRM_RESET'],
-        button1 = L['FARM_BUDDY_YES'],
-        button2 = L['FARM_BUDDY_NO'],
-        OnAccept = function()
-            self:ResetItems(true)
-        end,
-        timeout = 0,
-        whileDead = true,
-        hideOnEscape = true,
-        preferredIndex = 3,
-    }
-    StaticPopupDialogs[POPUP_KEY_RESET_ALL_CONFIRM] = {
-        text = L['FARM_BUDDY_CONFIRM_ALL_RESET'],
-        button1 = L['FARM_BUDDY_YES'],
-        button2 = L['FARM_BUDDY_NO'],
-        OnAccept = function()
-            self:ResetConfig()
-        end,
-        timeout = 0,
-        whileDead = true,
-        hideOnEscape = true,
-        preferredIndex = 3,
-    }
-    StaticPopupDialogs[POPUP_KEY_RESET_FRAME_POSITION_CONFIRM] = {
-        text = L['FARM_BUDDY_CONFIRM_RESET_FRAME_POSITION'],
-        button1 = L['FARM_BUDDY_YES'],
-        button2 = L['FARM_BUDDY_NO'],
-        OnAccept = function()
-            self:ResetFramePosition()
-        end,
-        timeout = 0,
-        whileDead = true,
-        hideOnEscape = true,
-        preferredIndex = 3,
-    }
-end
-
 ---Resets all tracked items.
 ---@param update boolean
 function FarmBuddy:ResetItems(update)
@@ -1331,7 +1287,7 @@ function FarmBuddy:ResetItems(update)
         self:UpdateGUI()
 
         -- Update settings GUI
-        CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
+        self:NotifySettingsChanged()
     end
 end
 
@@ -1352,7 +1308,7 @@ function FarmBuddy:ResetConfig()
     self:SetScale()
 
     -- Update settings GUI
-    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
+    self:NotifySettingsChanged()
 end
 
 ---Sets the item ID and the correct name.
@@ -1367,7 +1323,7 @@ function FarmBuddy:SetReceivedItemInfo(uniqueID, info)
     self:UpdateGUI()
 
     -- Update settings GUI
-    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
+    self:NotifySettingsChanged()
 end
 
 ---Sets the settings item.
@@ -1440,7 +1396,7 @@ function FarmBuddy:ToggleShowFrame()
     end
 
     -- Update settings GUI
-    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
+    self:NotifySettingsChanged()
 end
 
 ---Resets the main frame to the center of the screen.
@@ -1486,7 +1442,7 @@ function FarmBuddy:OnProfileChanged()
     self:RestoreFramePosition()
 
     -- Update GUIs
-    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
+    self:NotifySettingsChanged()
     self:UpdateGUI()
 end
 
@@ -1507,4 +1463,9 @@ function FarmBuddy:GetNotificationSound()
     end
 
     return sound
+end
+
+---Notifies the settings GUI that a change has been made.
+function FarmBuddy:NotifySettingsChanged()
+    CONFIG_REG:NotifyChange(FARM_BUDDY_ADDON_NAME)
 end
