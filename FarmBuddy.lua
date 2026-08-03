@@ -146,7 +146,6 @@ function FarmBuddy:RegisterDialogs()
         end,
         OnAccept = function(dialog, data)
             self:ApplyItemGoal(data, dialog:GetEditBox():GetText())
-            self:SetItemProp(data, 'quantity', dialog:GetEditBox():GetText(), true)
         end,
         EditBoxOnEnterPressed = function(editBox)
             local dialog = editBox:GetParent()

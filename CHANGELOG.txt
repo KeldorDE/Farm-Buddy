@@ -1,3 +1,7 @@
+1.1.16
+------------------
+- Removed a duplicate line of code
+
 1.1.15
 ------------------
 - Added a right-click context menu for items
