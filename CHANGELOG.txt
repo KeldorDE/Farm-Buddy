@@ -1,3 +1,7 @@
+1.1.14
+------------------
+- Added separate toc files for Retail and Classic
+
 1.1.13
 ------------------
 - Fixed a settings bug
