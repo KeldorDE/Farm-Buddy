@@ -768,6 +768,7 @@ end
 ---@param id string|nil
 ---@param itemID number|string
 ---@param name string|nil
+---@return boolean added False if the item is already tracked and was not added.
 function FarmBuddy:AddConfigItem(id, itemID, name)
     local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
     local itemIDText
@@ -781,6 +782,11 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
 
     -- New item so generate a unique ID to save it in SavedVariables
     if (id == nil) then
+
+        -- Prevent tracking the same item multiple times
+        if (self:IsItemTracked(itemID)) then
+            return false
+        end
 
         id = self:GetRandomString(ID_LENGTH)
         if (name == nil) then
@@ -907,6 +913,8 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
     }
 
     self:NotifySettingsChanged()
+
+    return true
 end
 
 ---Loads existing items from SavedVariables.
@@ -948,6 +956,27 @@ function FarmBuddy:GetItemUniqueIDByItemID(itemID)
     end
 
     return nil
+end
+
+---Checks whether an item with the given item ID is already tracked.
+---@param itemID number|string Item ID to look for.
+---@param excludeID? string Unique storage ID to ignore during the check.
+---@return boolean isTracked True if another item with the same item ID exists.
+function FarmBuddy:IsItemTracked(itemID, excludeID)
+    itemID = tonumber(itemID)
+    if (itemID == nil or itemID == 0) then
+        return false
+    end
+
+    if (self.db.profile.items ~= nil) then
+        for _, v in pairs(self.db.profile.items) do
+            if (v.id ~= excludeID and tonumber(v.itemID) == itemID) then
+                return true
+            end
+        end
+    end
+
+    return false
 end
 
 ---Gets the key value from the SavedVariables item list.
@@ -1021,9 +1050,17 @@ end
 ---@param id string
 ---@param input string
 function FarmBuddy:SetItem(id, input)
+    local itemInfo = self:GetItemInfo(input, id)
+
+    -- Abort if the item is already tracked by another entry
+    if (itemInfo ~= nil and self:IsItemTracked(itemInfo.ItemID, id)) then
+        local text = L['FARM_BUDDY_ITEM_NOT_SET_MSG']:gsub('!itemName!', itemInfo.Link)
+        self:Print(text)
+        return
+    end
+
     self:SetItemProp(id, 'name', input, false)
 
-    local itemInfo = self:GetItemInfo(input, id)
     if (itemInfo ~= nil) then
         self:SetReceivedItemInfo(id, itemInfo)
     end
@@ -1315,6 +1352,15 @@ end
 ---@param uniqueID string
 ---@param info table
 function FarmBuddy:SetReceivedItemInfo(uniqueID, info)
+    -- Remove the entry if the same item is already tracked (e.g. added twice before resolving)
+    if (self:IsItemTracked(info.ItemID, uniqueID)) then
+        self:RemoveItem(uniqueID)
+
+        local text = L['FARM_BUDDY_ITEM_NOT_SET_MSG']:gsub('!itemName!', info.Link)
+        self:Print(text)
+        return
+    end
+
     self:SetItemProp(uniqueID, 'itemID', info.ItemID, true)
     self:SetItemProp(uniqueID, 'name', info.Name, false)
     self:SetSettingProp(uniqueID, 'item_id', 'name', info.ItemID)

@@ -138,15 +138,28 @@ function FarmBuddy:CmdTrack(item, quantity)
         local origItem = item
         item = self:ItemLinkToID(item)
 
-        -- Add the item
-        self:AddConfigItem(nil, item, self:GetNameFromItemLink(origItem))
+        -- Resolve the item so already tracked items can be detected before adding
+        local itemInfo = self:GetItemInfo(tonumber(item) or item)
+        if itemInfo then
+            item = itemInfo.ItemID
+        end
+
+        -- Add the item and abort if it is already tracked
+        if not self:AddConfigItem(nil, item, self:GetNameFromItemLink(origItem)) then
+            local text = L['FARM_BUDDY_ITEM_NOT_SET_MSG']:gsub('!itemName!', origItem)
+            self:Print(text)
+            return
+        end
 
         if quantity then
             local status = self:ValidateNumber(nil, quantity)
             if status then
-                local itemID = self:GetItemIDByName(item)
-                if itemID then
-                    self:SetItemProp(itemID, 'quantity', tonumber(quantity), true)
+                local uniqueID = self:GetItemUniqueIDByItemID(item)
+                if not uniqueID then
+                    uniqueID = self:GetItemIDByName(self:GetNameFromItemLink(origItem))
+                end
+                if uniqueID then
+                    self:SetItemProp(uniqueID, 'quantity', tonumber(quantity), true)
                 end
             end
         end

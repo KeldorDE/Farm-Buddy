@@ -1,3 +1,7 @@
+1.1.17
+------------------
+- Fixed items being added multiple times via click modifier, chat command or the settings GUI
+
 1.1.16
 ------------------
 - Removed a duplicate line of code

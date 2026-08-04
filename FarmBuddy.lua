@@ -298,12 +298,16 @@ function FarmBuddy:ModifiedClick(itemLink, itemLocation)
         if itemLink then
             local itemInfo = self:GetItemInfo(itemLink)
             if itemInfo then
-                self:AddConfigItem(nil, itemInfo.ItemID, self:GetNameFromItemLink(itemLink))
-                self:InitItems()
-                self:UpdateGUI()
+                if self:AddConfigItem(nil, itemInfo.ItemID, self:GetNameFromItemLink(itemLink)) then
+                    self:InitItems()
+                    self:UpdateGUI()
 
-                local text = L['FARM_BUDDY_ITEM_SET_MSG']:gsub('!itemName!', itemLink)
-                self:Print(text)
+                    local text = L['FARM_BUDDY_ITEM_SET_MSG']:gsub('!itemName!', itemLink)
+                    self:Print(text)
+                else
+                    local text = L['FARM_BUDDY_ITEM_NOT_SET_MSG']:gsub('!itemName!', itemLink)
+                    self:Print(text)
+                end
             end
         end
     end
