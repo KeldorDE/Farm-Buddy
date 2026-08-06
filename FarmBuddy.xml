@@ -127,12 +127,17 @@
     </Layers>
 
     <Scripts>
+      <OnLoad>
+          self:RegisterForDrag('LeftButton')
+      </OnLoad>
+      <OnDragStart function="FarmBuddy_ItemOnDragStart"/>
+      <OnDragStop function="FarmBuddy_ItemOnDragStop"/>
       <OnMouseUp function="FarmBuddy_ItemOnMouseUp"/>
     </Scripts>
   </Frame>
 
   <!-- FarmBuddy Frame -->
-  <Frame name="FarmBuddyFrame" parent="UIParent" toplevel="true" enableMouse="false" movable="true" hidden="false">
+  <Frame name="FarmBuddyFrame" parent="UIParent" toplevel="true" enableMouse="true" movable="true" hidden="false">
     <Size x="320" y="156"/>
 
     <Anchors>
@@ -152,6 +157,21 @@
         </Anchor>
       </Anchors>
     </Button>
+
+    <!-- Invisible drag area over the title (title sits above the frame body) -->
+    <Frame name="$parentTitleBar" parentKey="TitleBar" enableMouse="true">
+      <Anchors>
+        <Anchor point="TOPLEFT" x="0" y="30"/>
+        <Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT" x="-20" y="4"/>
+      </Anchors>
+      <Scripts>
+        <OnLoad>
+            self:RegisterForDrag('LeftButton')
+        </OnLoad>
+        <OnDragStart function="FarmBuddy_ItemOnDragStart"/>
+        <OnDragStop function="FarmBuddy_ItemOnDragStop"/>
+      </Scripts>
+    </Frame>
     </Frames>
 
     <Layers>

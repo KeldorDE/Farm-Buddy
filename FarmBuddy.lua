@@ -429,8 +429,6 @@ function FarmBuddy:UpdateGUI(handleNotifications)
 
                     curFrame = CreateFrame('Frame', frameName, FarmBuddyFrame, 'FarmBuddyItemTemplate')
                     curFrame.storageID = itemStorage.id
-                    curFrame.Title:SetText(itemStorage.name)
-                    curFrame.Title:SetTextColor(itemInfo.Rarity.r, itemInfo.Rarity.g, itemInfo.Rarity.b, 1)
                     curFrame.Texture:SetTexture(itemInfo.IconFileDataID)
 
                     curFrame.ProgressBar = CreateFrame('STATUSBAR', frameName .. 'ProgressBar', curFrame, 'FarmBuddyProgressBarTemplate')
@@ -438,6 +436,11 @@ function FarmBuddy:UpdateGUI(handleNotifications)
 
                     ITEM_FRAMES[frameName] = curFrame
                 end
+
+                -- Derive the displayed name from the live item info so it reflects
+                -- the current client language instead of the stored name.
+                curFrame.Title:SetText(itemInfo.Name)
+                curFrame.Title:SetTextColor(itemInfo.Rarity.r, itemInfo.Rarity.g, itemInfo.Rarity.b, 1)
 
                 progressBarFrame = curFrame.ProgressBar
 
@@ -606,6 +609,25 @@ end
 function FarmBuddy_ItemOnMouseUp(self, button)
     if button == "RightButton" then
         FarmBuddy:ShowItemContextMenu(self)
+    end
+end
+
+---Forwards a drag start on an item row to move the main frame.
+---@param self table
+function FarmBuddy_ItemOnDragStart(self)
+    local parent = self:GetParent()
+    if not parent.FrameLock then
+        parent:StartMoving()
+    end
+end
+
+---Forwards a drag stop on an item row and saves the main frame position.
+---@param self table
+function FarmBuddy_ItemOnDragStop(self)
+    local parent = self:GetParent()
+    if not parent.FrameLock then
+        parent:StopMovingOrSizing()
+        FarmBuddy:SaveFramePosition()
     end
 end
 
