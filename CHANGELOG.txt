@@ -1,4 +1,4 @@
-NOT_RELEASED
+1.1.18
 ------------------
 - Fixed the window no longer being movable after adding the right-click context menu
 - Added the ability to move the window by dragging its title
