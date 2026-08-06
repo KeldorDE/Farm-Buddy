@@ -69,6 +69,41 @@ function FarmBuddy:AddItemToQueue(uniqueID, item)
         uniqueID = uniqueID,
         itemValue = item
     })
+
+    -- The WoW cache only returns data for items the client has already seen, so
+    -- polling GetItemInfo never resolves unknown items on its own. Actively
+    -- request the data from the server via the item mixin and re-check the queue
+    -- once it has loaded.
+    local itemID = self:GetInputItemID(item)
+    if itemID then
+        local mixin = Item:CreateFromItemID(itemID)
+        if not mixin:IsItemEmpty() then
+            mixin:ContinueOnItemLoad(function()
+                self:ItemInfoReceived()
+            end)
+        end
+    end
+end
+
+---Returns the numeric item ID for the given input when it is a bare item ID or
+---an item link. Item names return nil because they cannot be requested by ID.
+---@param item number|string Item ID, name or item link.
+---@return number? itemID
+function FarmBuddy:GetInputItemID(item)
+    if type(item) == 'number' then
+        return item
+    end
+
+    if type(item) == 'string' then
+        local linkID = item:match('item:(%d+)')
+        if linkID then
+            return tonumber(linkID)
+        end
+
+        return tonumber(item)
+    end
+
+    return nil
 end
 
 ---Called when the item info has received.
