@@ -609,6 +609,25 @@ function FarmBuddy_ItemOnMouseUp(self, button)
     end
 end
 
+---Forwards a drag start on an item row to move the main frame.
+---@param self table
+function FarmBuddy_ItemOnDragStart(self)
+    local parent = self:GetParent()
+    if not parent.FrameLock then
+        parent:StartMoving()
+    end
+end
+
+---Forwards a drag stop on an item row and saves the main frame position.
+---@param self table
+function FarmBuddy_ItemOnDragStop(self)
+    local parent = self:GetParent()
+    if not parent.FrameLock then
+        parent:StopMovingOrSizing()
+        FarmBuddy:SaveFramePosition()
+    end
+end
+
 ---Shows the context menu for the specified item.
 ---@param _ table
 ---@param itemFrame table
