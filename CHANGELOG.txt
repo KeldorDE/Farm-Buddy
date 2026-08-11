@@ -1,3 +1,10 @@
+1.2.0
+------------------
+- Added the option to include items from the Warband Bank in the item count
+- Added the option to show or hide the item icon
+- Added the option to show a chat notification when a farming goal is reached
+- Added Spanish translation
+
 1.1.18
 ------------------
 - Fixed the window no longer being movable after adding the right-click context menu

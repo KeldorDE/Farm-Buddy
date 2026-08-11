@@ -1,10 +1,10 @@
 ## Interface: 20506, 11509, 50504
-## Title: Farm Buddy
+## Title: Farm |cffffffffBuddy|r |cff00aa001.2.0|r
 ## IconTexture: Interface\Icons\INV_Misc_Coin_01
 ## Notes: Adds the functionality to track farmed items in a movable window.|n|cffbbbbbbBy Keldor|r|n|nSupport:|n|cff82c5ff- patreon.com/c/keldor|r|n|n
 ## Author: Keldor (https://www.devil-coding.de)
 ## SavedVariables: FarmBuddyStandaloneDB
-## Version: 1.1.18
+## Version: 1.2.0
 ## Category: Inventory
 ## Category-deDE: Inventar
 
@@ -12,6 +12,7 @@ embeds.xml
 
 locale\Localization.deDE.lua
 locale\Localization.enUS.lua
+locale\Localization.esES.lua
 locale\Localization.frFR.lua
 locale\Localization.itIT.lua
 locale\Localization.ruRU.lua

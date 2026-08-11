@@ -72,6 +72,15 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('general'),
                     },
+                    general_include_warband_bank = {
+                        type = 'toggle',
+                        name = L['FARM_BUDDY_INCLUDE_WARBAND_BANK'],
+                        desc = L['FARM_BUDDY_INCLUDE_WARBAND_BANK_DESC'],
+                        get = function() return self:GetSetting('includeWarbandBank', 'bool') end,
+                        set = function(_, input) self:SetSetting('includeWarbandBank', 'bool', input, true) end,
+                        width = 'full',
+                        order = self:GetOptionOrder('general'),
+                    },
                     general_space_2 = {
                         type = 'description',
                         name = '',
@@ -240,6 +249,19 @@ function FarmBuddy:GetConfigOptions()
                         name = '',
                         order = self:GetOptionOrder('appearance'),
                     },
+                    appearance_show_icon = {
+                        type = 'toggle',
+                        name = L['FARM_BUDDY_SHOW_ICON'],
+                        desc = L['FARM_BUDDY_SHOW_ICON_DESC'],
+                        get = function() return self:GetSetting('showIcon', 'bool') end,
+                        set = function(_, input) self:SetSetting('showIcon', 'bool', input, true) end,
+                        order = self:GetOptionOrder('appearance'),
+                    },
+                    appearance_space_3 = {
+                        type = 'description',
+                        name = '',
+                        order = self:GetOptionOrder('appearance'),
+                    },
                     appearance_show_buttons = {
                         type = 'toggle',
                         name = L['FARM_BUDDY_SHOW_BUTTONS'],
@@ -248,7 +270,7 @@ function FarmBuddy:GetConfigOptions()
                         set = function(_, input) self:SetSetting('showButtons', 'bool', input, false) self:SetButtonDisplay() end,
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_3 = {
+                    appearance_space_4 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -261,7 +283,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('general'),
                     },
-                    appearance_space_4 = {
+                    appearance_space_5 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('general'),
@@ -275,7 +297,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_5 = {
+                    appearance_space_6 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -289,7 +311,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_6 = {
+                    appearance_space_7 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -303,7 +325,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_7 = {
+                    appearance_space_8 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -322,7 +344,7 @@ function FarmBuddy:GetConfigOptions()
                         },
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_8 = {
+                    appearance_space_9 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -336,7 +358,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_9 = {
+                    appearance_space_10 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -354,7 +376,7 @@ function FarmBuddy:GetConfigOptions()
                         },
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_10 = {
+                    appearance_space_11 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -373,7 +395,7 @@ function FarmBuddy:GetConfigOptions()
                         },
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_11 = {
+                    appearance_space_12 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -391,7 +413,7 @@ function FarmBuddy:GetConfigOptions()
                         },
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_12 = {
+                    appearance_space_13 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -428,7 +450,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_13 = {
+                    appearance_space_14 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -445,7 +467,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_14 = {
+                    appearance_space_15 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -483,6 +505,20 @@ function FarmBuddy:GetConfigOptions()
                         name = '',
                         order = self:GetOptionOrder('notifications'),
                     },
+                    notifications_chat_notification_status = {
+                        type = 'toggle',
+                        name = L['FARM_BUDDY_CHAT_NOTIFICATIONS'],
+                        desc = L['FARM_BUDDY_CHAT_NOTIFICATIONS_DESC'],
+                        get = function() return self:GetSetting('chatGoalNotifications', 'bool') end,
+                        set = function(_, input) self:SetSetting('chatGoalNotifications', 'bool', input, true) end,
+                        width = 'full',
+                        order = self:GetOptionOrder('notifications'),
+                    },
+                    notifications_space_2 = {
+                        type = 'description',
+                        name = '',
+                        order = self:GetOptionOrder('notifications'),
+                    },
                     notifications_hide_in_combat = {
                         type = 'toggle',
                         name = L['FARM_BUDDY_HIDE_NOTIFICATIONS_IN_COMBAT'],
@@ -491,7 +527,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('notifications'),
                     },
-                    notifications_space_2 = {
+                    notifications_space_3 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('notifications'),
@@ -506,7 +542,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'double',
                         order = self:GetOptionOrder('notifications'),
                     },
-                    notifications_space_3 = {
+                    notifications_space_4 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('notifications'),
@@ -520,7 +556,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('notifications'),
                     },
-                    notifications_space_4 = {
+                    notifications_space_5 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('notifications'),
@@ -534,7 +570,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('notifications'),
                     },
-                    notifications_space_5 = {
+                    notifications_space_6 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('notifications'),
@@ -548,7 +584,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('notifications'),
                     },
-                    notifications_space_6 = {
+                    notifications_space_7 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('notifications'),
@@ -564,7 +600,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'double',
                         order = self:GetOptionOrder('notifications'),
                     },
-                    notifications_space_7 = {
+                    notifications_space_8 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('notifications'),
@@ -1236,7 +1272,7 @@ end
 ---Raises a test notification.
 function FarmBuddy:TestNotification()
     local itemInfo = self:GetItemInfo(L['FARM_BUDDY_NOTIFICATION_DEMO_ITEM_NAME'])
-    self:ShowNotification(0, itemInfo.Name, itemInfo.IconFileDataID, 200, true)
+    self:ShowNotification(0, itemInfo, 200, true)
 end
 
 ---Generates a table of random chars.

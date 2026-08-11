@@ -19,9 +19,12 @@ local DEFAULTS = {
         settings = {
             showFrame = true,
             showTitle = true,
+            showIcon = true,
             showQuantity = true,
             includeBank = false,
+            includeWarbandBank = false,
             goalNotification = true,
+            chatGoalNotifications = false,
             notificationDisplayDuration = 5,
             notificationGlow = true,
             notificationShine = true,
@@ -334,12 +337,11 @@ end
 ---@param itemName string
 ---@param itemIconFileDataID number
 ---@param quantity number Goal quantity.
-function FarmBuddy:QueueNotification(index, itemName, itemIconFileDataID, quantity)
+function FarmBuddy:QueueNotification(index, itemInfo, quantity)
     NOTIFICATION_QUEUE[index] = {
         Index = index,
-        Name = itemName,
-        Icon = itemIconFileDataID,
-        Quantity = quantity
+        ItemInfo = itemInfo,
+        Quantity = quantity,
     }
 end
 
@@ -356,7 +358,7 @@ function FarmBuddy:NotificationTask()
         local hideInCombat = self.db.profile.settings.hideNotificationsInCombat
         for index, notification in pairs(NOTIFICATION_QUEUE) do
             if not hideInCombat or (hideInCombat and not PLAYER_IN_COMBAT) then
-                self:ShowNotification(notification.Index, notification.Name, notification.Icon, notification.Quantity, false)
+                self:ShowNotification(notification.Index, notification.ItemInfo, notification.Quantity, false)
             else
                 NOTIFICATION_TRIGGERED[notification.Index] = true
             end
@@ -372,7 +374,8 @@ end
 ---@param icon number Icon file data ID.
 ---@param quantity number Goal quantity.
 ---@param demo? boolean Force showing the notification (preview), bypassing the triggered state.
-function FarmBuddy:ShowNotification(index, name, icon, quantity, demo)
+---@param itemLink string Item link.
+function FarmBuddy:ShowNotification(index, itemInfo, quantity, demo)
     if self.db.profile.settings.goalNotification or demo then
 
         local playSound = self.db.profile.settings.playNotificationSound
@@ -389,8 +392,13 @@ function FarmBuddy:ShowNotification(index, name, icon, quantity, demo)
             NOTIFICATION_TRIGGERED[index] = true
         end
 
+        if self.db.profile.settings.chatGoalNotifications then
+            local message = L["FARM_BUDDY_CHAT_NOTIFICATION_TEXT"]:gsub('!quantity!', quantity):gsub('!itemLink!', itemInfo.Link)
+            print(message)
+        end
+
         FarmBuddyNotification_Show(
-            name, icon, quantity, sound, notificationDisplayDuration, notificationGlow, notificationShine
+            itemInfo.Name, itemInfo.IconFileDataID, quantity, sound, notificationDisplayDuration, notificationGlow, notificationShine
         )
     end
 end
@@ -433,6 +441,13 @@ function FarmBuddy:UpdateGUI(handleNotifications)
 
                     curFrame.ProgressBar = CreateFrame('STATUSBAR', frameName .. 'ProgressBar', curFrame, 'FarmBuddyProgressBarTemplate')
                     curFrame.ProgressBar:SetPoint('TOPLEFT', curFrame, (curFrame.Texture:GetWidth() + 7), -25)
+                    curFrame.ProgressBar.baseWidth = curFrame.ProgressBar:GetWidth()
+
+                    -- Keep the title on a single line so it clips instead of
+                    -- wrapping when constrained to the available width. The
+                    -- inherited font is centered by default, so left-align it.
+                    curFrame.Title:SetWordWrap(false)
+                    curFrame.Title:SetJustifyH('LEFT')
 
                     ITEM_FRAMES[frameName] = curFrame
                 end
@@ -449,7 +464,7 @@ function FarmBuddy:UpdateGUI(handleNotifications)
                     goalReached = true
 
                     if handleNotifications and ITEM_DATA_INIT_COMPLETE then
-                        self:QueueNotification(itemInfo.ItemID, itemInfo.Name, itemInfo.IconFileDataID, itemStorage.quantity)
+                        self:QueueNotification(itemInfo.ItemID, itemInfo, itemStorage.quantity)
                     end
                 else
                     NOTIFICATION_QUEUE[itemInfo.ItemID] = nil
@@ -465,6 +480,28 @@ function FarmBuddy:UpdateGUI(handleNotifications)
                 else
                     curFrame:SetPoint('TOPLEFT', FarmBuddyFrame, 0, 0)
                 end
+
+                -- Toggle the item icon. When it is hidden, shift the content
+                -- (title, completion check and progress bar) left by the icon
+                -- width and widen the title and progress bar by the same amount
+                -- so they fill the freed space and keep the same look.
+                local iconWidth = curFrame.Texture:GetWidth()
+                local iconOffset = 0
+
+                if self.db.profile.settings.showIcon then
+                    curFrame.Texture:Show()
+                else
+                    curFrame.Texture:Hide()
+                    iconOffset = -iconWidth
+                end
+
+                local extraWidth = -iconOffset
+
+                curFrame.Title:SetPoint('TOPLEFT', curFrame, 39 + iconOffset, -7)
+                curFrame.Title:SetWidth(curFrame.ProgressBar.baseWidth + 4 + extraWidth)
+                curFrame.Complete:SetPoint('LEFT', curFrame, 40 + iconOffset, -11)
+                curFrame.ProgressBar:SetPoint('TOPLEFT', curFrame, (iconWidth + 7) + iconOffset, -25)
+                curFrame.ProgressBar:SetWidth(curFrame.ProgressBar.baseWidth + extraWidth)
 
                 if self.db.profile.settings.showProgressBar then
                     progressBarFrame:Show()
@@ -510,15 +547,16 @@ end
 ---@param goalReached boolean
 function FarmBuddy:SetSubline(frame, itemInfo, itemStorage, goalReached)
     local point, _, _, _, yOfs = frame.Subline:GetPoint()
+    local iconOffset = self.db.profile.settings.showIcon and 0 or -frame.Texture:GetWidth()
 
     frame.Subline:SetText(self:GetCount(itemInfo, itemStorage.quantity, true))
 
     if goalReached and self.db.profile.settings.showGoalIndicator then
-        frame.Subline:SetPoint(point, 54, yOfs)
+        frame.Subline:SetPoint(point, 54 + iconOffset, yOfs)
         frame.Complete:Show()
         frame.Subline:SetTextColor(0, 0.9, 0, 1.0)
     else
-        frame.Subline:SetPoint(point, 40, yOfs)
+        frame.Subline:SetPoint(point, 40 + iconOffset, yOfs)
         frame.Complete:Hide()
         frame.Subline:SetTextColor(1, 0.8, 0, 1.0)
     end
