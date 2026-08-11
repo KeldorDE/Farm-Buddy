@@ -72,6 +72,15 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('general'),
                     },
+                    general_include_warband_bank = {
+                        type = 'toggle',
+                        name = L['FARM_BUDDY_INCLUDE_WARBAND_BANK'],
+                        desc = L['FARM_BUDDY_INCLUDE_WARBAND_BANK_DESC'],
+                        get = function() return self:GetSetting('includeWarbandBank', 'bool') end,
+                        set = function(_, input) self:SetSetting('includeWarbandBank', 'bool', input, true) end,
+                        width = 'full',
+                        order = self:GetOptionOrder('general'),
+                    },
                     general_space_2 = {
                         type = 'description',
                         name = '',

@@ -21,6 +21,7 @@ local DEFAULTS = {
             showTitle = true,
             showQuantity = true,
             includeBank = false,
+            includeWarbandBank = false,
             goalNotification = true,
             notificationDisplayDuration = 5,
             notificationGlow = true,

@@ -40,11 +40,21 @@ function FarmBuddy:GetItemInfo(item, uniqueID)
         ITEM_INFO_CACHE[item] = static
     end
 
+    local countWarbandBank = 0
     local countBags = C_Item.GetItemCount(static.ItemID)
-    local countTotal = countBags
+    local countBank = 0
+
     if self.db.profile.settings.includeBank then
-        countTotal = C_Item.GetItemCount(static.ItemID, true)
+        countBank = C_Item.GetItemCount(static.ItemID, true)
+        countBank = (countBank - countBags)
     end
+
+    if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and self.db.profile.settings.includeWarbandBank then
+        countWarbandBank = C_Item.GetItemCount(static.ItemID, false, false, false, true)
+        countWarbandBank = (countWarbandBank - countBags)
+    end
+
+    local countTotal = (countBags + countBank + countWarbandBank)
 
     return {
         ItemID = static.ItemID,
@@ -53,6 +63,8 @@ function FarmBuddy:GetItemInfo(item, uniqueID)
         IconFileDataID = static.IconFileDataID,
         Rarity = static.Rarity,
         CountBags = countBags,
+        CountBank = countBank,
+        CountWarbandBank = countWarbandBank,
         CountTotal = countTotal,
     }
 end

@@ -1,3 +1,8 @@
+1.2.0
+------------------
+- Added Spanish translation
+- Added the option to include items from the Warband Bank in the item count
+
 1.1.18
 ------------------
 - Fixed the window no longer being movable after adding the right-click context menu

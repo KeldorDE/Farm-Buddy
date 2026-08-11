@@ -94,12 +94,15 @@ end
 ---@param showIndicator? boolean Append an 'x' indicator when no goal is set.
 ---@return number|string count Numeric count, or a formatted string when a goal/indicator is shown.
 function FarmBuddy:GetCount(itemInfo, quantity, showIndicator)
-    local includeBank = self.db.profile.settings.includeBank
     local count = itemInfo.CountBags
     local displayStyle = self.db.profile.settings.progressStyle
 
-    if includeBank then
-        count = itemInfo.CountTotal
+    if self.db.profile.settings.includeBank then
+        count = count + itemInfo.CountBank
+    end
+
+    if self.db.profile.settings.includeWarbandBank then
+        count = count + itemInfo.CountWarbandBank
     end
 
     if self.db.profile.settings.showQuantity and quantity and quantity > 0 then
