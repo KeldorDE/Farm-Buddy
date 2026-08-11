@@ -19,6 +19,7 @@ local DEFAULTS = {
         settings = {
             showFrame = true,
             showTitle = true,
+            showIcon = true,
             showQuantity = true,
             includeBank = false,
             includeWarbandBank = false,
@@ -434,6 +435,13 @@ function FarmBuddy:UpdateGUI(handleNotifications)
 
                     curFrame.ProgressBar = CreateFrame('STATUSBAR', frameName .. 'ProgressBar', curFrame, 'FarmBuddyProgressBarTemplate')
                     curFrame.ProgressBar:SetPoint('TOPLEFT', curFrame, (curFrame.Texture:GetWidth() + 7), -25)
+                    curFrame.ProgressBar.baseWidth = curFrame.ProgressBar:GetWidth()
+
+                    -- Keep the title on a single line so it clips instead of
+                    -- wrapping when constrained to the available width. The
+                    -- inherited font is centered by default, so left-align it.
+                    curFrame.Title:SetWordWrap(false)
+                    curFrame.Title:SetJustifyH('LEFT')
 
                     ITEM_FRAMES[frameName] = curFrame
                 end
@@ -466,6 +474,28 @@ function FarmBuddy:UpdateGUI(handleNotifications)
                 else
                     curFrame:SetPoint('TOPLEFT', FarmBuddyFrame, 0, 0)
                 end
+
+                -- Toggle the item icon. When it is hidden, shift the content
+                -- (title, completion check and progress bar) left by the icon
+                -- width and widen the title and progress bar by the same amount
+                -- so they fill the freed space and keep the same look.
+                local iconWidth = curFrame.Texture:GetWidth()
+                local iconOffset = 0
+
+                if self.db.profile.settings.showIcon then
+                    curFrame.Texture:Show()
+                else
+                    curFrame.Texture:Hide()
+                    iconOffset = -iconWidth
+                end
+
+                local extraWidth = -iconOffset
+
+                curFrame.Title:SetPoint('TOPLEFT', curFrame, 39 + iconOffset, -7)
+                curFrame.Title:SetWidth(curFrame.ProgressBar.baseWidth + 4 + extraWidth)
+                curFrame.Complete:SetPoint('LEFT', curFrame, 40 + iconOffset, -11)
+                curFrame.ProgressBar:SetPoint('TOPLEFT', curFrame, (iconWidth + 7) + iconOffset, -25)
+                curFrame.ProgressBar:SetWidth(curFrame.ProgressBar.baseWidth + extraWidth)
 
                 if self.db.profile.settings.showProgressBar then
                     progressBarFrame:Show()
@@ -511,15 +541,16 @@ end
 ---@param goalReached boolean
 function FarmBuddy:SetSubline(frame, itemInfo, itemStorage, goalReached)
     local point, _, _, _, yOfs = frame.Subline:GetPoint()
+    local iconOffset = self.db.profile.settings.showIcon and 0 or -frame.Texture:GetWidth()
 
     frame.Subline:SetText(self:GetCount(itemInfo, itemStorage.quantity, true))
 
     if goalReached and self.db.profile.settings.showGoalIndicator then
-        frame.Subline:SetPoint(point, 54, yOfs)
+        frame.Subline:SetPoint(point, 54 + iconOffset, yOfs)
         frame.Complete:Show()
         frame.Subline:SetTextColor(0, 0.9, 0, 1.0)
     else
-        frame.Subline:SetPoint(point, 40, yOfs)
+        frame.Subline:SetPoint(point, 40 + iconOffset, yOfs)
         frame.Complete:Hide()
         frame.Subline:SetTextColor(1, 0.8, 0, 1.0)
     end

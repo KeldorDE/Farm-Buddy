@@ -249,6 +249,19 @@ function FarmBuddy:GetConfigOptions()
                         name = '',
                         order = self:GetOptionOrder('appearance'),
                     },
+                    appearance_show_icon = {
+                        type = 'toggle',
+                        name = L['FARM_BUDDY_SHOW_ICON'],
+                        desc = L['FARM_BUDDY_SHOW_ICON_DESC'],
+                        get = function() return self:GetSetting('showIcon', 'bool') end,
+                        set = function(_, input) self:SetSetting('showIcon', 'bool', input, true) end,
+                        order = self:GetOptionOrder('appearance'),
+                    },
+                    appearance_space_3 = {
+                        type = 'description',
+                        name = '',
+                        order = self:GetOptionOrder('appearance'),
+                    },
                     appearance_show_buttons = {
                         type = 'toggle',
                         name = L['FARM_BUDDY_SHOW_BUTTONS'],
@@ -257,7 +270,7 @@ function FarmBuddy:GetConfigOptions()
                         set = function(_, input) self:SetSetting('showButtons', 'bool', input, false) self:SetButtonDisplay() end,
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_3 = {
+                    appearance_space_4 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -270,7 +283,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('general'),
                     },
-                    appearance_space_4 = {
+                    appearance_space_5 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('general'),
@@ -284,7 +297,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_5 = {
+                    appearance_space_6 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -298,7 +311,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_6 = {
+                    appearance_space_7 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -312,7 +325,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_7 = {
+                    appearance_space_8 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -331,7 +344,7 @@ function FarmBuddy:GetConfigOptions()
                         },
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_8 = {
+                    appearance_space_9 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -345,7 +358,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_9 = {
+                    appearance_space_10 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -363,7 +376,7 @@ function FarmBuddy:GetConfigOptions()
                         },
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_10 = {
+                    appearance_space_11 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -382,7 +395,7 @@ function FarmBuddy:GetConfigOptions()
                         },
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_11 = {
+                    appearance_space_12 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -400,7 +413,7 @@ function FarmBuddy:GetConfigOptions()
                         },
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_12 = {
+                    appearance_space_13 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -437,7 +450,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_13 = {
+                    appearance_space_14 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
@@ -454,7 +467,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('appearance'),
                     },
-                    appearance_space_14 = {
+                    appearance_space_15 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('appearance'),
