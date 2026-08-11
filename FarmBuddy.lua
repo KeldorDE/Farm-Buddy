@@ -24,6 +24,7 @@ local DEFAULTS = {
             includeBank = false,
             includeWarbandBank = false,
             goalNotification = true,
+            chatGoalNotifications = false,
             notificationDisplayDuration = 5,
             notificationGlow = true,
             notificationShine = true,
@@ -336,12 +337,11 @@ end
 ---@param itemName string
 ---@param itemIconFileDataID number
 ---@param quantity number Goal quantity.
-function FarmBuddy:QueueNotification(index, itemName, itemIconFileDataID, quantity)
+function FarmBuddy:QueueNotification(index, itemInfo, quantity)
     NOTIFICATION_QUEUE[index] = {
         Index = index,
-        Name = itemName,
-        Icon = itemIconFileDataID,
-        Quantity = quantity
+        ItemInfo = itemInfo,
+        Quantity = quantity,
     }
 end
 
@@ -358,7 +358,7 @@ function FarmBuddy:NotificationTask()
         local hideInCombat = self.db.profile.settings.hideNotificationsInCombat
         for index, notification in pairs(NOTIFICATION_QUEUE) do
             if not hideInCombat or (hideInCombat and not PLAYER_IN_COMBAT) then
-                self:ShowNotification(notification.Index, notification.Name, notification.Icon, notification.Quantity, false)
+                self:ShowNotification(notification.Index, notification.ItemInfo, notification.Quantity, false)
             else
                 NOTIFICATION_TRIGGERED[notification.Index] = true
             end
@@ -374,7 +374,8 @@ end
 ---@param icon number Icon file data ID.
 ---@param quantity number Goal quantity.
 ---@param demo? boolean Force showing the notification (preview), bypassing the triggered state.
-function FarmBuddy:ShowNotification(index, name, icon, quantity, demo)
+---@param itemLink string Item link.
+function FarmBuddy:ShowNotification(index, itemInfo, quantity, demo)
     if self.db.profile.settings.goalNotification or demo then
 
         local playSound = self.db.profile.settings.playNotificationSound
@@ -391,8 +392,13 @@ function FarmBuddy:ShowNotification(index, name, icon, quantity, demo)
             NOTIFICATION_TRIGGERED[index] = true
         end
 
+        if self.db.profile.settings.chatGoalNotifications then
+            local message = L["FARM_BUDDY_CHAT_NOTIFICATION_TEXT"]:gsub('!quantity!', quantity):gsub('!itemLink!', itemInfo.Link)
+            print(message)
+        end
+
         FarmBuddyNotification_Show(
-            name, icon, quantity, sound, notificationDisplayDuration, notificationGlow, notificationShine
+            itemInfo.Name, itemInfo.IconFileDataID, quantity, sound, notificationDisplayDuration, notificationGlow, notificationShine
         )
     end
 end
@@ -458,7 +464,7 @@ function FarmBuddy:UpdateGUI(handleNotifications)
                     goalReached = true
 
                     if handleNotifications and ITEM_DATA_INIT_COMPLETE then
-                        self:QueueNotification(itemInfo.ItemID, itemInfo.Name, itemInfo.IconFileDataID, itemStorage.quantity)
+                        self:QueueNotification(itemInfo.ItemID, itemInfo, itemStorage.quantity)
                     end
                 else
                     NOTIFICATION_QUEUE[itemInfo.ItemID] = nil

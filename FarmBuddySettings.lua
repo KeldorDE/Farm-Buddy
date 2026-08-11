@@ -505,6 +505,20 @@ function FarmBuddy:GetConfigOptions()
                         name = '',
                         order = self:GetOptionOrder('notifications'),
                     },
+                    notifications_chat_notification_status = {
+                        type = 'toggle',
+                        name = L['FARM_BUDDY_CHAT_NOTIFICATIONS'],
+                        desc = L['FARM_BUDDY_CHAT_NOTIFICATIONS_DESC'],
+                        get = function() return self:GetSetting('chatGoalNotifications', 'bool') end,
+                        set = function(_, input) self:SetSetting('chatGoalNotifications', 'bool', input, true) end,
+                        width = 'full',
+                        order = self:GetOptionOrder('notifications'),
+                    },
+                    notifications_space_2 = {
+                        type = 'description',
+                        name = '',
+                        order = self:GetOptionOrder('notifications'),
+                    },
                     notifications_hide_in_combat = {
                         type = 'toggle',
                         name = L['FARM_BUDDY_HIDE_NOTIFICATIONS_IN_COMBAT'],
@@ -513,7 +527,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('notifications'),
                     },
-                    notifications_space_2 = {
+                    notifications_space_3 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('notifications'),
@@ -528,7 +542,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'double',
                         order = self:GetOptionOrder('notifications'),
                     },
-                    notifications_space_3 = {
+                    notifications_space_4 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('notifications'),
@@ -542,7 +556,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('notifications'),
                     },
-                    notifications_space_4 = {
+                    notifications_space_5 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('notifications'),
@@ -556,7 +570,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('notifications'),
                     },
-                    notifications_space_5 = {
+                    notifications_space_6 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('notifications'),
@@ -570,7 +584,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'full',
                         order = self:GetOptionOrder('notifications'),
                     },
-                    notifications_space_6 = {
+                    notifications_space_7 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('notifications'),
@@ -586,7 +600,7 @@ function FarmBuddy:GetConfigOptions()
                         width = 'double',
                         order = self:GetOptionOrder('notifications'),
                     },
-                    notifications_space_7 = {
+                    notifications_space_8 = {
                         type = 'description',
                         name = '',
                         order = self:GetOptionOrder('notifications'),
@@ -1258,7 +1272,7 @@ end
 ---Raises a test notification.
 function FarmBuddy:TestNotification()
     local itemInfo = self:GetItemInfo(L['FARM_BUDDY_NOTIFICATION_DEMO_ITEM_NAME'])
-    self:ShowNotification(0, itemInfo.Name, itemInfo.IconFileDataID, 200, true)
+    self:ShowNotification(0, itemInfo, 200, true)
 end
 
 ---Generates a table of random chars.
