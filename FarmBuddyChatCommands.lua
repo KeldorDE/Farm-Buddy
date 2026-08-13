@@ -51,12 +51,19 @@ function FarmBuddy:GetChatCommandsHelp(printOut)
     local helpStr = ''
 
     for command, info in pairs(CHAT_COMMANDS) do
+
+        if not printOut then
+            helpStr = helpStr .. '   '
+        end
+
         helpStr = helpStr .. self:GetColoredText('/' .. CHAT_COMMAND, FARM_BUDDY_COLOR_GREEN)
             .. ' ' .. self:GetColoredText(command, FARM_BUDDY_COLOR_RED)
         if info.Args ~= '' then
-            helpStr = helpStr .. ' ' .. self:GetColoredText(info.Args, FARM_BUDDY_COLOR_GREEN)
+            helpStr = helpStr .. ' ' .. self:GetColoredText(info.Args, FARM_BUDDY_COLOR_YELLOW)
         end
+
         helpStr = helpStr .. ' - ' .. info.Description
+
         if printOut then
             print(helpStr)
             helpStr = ''
