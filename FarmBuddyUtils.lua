@@ -7,6 +7,12 @@
 
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID)
 
+--- Prints a message to the default chat frame with the addon's prefix.
+--- @param msg string The message to print.
+function FarmBuddy:Print(msg)
+    DEFAULT_CHAT_FRAME:AddMessage("|cffFFD100" .. FARM_BUDDY_ADDON_NAME .. ":|r " .. tostring(msg))
+end
+
 ---Gets a colored string.
 ---@param text string
 ---@param color string Hex color string (e.g. 'FF00FF00').
