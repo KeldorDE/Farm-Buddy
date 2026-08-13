@@ -61,7 +61,6 @@ local DEFAULTS = {
 
 ---Is called by AceAddon when the addon is first loaded.
 function FarmBuddy:OnInitialize()
-    -- Init SavedVariables
     self.db = LibStub('AceDB-3.0'):New(FARM_BUDDY_ID .. 'DB', DEFAULTS)
 
     -- Register events
@@ -370,11 +369,9 @@ end
 
 ---Raises a notification.
 ---@param index number Item ID used as the trigger key.
----@param name string Item name.
----@param icon number Icon file data ID.
+---@param itemInfo table Item info.
 ---@param quantity number Goal quantity.
 ---@param demo? boolean Force showing the notification (preview), bypassing the triggered state.
----@param itemLink string Item link.
 function FarmBuddy:ShowNotification(index, itemInfo, quantity, demo)
     if self.db.profile.settings.goalNotification or demo then
 
@@ -394,7 +391,7 @@ function FarmBuddy:ShowNotification(index, itemInfo, quantity, demo)
 
         if self.db.profile.settings.chatGoalNotifications then
             local message = L["FARM_BUDDY_CHAT_NOTIFICATION_TEXT"]:gsub('!quantity!', quantity):gsub('!itemLink!', itemInfo.Link)
-            print(message)
+            self:Print(message)
         end
 
         FarmBuddyNotification_Show(
