@@ -1,3 +1,11 @@
+1.2.3
+------------------
+- Moved the Data-Broker settings from General to it's own category
+- Added a show icon setting to the Data-Broker settings
+- Added a show item color setting to the Data-Broker settings
+- Fixed data broker not showing item name color
+- Fixed data broker icon not showing
+
 1.2.2
 ------------------
 - Updated about page information and styling

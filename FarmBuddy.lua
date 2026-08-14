@@ -52,9 +52,10 @@ local DEFAULTS = {
             sortBy = 'name',
             sortOrder = 'asc',
             frameScale = 1.0,
-            enableDataBrokerSupport = false,
             showDataBrokerItemName = true,
-            dataBrokerNumItems = 2,
+            showDataBrokerItemIcon = true,
+            showDataBrokerItemNameColor = true,
+            dataBrokerNumItems = 16,
         }
     }
 }
