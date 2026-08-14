@@ -8,37 +8,33 @@ local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID)
 local ldb = LibStub:GetLibrary('LibDataBroker-1.1')
 local DATA_BROKER
-local DATA_BROKER_ITEMS
-local DATA_BROKER_ICON = 'Interface\\AddOns\\FarmBuddy\\FarmBuddy.tga'
+local DATA_BROKER_ITEMS = {}
 
 
 ---Inits the data broker items.
 function FarmBuddy:InitDataBroker()
-    local addon = self
 
-    -- Init data broker
     DATA_BROKER = ldb:NewDataObject('FarmBuddyBroker', {
+        label = FARM_BUDDY_ADDON_NAME,
         type = 'data source',
-        icon = DATA_BROKER_ICON,
         text = '',
+        icon = C_AddOns.GetAddOnMetadata('FarmBuddy', 'IconTexture'),
     })
 
-    -- Data broker click handler
     DATA_BROKER.OnClick = function(_, button)
         if button == 'LeftButton' then
-            addon:ToggleShowFrame()
+            self:ToggleShowFrame()
         elseif button == 'RightButton' then
-            addon:OpenSettings('tab_general')
+            self:OpenSettings('tab_data_broker')
         end
     end
 
-    -- Data broker tooltip
     DATA_BROKER.OnTooltipShow = function(tooltip)
         if not tooltip or not tooltip.AddLine then return end
 
-        tooltip:AddLine(addon:GetColoredText(FARM_BUDDY_ADDON_NAME, FARM_BUDDY_COLOR_WHITE))
-        tooltip:AddLine(addon:GetColoredText(L['FARM_BUDDY_BROKER_TOOLTIP_LINE_1'], FARM_BUDDY_COLOR_GREEN))
-        tooltip:AddLine(addon:GetColoredText(L['FARM_BUDDY_BROKER_TOOLTIP_LINE_2'], FARM_BUDDY_COLOR_GREEN))
+        tooltip:AddLine(self:GetColoredText(FARM_BUDDY_ADDON_NAME, FARM_BUDDY_COLOR_WHITE))
+        tooltip:AddLine(self:GetColoredText(L['FARM_BUDDY_BROKER_TOOLTIP_LINE_1'], FARM_BUDDY_COLOR_GREEN))
+        tooltip:AddLine(self:GetColoredText(L['FARM_BUDDY_BROKER_TOOLTIP_LINE_2'], FARM_BUDDY_COLOR_GREEN))
     end
 end
 
@@ -51,58 +47,48 @@ end
 ---@param itemInfo table
 ---@param itemStorage table
 function FarmBuddy:AddItemToDataBroker(itemInfo, itemStorage)
-    if self.db.profile.settings.enableDataBrokerSupport then
-        tinsert(DATA_BROKER_ITEMS, {
-            itemInfo = itemInfo,
-            itemStorage = itemStorage,
-        })
-    end
+    tinsert(DATA_BROKER_ITEMS, {
+        itemInfo = itemInfo,
+        itemStorage = itemStorage,
+    })
 end
 
 ---Updates the data broker text and icon.
 function FarmBuddy:UpdateDataBroker()
-    if self.db.profile.settings.enableDataBrokerSupport then
-        local dataList = {}
-        local numItems = 0
-        local totalItemCount = tonumber(self.db.profile.settings.dataBrokerNumItems)
-        local showIcon = false
+    local parts = {}
+    local count = 0
 
-        if totalItemCount == 0 then
-            showIcon = true
+    for _, v in ipairs(DATA_BROKER_ITEMS) do
+        if count >= self.db.profile.settings.dataBrokerNumItems then
+            break
         end
 
-        for _, v in pairs(DATA_BROKER_ITEMS) do
+        local segment = ''
+        local itemName
 
-            if numItems >= totalItemCount then
-                break
+        if self.db.profile.settings.showDataBrokerItemIcon then
+            segment = self:GetIconString(v.itemInfo.IconFileDataID, false)
+        end
+
+        if self.db.profile.settings.showDataBrokerItemName then
+            if self.db.profile.settings.showDataBrokerItemIcon then
+                segment = segment .. ' '
             end
 
-            tinsert(dataList, self:GetIconString(v.itemInfo.IconFileDataID, false))
-
-            if self.db.profile.settings.showDataBrokerItemName then
-                tinsert(dataList, v.itemInfo.Name)
+            if self.db.profile.settings.showDataBrokerItemNameColor then
+                itemName = self:GetNameFromItemLink(v.itemInfo.Link)
+            else
+                itemName = v.itemInfo.Name
             end
 
-            tinsert(dataList, self:GetCount(v.itemInfo, v.itemStorage.quantity, true) .. '  ')
-
-            numItems = numItems + 1
+            segment = segment .. itemName
         end
 
-        local icon = ''
-        local text = table.concat(dataList, ' ')
+        segment = segment .. ' ' .. self:GetCount(v.itemInfo, v.itemStorage.quantity, true)
+        tinsert(parts, segment)
 
-        if showIcon then
-            icon = DATA_BROKER_ICON
-        end
-
-        if text == '' then
-            text = FARM_BUDDY_ADDON_NAME
-        end
-
-        DATA_BROKER.text = text
-        DATA_BROKER.icon = icon
-    else
-        DATA_BROKER.text = ''
-        DATA_BROKER.icon = ''
+        count = count + 1
     end
+
+    DATA_BROKER.text = #parts > 0 and table.concat(parts, '  ') or FARM_BUDDY_ADDON_NAME
 end
