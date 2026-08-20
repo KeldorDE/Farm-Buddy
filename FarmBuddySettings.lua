@@ -5,9 +5,11 @@
 -- * By: Keldor
 -- **************************************************************************
 
-local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
+---@class FarmBuddy : AceConsole, AceEvent, AceHook, AceTimer
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID)
+local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
 local CONFIG_REG = LibStub("AceConfigRegistry-3.0")
+local CONFIG_OPTIONS
 local ADDON_VERSION = C_AddOns.GetAddOnMetadata('FarmBuddy', 'Version')
 local ITEM_PREFIX = FARM_BUDDY_ID .. 'Item'
 local ID_LENGTH = 32
@@ -29,8 +31,10 @@ local NOTIFICATION_SOUNDS = {
 ---Creates the configuration page.
 function FarmBuddy:InitSettings()
     LibStub('AceConfig-3.0'):RegisterOptionsTable(FARM_BUDDY_ADDON_NAME, self:GetConfigOptions())
+    CONFIG_OPTIONS = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
     self.optionsFrame, self.optionsID = LibStub('AceConfigDialog-3.0'):AddToBlizOptions(FARM_BUDDY_ADDON_NAME)
     self:GenerateChars()
+
     self:LoadExistingConfigItems()
 end
 
@@ -157,7 +161,7 @@ function FarmBuddy:GetConfigOptions()
                     items_add_item = {
                         type = 'execute',
                         name = L['FARM_BUDDY_ADD_NEW_ITEM'],
-                        func = function() self:AddConfigItem() end,
+                        func = function() self:AddConfigItem(nil, nil, nil) end,
                         width = 'double',
                         order = self:GetOptionOrder('items'),
                     },
@@ -872,11 +876,14 @@ end
 
 ---Adds a new config item row to tree.
 ---@param id string|nil
----@param itemID number|string
+---@param itemID number|string|nil}
 ---@param name string|nil
 ---@return boolean added False if the item is already tracked and was not added.
 function FarmBuddy:AddConfigItem(id, itemID, name)
-    local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
+    if not CONFIG_OPTIONS then
+        return false
+    end
+
     local itemIDText
 
     if (itemID == nil or tonumber(itemID) == 0) then
@@ -910,9 +917,9 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
         end
     end
 
-    local count = (self:TableLength(options.args.tab_items.args) - 4) + 1
+    local count = (self:TableLength(CONFIG_OPTIONS.args.tab_items.args) - 4) + 1
 
-    options.args.tab_items.args[ITEM_PREFIX .. id] = {
+    CONFIG_OPTIONS.args.tab_items.args[ITEM_PREFIX .. id] = {
         name = L['FARM_BUDDY_ITEM'] .. ' ' .. count,
         type = 'group',
         order = self:GetOptionOrder('items'),
@@ -1065,12 +1072,12 @@ function FarmBuddy:GetItemUniqueIDByItemID(itemID)
 end
 
 ---Checks whether an item with the given item ID is already tracked.
----@param itemID number|string Item ID to look for.
+---@param itemID number|string|nil Item ID to look for.
 ---@param excludeID? string Unique storage ID to ignore during the check.
 ---@return boolean isTracked True if another item with the same item ID exists.
 function FarmBuddy:IsItemTracked(itemID, excludeID)
-    itemID = tonumber(itemID)
-    if (itemID == nil or itemID == 0) then
+    itemID = tonumber(itemID) or nil
+    if (not itemID) then
         return false
     end
 
@@ -1103,7 +1110,7 @@ function FarmBuddy:GetItemFromSV(id, key, numeric)
         value = self.db.profile.items[index][key]
 
         if(numeric == true) then
-            value = tonumber(value)
+            value = tonumber(value) or 0
         else
             value = tostring(value)
         end
@@ -1131,7 +1138,7 @@ function FarmBuddy:SetItemProp(id, key, input, numeric)
         end
 
         if (numeric == true) then
-            input = tonumber(input)
+            input = tonumber(input) or 0
         end
 
         self.db.profile.items[index][key] = input
@@ -1203,12 +1210,16 @@ end
 ---Removes the item with the given ID from the settings GUI and SavedVariables.
 ---@param id number|string
 function FarmBuddy:RemoveItem(id)
+    if not CONFIG_OPTIONS then
+        return
+    end
+
+    id = tostring(id)
     local groupName = ITEM_PREFIX .. id
-    local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
 
     -- Remove settings group for item ID
-    if (options.args.tab_items.args[groupName] ~= nil) then
-        options.args.tab_items.args[groupName] = nil
+    if (CONFIG_OPTIONS.args.tab_items.args[groupName] ~= nil) then
+        CONFIG_OPTIONS.args.tab_items.args[groupName] = nil
     end
 
     -- Remove item from SavedVariables
@@ -1229,11 +1240,14 @@ end
 
 ---Number item entries by it's new order.
 function FarmBuddy:ReindexConfigItems()
-    local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
-    if (options.args.tab_items.args ~= nil) then
-        for k in pairs(options.args.tab_items.args) do
+    if not CONFIG_OPTIONS then
+        return
+    end
+
+    if (CONFIG_OPTIONS.args.tab_items.args ~= nil) then
+        for k in pairs(CONFIG_OPTIONS.args.tab_items.args) do
             if (string.sub(k, 1, string.len(ITEM_PREFIX)) == ITEM_PREFIX) then
-                options.args.tab_items.args[k] = nil
+                CONFIG_OPTIONS.args.tab_items.args[k] = nil
             end
         end
 
@@ -1342,7 +1356,9 @@ end
 ---Raises a test notification.
 function FarmBuddy:TestNotification()
     local itemInfo = self:GetItemInfo(L['FARM_BUDDY_NOTIFICATION_DEMO_ITEM_NAME'])
-    self:ShowNotification(0, itemInfo, 200, true)
+    if itemInfo then
+        self:ShowNotification(0, itemInfo, 200, true)
+    end
 end
 
 ---Generates a table of random chars.
@@ -1366,8 +1382,8 @@ function FarmBuddy:GetRandomString(length)
 end
 
 ---Checks if the entered value a valid and positive number.
----@param _ table
----@param input string
+---@param _ table|nil
+---@param input string The input value to validate.
 ---@return boolean
 function FarmBuddy:ValidateNumber(_, input)
 
@@ -1484,16 +1500,18 @@ end
 ---@param propKey string
 ---@param value any
 function FarmBuddy:SetSettingProp(uniqueID, configKey, propKey, value)
+    if not CONFIG_OPTIONS then
+        return
+    end
 
-    local options = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
-    if (options.args.tab_items.args ~= nil) then
-        for k in pairs(options.args.tab_items.args) do
+    if (CONFIG_OPTIONS.args.tab_items.args ~= nil) then
+        for k in pairs(CONFIG_OPTIONS.args.tab_items.args) do
 
             local prefixCheck = string.sub(k, 1, string.len(ITEM_PREFIX))
             local idCheck = string.sub(k, -string.len(uniqueID))
 
             if (prefixCheck == ITEM_PREFIX and idCheck == uniqueID) then
-                options.args.tab_items.args[k].args[configKey .. '_' .. uniqueID][propKey] = tostring(value)
+                CONFIG_OPTIONS.args.tab_items.args[k].args[configKey .. '_' .. uniqueID][propKey] = tostring(value)
                 break
             end
         end

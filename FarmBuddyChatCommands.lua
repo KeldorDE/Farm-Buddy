@@ -5,140 +5,82 @@
 -- * By: Keldor
 -- **************************************************************************
 
-local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
+---@class FarmBuddy : AceConsole, AceEvent, AceHook, AceTimer
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID)
+local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
 local CHAT_COMMAND = 'fbs'
 local CHAT_COMMANDS = {
-    track = {
-        Args = '<' .. L['FARM_BUDDY_COMMAND_TRACK_ARGS'] .. '> (<' .. L['FARM_BUDDY_COMMAND_GOAL_ARGS'] .. '>)',
-        Description = L['FARM_BUDDY_COMMAND_TRACK_DESC']
-    },
-    quantity = {
+    {
+        Command = 'track',
         Args = '<' .. L['FARM_BUDDY_COMMAND_TRACK_ARGS'] .. '> <' .. L['FARM_BUDDY_COMMAND_GOAL_ARGS'] .. '>',
-        Description = L['FARM_BUDDY_COMMAND_GOAL_DESC']
+        Description = L['FARM_BUDDY_COMMAND_TRACK_DESC'],
+        Handler = 'CmdTrack',
     },
-    reset = {
+    {
+        Command = 'quantity',
+        Args = '<' .. L['FARM_BUDDY_COMMAND_TRACK_ARGS'] .. '> <' .. L['FARM_BUDDY_COMMAND_GOAL_ARGS'] .. '>',
+        Description = L['FARM_BUDDY_COMMAND_GOAL_DESC'],
+        Handler = 'CmdQuantity',
+    },
+    {
+        Command = 'toggle',
+        Args = '',
+        Description = L['FARM_BUDDY_COMMAND_TOGGLE_DESC'],
+        Handler = 'CmdToggle',
+    },
+    {
+        Command = 'settings',
+        Args = '',
+        Description = L['FARM_BUDDY_COMMAND_SETTINGS_DESC'],
+        Handler = 'CmdSettings',
+    },
+    {
+        Command = 'testNotification',
+        Args = '',
+        Description = L['FARM_BUDDY_COMMAND_TEST_NOTIFICATION_DESC'],
+        Handler = 'CmdTestNotification',
+    },
+    {
+        Command = 'reset',
         Args = '<' .. L['FARM_BUDDY_COMMAND_RESET_ARGS'] .. '>',
-        Description = L['FARM_BUDDY_COMMAND_RESET_DESC']
+        Description = L['FARM_BUDDY_COMMAND_RESET_DESC'],
+        Handler = 'CmdReset',
     },
-    toggle = {
+    {
+        Command = 'version',
         Args = '',
-        Description = L['FARM_BUDDY_COMMAND_TOGGLE_DESC']
+        Description = L['FARM_BUDDY_COMMAND_VERSION_DESC'],
+        Handler = 'CmdVersion',
     },
-    settings = {
+    {
+        Command = 'help',
         Args = '',
-        Description = L['FARM_BUDDY_COMMAND_SETTINGS_DESC']
-    },
-    version = {
-        Args = '',
-        Description = L['FARM_BUDDY_COMMAND_VERSION_DESC']
-    },
-    help = {
-        Args = '',
-        Description = L['FARM_BUDDY_COMMAND_HELP_DESC']
+        Description = L['FARM_BUDDY_COMMAND_HELP_DESC'],
+        Handler = 'CmdGetHelp',
     }
 }
+-- Maps command names to their entry for quick lookup, derived from the ordered CHAT_COMMANDS list.
+local CHAT_COMMANDS_BY_NAME = {}
+for _, entry in ipairs(CHAT_COMMANDS) do
+    CHAT_COMMANDS_BY_NAME[entry.Command] = entry
+end
 
 ---Creates the chat commands.
 function FarmBuddy:InitChatCommands()
     self:RegisterChatCommand(CHAT_COMMAND, 'ChatCommand')
 end
 
----Returns the help text of the chat commands.
----@param printOut boolean
----@return string
-function FarmBuddy:GetChatCommandsHelp(printOut)
-    local helpStr = ''
-
-    for command, info in pairs(CHAT_COMMANDS) do
-
-        if not printOut then
-            helpStr = helpStr .. '   '
-        end
-
-        helpStr = helpStr .. self:GetColoredText('/' .. CHAT_COMMAND, FARM_BUDDY_COLOR_GREEN)
-            .. ' ' .. self:GetColoredText(command, FARM_BUDDY_COLOR_RED)
-        if info.Args ~= '' then
-            helpStr = helpStr .. ' ' .. self:GetColoredText(info.Args, FARM_BUDDY_COLOR_YELLOW)
-        end
-
-        helpStr = helpStr .. ' - ' .. info.Description
-
-        if printOut then
-            print(helpStr)
-            helpStr = ''
-        else
-            helpStr = helpStr .. '\n'
-        end
-    end
-
-    return helpStr
-end
-
 ---Handles AddOn commands.
----@param input string
+---@param input string The raw chat command input.
 function FarmBuddy:ChatCommand(input)
     local cmd, value, arg1 = self:GetArgs(input, 3)
-
-    -- Show help
-    if not cmd or cmd == 'help' then
-        self:CmdGetHelp()
-
-        -- Prints version information
-    elseif cmd == 'version' then
-        self:CmdVersion()
-
-        -- Reset AddOn settings
-    elseif cmd == 'reset' then
-        self:CmdReset(value)
-
-        -- Set tracked item
-    elseif cmd == 'track' then
-        self:CmdTrack(value, arg1)
-
-        -- Set goal quantity
-    elseif cmd == 'quantity' then
-        self:CmdQuantity(value, arg1)
-
-        -- Toggle frame display
-    elseif cmd == 'toggle' then
-        self:CmdToggle()
-
-        -- Open settings
-    elseif cmd == 'settings' then
-        self:CmdSettings()
-    end
-end
-
----Handles the help chat command.
-function FarmBuddy:CmdGetHelp()
-    self:Print(L['FARM_BUDDY_COMMAND_LIST'] .. '\n')
-    self:GetChatCommandsHelp(true)
-end
-
----Handles the version chat command.
-function FarmBuddy:CmdVersion()
-    self:Print(C_AddOns.GetAddOnMetadata('FarmBuddy', 'Version'))
-end
-
----Handles the reset chat command.
----@param value string
-function FarmBuddy:CmdReset(value)
-    if value == 'all' then
-        self:ResetConfig()
-    else
-        self:ResetItems(false)
-    end
-
-    self:InitItems()
-    self:UpdateGUI()
-
-    self:Print(L['FARM_BUDDY_CONFIG_RESET_MSG'])
+    local entry = CHAT_COMMANDS_BY_NAME[cmd] or CHAT_COMMANDS_BY_NAME.help
+    self[entry.Handler](self, value, arg1)
 end
 
 ---Handles the track chat command.
----@param item string
----@param quantity string|number
+---@param item string The item link or item ID.
+---@param quantity string|number The quantity to set for the item.
 function FarmBuddy:CmdTrack(item, quantity)
     if item then
         -- Convert item link to name
@@ -159,14 +101,14 @@ function FarmBuddy:CmdTrack(item, quantity)
         end
 
         if quantity then
-            local status = self:ValidateNumber(nil, quantity)
+            local status = self:ValidateNumber(nil, tostring(quantity))
             if status then
                 local uniqueID = self:GetItemUniqueIDByItemID(item)
                 if not uniqueID then
                     uniqueID = self:GetItemIDByName(self:GetNameFromItemLink(origItem))
                 end
                 if uniqueID then
-                    self:SetItemProp(uniqueID, 'quantity', tonumber(quantity), true)
+                    self:SetItemProp(uniqueID, 'quantity', tonumber(quantity) or 0, true)
                 end
             end
         end
@@ -182,18 +124,18 @@ function FarmBuddy:CmdTrack(item, quantity)
 end
 
 ---Handles the quantity chat command.
----@param item string
----@param quantity string|number
+---@param item string The item link or item ID.
+---@param quantity string|number The quantity to set for the item.
 function FarmBuddy:CmdQuantity(item, quantity)
     if item then
-        local status = self:ValidateNumber(nil, quantity)
+        local status = self:ValidateNumber(nil, tostring(quantity))
         if status then
             -- Convert item link to ID
             local itemID = self:ItemLinkToID(item)
             if itemID then
                 local uniqueID = self:GetItemUniqueIDByItemID(itemID)
                 if uniqueID then
-                    self:SetItemProp(uniqueID, 'quantity', tonumber(quantity), true)
+                    self:SetItemProp(uniqueID, 'quantity', tonumber(quantity) or 0, true)
                     self:Print(L['FARM_BUDDY_GOAL_SET'])
                 else
                     self:Print(L['FARM_BUDDY_ITEM_NOT_ON_LIST'])
@@ -217,14 +159,63 @@ function FarmBuddy:CmdSettings()
     self:OpenSettings('tab_general')
 end
 
----Converts a item link to item ID.
----@param item string
----@return string
-function FarmBuddy:ItemLinkToID(item)
-    local itemID = item:match("item:(%d+)")
-    if itemID then
-        item = itemID
+function FarmBuddy:CmdTestNotification()
+    FarmBuddy:TestNotification()
+end
+
+---Handles the reset chat command.
+---@param resetType string The reset type. Can be 'all' or 'items'.
+function FarmBuddy:CmdReset(resetType)
+    if resetType == 'all' then
+        self:ResetConfig()
+    else
+        self:ResetItems(false)
     end
 
-    return item
+    self:InitItems()
+    self:UpdateGUI()
+
+    self:Print(L['FARM_BUDDY_CONFIG_RESET_MSG'])
+end
+
+---Handles the version chat command.
+function FarmBuddy:CmdVersion()
+    self:Print(C_AddOns.GetAddOnMetadata('FarmBuddy', 'Version'))
+end
+
+---Handles the help chat command.
+function FarmBuddy:CmdGetHelp()
+    self:Print(L['FARM_BUDDY_COMMAND_LIST'] .. '\n')
+    self:GetChatCommandsHelp(true)
+end
+
+---Returns the help text of the chat commands.
+---@param printOut boolean If true, each line is printed to the chat frame.
+---@return string helpText The help text of the chat commands.
+function FarmBuddy:GetChatCommandsHelp(printOut)
+    local helpStr = ''
+
+    for _, info in ipairs(CHAT_COMMANDS) do
+
+        if not printOut then
+            helpStr = helpStr .. '   '
+        end
+
+        helpStr = helpStr .. self:GetColoredText('/' .. CHAT_COMMAND, FARM_BUDDY_COLOR_GREEN)
+            .. ' ' .. self:GetColoredText(info.Command, FARM_BUDDY_COLOR_BLUE)
+        if info.Args ~= '' then
+            helpStr = helpStr .. ' ' .. self:GetColoredText(info.Args, FARM_BUDDY_COLOR_YELLOW)
+        end
+
+        helpStr = helpStr .. ' - ' .. info.Description
+
+        if printOut then
+            DEFAULT_CHAT_FRAME:AddMessage(helpStr)
+            helpStr = ''
+        else
+            helpStr = helpStr .. '\n'
+        end
+    end
+
+    return helpStr
 end

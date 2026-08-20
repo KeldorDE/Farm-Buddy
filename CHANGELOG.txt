@@ -1,3 +1,9 @@
+1.2.4
+------------------
+- Added testNotification chat command
+- Fixed wrong text for the chat command output
+- Optimized various parts of the code
+
 1.2.3
 ------------------
 - Moved the Data-Broker settings from General to it's own category

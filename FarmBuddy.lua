@@ -5,8 +5,9 @@
 -- * By: Keldor
 -- **************************************************************************
 
-local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
+---@class FarmBuddy : AceConsole, AceEvent, AceHook, AceTimer
 local FarmBuddy = LibStub('AceAddon-3.0'):NewAddon(FARM_BUDDY_ID, 'AceConsole-3.0', 'AceEvent-3.0', 'AceTimer-3.0', 'AceHook-3.0')
+local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
 local ITEM_DATA_INIT_COMPLETE = false
 local NOTIFICATION_QUEUE = {}
 local NOTIFICATION_TRIGGERED = {}
@@ -334,8 +335,7 @@ end
 
 ---Queues a notification.
 ---@param index number Item ID used as the queue key.
----@param itemName string
----@param itemIconFileDataID number
+---@param itemInfo string Item info.
 ---@param quantity number Goal quantity.
 function FarmBuddy:QueueNotification(index, itemInfo, quantity)
     NOTIFICATION_QUEUE[index] = {
@@ -377,7 +377,7 @@ function FarmBuddy:ShowNotification(index, itemInfo, quantity, demo)
     if self.db.profile.settings.goalNotification or demo then
 
         local playSound = self.db.profile.settings.playNotificationSound
-        local notificationDisplayDuration = tonumber(self.db.profile.settings.notificationDisplayDuration)
+        local notificationDisplayDuration = tonumber(self.db.profile.settings.notificationDisplayDuration) or 5
         local notificationGlow = self.db.profile.settings.notificationGlow
         local notificationShine = self.db.profile.settings.notificationShine
         local sound
@@ -426,7 +426,7 @@ function FarmBuddy:UpdateGUI(handleNotifications)
                     curFrame:Hide()
                 end
             else
-                local itemCount = self:GetCount(itemInfo)
+                local itemCount = tonumber(self:GetCount(itemInfo)) or 0
                 local goalReached
                 local progressBarFrame
 
@@ -668,7 +668,6 @@ function FarmBuddy_ItemOnDragStop(self)
 end
 
 ---Shows the context menu for the specified item.
----@param _ table
 ---@param itemFrame table
 function FarmBuddy:ShowItemContextMenu(itemFrame)
     MenuUtil.CreateContextMenu(itemFrame, function(_, rootDescription)

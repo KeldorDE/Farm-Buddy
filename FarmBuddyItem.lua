@@ -5,6 +5,7 @@
 -- * By: Keldor
 -- **************************************************************************
 
+---@class FarmBuddy : AceConsole, AceEvent, AceHook, AceTimer
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID)
 local ITEM_QUEUE = {}
 local ITEM_INFO_CACHE = {}

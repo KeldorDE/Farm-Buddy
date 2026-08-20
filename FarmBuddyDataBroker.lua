@@ -4,8 +4,9 @@
 -- * By: Keldor
 -- **************************************************************************
 
-local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
+---@class FarmBuddy : AceConsole, AceEvent, AceHook, AceTimer
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID)
+local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
 local ldb = LibStub:GetLibrary('LibDataBroker-1.1')
 local DATA_BROKER
 local DATA_BROKER_ITEMS = {}

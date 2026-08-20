@@ -5,6 +5,7 @@
 -- * By: Keldor
 -- **************************************************************************
 
+---@class FarmBuddy : AceConsole, AceEvent, AceHook, AceTimer
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID)
 
 --- Prints a message to the default chat frame with the addon's prefix.
@@ -142,4 +143,16 @@ function FarmBuddy:GetCount(itemInfo, quantity, showIndicator)
     end
 
     return count
+end
+
+---Converts a item link to item ID.
+---@param item string The item link or item ID.
+---@return string The item ID.
+function FarmBuddy:ItemLinkToID(item)
+    local itemID = item:match("item:(%d+)")
+    if itemID then
+        item = itemID
+    end
+
+    return item
 end
