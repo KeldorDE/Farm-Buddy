@@ -1,9 +1,5 @@
----@diagnostic disable: undefined-global
+local L = LibStub('AceLocale-3.0'):NewLocale('FarmBuddyStandalone', 'frFR', false) or {}
 
-local L = LibStub('AceLocale-3.0'):NewLocale('FarmBuddyStandalone', 'frFR', false)
-if not L then return end
-
-L = L or {}
 L["FARM_BUDDY_ABOUT"] = "À propos"
 L["FARM_BUDDY_ACTIONS"] = "Actions"
 L["FARM_BUDDY_ADD_ITEM_DESC"] = "Cliquez sur le bouton d'ajout ci-dessous pour ajouter un nouvel objet."

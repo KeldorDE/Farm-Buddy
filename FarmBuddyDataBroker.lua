@@ -19,7 +19,7 @@ function FarmBuddy:InitDataBroker()
         label = FARM_BUDDY_ADDON_NAME,
         type = 'data source',
         text = '',
-        icon = C_AddOns.GetAddOnMetadata('FarmBuddy', 'IconTexture'),
+        icon = C_AddOns.GetAddOnMetadata(FARM_BUDDY_FOLDER, 'IconTexture'),
     })
 
     DATA_BROKER.OnClick = function(_, button)

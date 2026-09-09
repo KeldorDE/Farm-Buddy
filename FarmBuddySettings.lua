@@ -9,31 +9,15 @@
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID)
 local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
 local CONFIG_REG = LibStub("AceConfigRegistry-3.0")
+local ADDON_VERSION = C_AddOns.GetAddOnMetadata(FARM_BUDDY_FOLDER, 'Version')
 local CONFIG_OPTIONS
-local ADDON_VERSION = C_AddOns.GetAddOnMetadata('FarmBuddy', 'Version')
-local ITEM_PREFIX = FARM_BUDDY_ID .. 'Item'
-local ID_LENGTH = 32
 local OPTION_ORDER = {}
-local RANDOM_CHARS = {}
-local NOTIFICATION_SOUNDS = {
-    [SOUNDKIT.ALARM_CLOCK_WARNING_1]        = L['FARM_BUDDY_SOUND_ALARM_1'],
-    [SOUNDKIT.ALARM_CLOCK_WARNING_2]        = L['FARM_BUDDY_SOUND_ALARM_2'],
-    [SOUNDKIT.ALARM_CLOCK_WARNING_3]        = L['FARM_BUDDY_SOUND_ALARM_3'],
-    [SOUNDKIT.READY_CHECK]                  = L['FARM_BUDDY_SOUND_READY_CHECK'],
-    [SOUNDKIT.RAID_WARNING]                 = L['FARM_BUDDY_SOUND_RAID_WARNING'],
-    [SOUNDKIT.AUCTION_WINDOW_OPEN]          = L['FARM_BUDDY_SOUND_AUCTION'],
-    [SOUNDKIT.IG_QUEST_LIST_COMPLETE]       = L['FARM_BUDDY_SOUND_QUEST_COMPLETE'],
-    [SOUNDKIT.LFG_REWARDS]                  = L['FARM_BUDDY_SOUND_DUNGEON_REWARD'],
-    [SOUNDKIT.UI_EPICLOOT_TOAST]            = L['FARM_BUDDY_SOUND_EPIC_LOOT'],
-    [SOUNDKIT.UI_LEGENDARY_LOOT_TOAST]      = L['FARM_BUDDY_SOUND_LEGENDARY_LOOT'],
-}
 
 ---Creates the configuration page.
 function FarmBuddy:InitSettings()
     LibStub('AceConfig-3.0'):RegisterOptionsTable(FARM_BUDDY_ADDON_NAME, self:GetConfigOptions())
     CONFIG_OPTIONS = CONFIG_REG:GetOptionsTable(FARM_BUDDY_ADDON_NAME, 'dialog', 'AceConfigDialog-3.0')
     self.optionsFrame, self.optionsID = LibStub('AceConfigDialog-3.0'):AddToBlizOptions(FARM_BUDDY_ADDON_NAME)
-    self:GenerateChars()
 
     self:LoadExistingConfigItems()
 end
@@ -54,7 +38,7 @@ function FarmBuddy:GetConfigOptions()
             },
             info_author = {
                 type = 'description',
-                name = L['FARM_BUDDY_AUTHOR'] .. ': ' .. C_AddOns.GetAddOnMetadata('FarmBuddy', 'Author'),
+                name = L['FARM_BUDDY_AUTHOR'] .. ': ' .. C_AddOns.GetAddOnMetadata(FARM_BUDDY_FOLDER, 'Author'),
                 order = self:GetOptionOrder('main'),
             },
             tab_general = {
@@ -751,7 +735,7 @@ function FarmBuddy:GetConfigOptions()
                     },
                     about_info_author = {
                         type = 'description',
-                        name = C_AddOns.GetAddOnMetadata('FarmBuddy', 'Author'),
+                        name = C_AddOns.GetAddOnMetadata(FARM_BUDDY_FOLDER, 'Author'),
                         fontSize = 'medium',
                         order = self:GetOptionOrder('about'),
                         width = 'double',
@@ -901,7 +885,7 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
             return false
         end
 
-        id = self:GetRandomString(ID_LENGTH)
+        id = self:GetRandomString()
         if (name == nil) then
             name = ''
         end
@@ -919,7 +903,7 @@ function FarmBuddy:AddConfigItem(id, itemID, name)
 
     local count = (self:TableLength(CONFIG_OPTIONS.args.tab_items.args) - 4) + 1
 
-    CONFIG_OPTIONS.args.tab_items.args[ITEM_PREFIX .. id] = {
+    CONFIG_OPTIONS.args.tab_items.args[FARM_BUDDY_ITEM_PREFIX .. id] = {
         name = L['FARM_BUDDY_ITEM'] .. ' ' .. count,
         type = 'group',
         order = self:GetOptionOrder('items'),
@@ -1148,9 +1132,9 @@ function FarmBuddy:SetItemProp(id, key, input, numeric)
         if (key == 'quantity') then
             local item = self.db.profile.items[index]
             if (input > (item.count or 0)) then
-                self:ResetNotificationTrigger(item.itemID, false)
+                self:SetNotificationTrigger(item.itemID, false)
             else
-                self:ResetNotificationTrigger(item.itemID, true)
+                self:SetNotificationTrigger(item.itemID, true)
             end
         end
     end
@@ -1215,7 +1199,7 @@ function FarmBuddy:RemoveItem(id)
     end
 
     id = tostring(id)
-    local groupName = ITEM_PREFIX .. id
+    local groupName = FARM_BUDDY_ITEM_PREFIX .. id
 
     -- Remove settings group for item ID
     if (CONFIG_OPTIONS.args.tab_items.args[groupName] ~= nil) then
@@ -1246,7 +1230,7 @@ function FarmBuddy:ReindexConfigItems()
 
     if (CONFIG_OPTIONS.args.tab_items.args ~= nil) then
         for k in pairs(CONFIG_OPTIONS.args.tab_items.args) do
-            if (string.sub(k, 1, string.len(ITEM_PREFIX)) == ITEM_PREFIX) then
+            if (string.sub(k, 1, string.len(FARM_BUDDY_ITEM_PREFIX)) == FARM_BUDDY_ITEM_PREFIX) then
                 CONFIG_OPTIONS.args.tab_items.args[k] = nil
             end
         end
@@ -1361,21 +1345,15 @@ function FarmBuddy:TestNotification()
     end
 end
 
----Generates a table of random chars.
-function FarmBuddy:GenerateChars()
-    for i = 48, 57 do table.insert(RANDOM_CHARS, string.char(i)) end
-    for i = 65, 90 do table.insert(RANDOM_CHARS, string.char(i)) end
-    for i = 97, 122 do table.insert(RANDOM_CHARS, string.char(i)) end
-end
-
----Generates a random string with the given length.
----@param length number
+---Generates a random string with a default length of 32.
 ---@return string
-function FarmBuddy:GetRandomString(length)
+function FarmBuddy:GetRandomString()
     local strTable = {}
+    local charCount = #FARM_BUDDY_RANDOM_CHARS
 
-    for _ = 1, length do
-        table.insert(strTable, RANDOM_CHARS[math.random(1, #RANDOM_CHARS)])
+    for _ = 1, 32 do
+        local pos = math.random(1, charCount)
+        table.insert(strTable, string.sub(FARM_BUDDY_RANDOM_CHARS, pos, pos))
     end
 
     return table.concat(strTable)
@@ -1402,7 +1380,7 @@ function FarmBuddy:GetNotificationSounds()
 
     local sounds = {}
 
-    for k, v in pairs(NOTIFICATION_SOUNDS) do
+    for k, v in pairs(FARM_BUDDY_NOTIFICATION_SOUNDS) do
         sounds[k] = v
     end
 
@@ -1415,12 +1393,12 @@ function FarmBuddy:GetNotificationSoundsSorting()
 
     local sorting = {}
 
-    for k in pairs(NOTIFICATION_SOUNDS) do
+    for k in pairs(FARM_BUDDY_NOTIFICATION_SOUNDS) do
         table.insert(sorting, k)
     end
 
     table.sort(sorting, function(a, b)
-        return NOTIFICATION_SOUNDS[a] < NOTIFICATION_SOUNDS[b]
+        return FARM_BUDDY_NOTIFICATION_SOUNDS[a] < FARM_BUDDY_NOTIFICATION_SOUNDS[b]
     end)
 
     return sorting
@@ -1507,10 +1485,10 @@ function FarmBuddy:SetSettingProp(uniqueID, configKey, propKey, value)
     if (CONFIG_OPTIONS.args.tab_items.args ~= nil) then
         for k in pairs(CONFIG_OPTIONS.args.tab_items.args) do
 
-            local prefixCheck = string.sub(k, 1, string.len(ITEM_PREFIX))
+            local prefixCheck = string.sub(k, 1, string.len(FARM_BUDDY_ITEM_PREFIX))
             local idCheck = string.sub(k, -string.len(uniqueID))
 
-            if (prefixCheck == ITEM_PREFIX and idCheck == uniqueID) then
+            if (prefixCheck == FARM_BUDDY_ITEM_PREFIX and idCheck == uniqueID) then
                 CONFIG_OPTIONS.args.tab_items.args[k].args[configKey .. '_' .. uniqueID][propKey] = tostring(value)
                 break
             end
@@ -1628,7 +1606,7 @@ end
 ---@return number
 function FarmBuddy:GetNotificationSound()
     local sound = self:GetSetting('notificationSound', 'number')
-    if not sound or NOTIFICATION_SOUNDS[sound] == nil then
+    if not sound or FARM_BUDDY_NOTIFICATION_SOUNDS[sound] == nil then
         return SOUNDKIT.ALARM_CLOCK_WARNING_3
     end
 

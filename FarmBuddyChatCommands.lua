@@ -8,66 +8,16 @@
 ---@class FarmBuddy : AceConsole, AceEvent, AceHook, AceTimer
 local FarmBuddy = LibStub('AceAddon-3.0'):GetAddon(FARM_BUDDY_ID)
 local L = LibStub('AceLocale-3.0'):GetLocale(FARM_BUDDY_ID, true)
-local CHAT_COMMAND = 'fbs'
-local CHAT_COMMANDS = {
-    {
-        Command = 'track',
-        Args = '<' .. L['FARM_BUDDY_COMMAND_TRACK_ARGS'] .. '> <' .. L['FARM_BUDDY_COMMAND_GOAL_ARGS'] .. '>',
-        Description = L['FARM_BUDDY_COMMAND_TRACK_DESC'],
-        Handler = 'CmdTrack',
-    },
-    {
-        Command = 'quantity',
-        Args = '<' .. L['FARM_BUDDY_COMMAND_TRACK_ARGS'] .. '> <' .. L['FARM_BUDDY_COMMAND_GOAL_ARGS'] .. '>',
-        Description = L['FARM_BUDDY_COMMAND_GOAL_DESC'],
-        Handler = 'CmdQuantity',
-    },
-    {
-        Command = 'toggle',
-        Args = '',
-        Description = L['FARM_BUDDY_COMMAND_TOGGLE_DESC'],
-        Handler = 'CmdToggle',
-    },
-    {
-        Command = 'settings',
-        Args = '',
-        Description = L['FARM_BUDDY_COMMAND_SETTINGS_DESC'],
-        Handler = 'CmdSettings',
-    },
-    {
-        Command = 'testNotification',
-        Args = '',
-        Description = L['FARM_BUDDY_COMMAND_TEST_NOTIFICATION_DESC'],
-        Handler = 'CmdTestNotification',
-    },
-    {
-        Command = 'reset',
-        Args = '<' .. L['FARM_BUDDY_COMMAND_RESET_ARGS'] .. '>',
-        Description = L['FARM_BUDDY_COMMAND_RESET_DESC'],
-        Handler = 'CmdReset',
-    },
-    {
-        Command = 'version',
-        Args = '',
-        Description = L['FARM_BUDDY_COMMAND_VERSION_DESC'],
-        Handler = 'CmdVersion',
-    },
-    {
-        Command = 'help',
-        Args = '',
-        Description = L['FARM_BUDDY_COMMAND_HELP_DESC'],
-        Handler = 'CmdGetHelp',
-    }
-}
--- Maps command names to their entry for quick lookup, derived from the ordered CHAT_COMMANDS list.
+
+-- Maps command names to their entry for quick lookup, derived from the ordered FARM_BUDDY_CHAT_COMMANDS list.
 local CHAT_COMMANDS_BY_NAME = {}
-for _, entry in ipairs(CHAT_COMMANDS) do
+for _, entry in ipairs(FARM_BUDDY_CHAT_COMMANDS) do
     CHAT_COMMANDS_BY_NAME[entry.Command] = entry
 end
 
 ---Creates the chat commands.
 function FarmBuddy:InitChatCommands()
-    self:RegisterChatCommand(CHAT_COMMAND, 'ChatCommand')
+    self:RegisterChatCommand(FARM_BUDDY_CHAT_COMMAND, 'ChatCommand')
 end
 
 ---Handles AddOn commands.
@@ -180,7 +130,7 @@ end
 
 ---Handles the version chat command.
 function FarmBuddy:CmdVersion()
-    self:Print(C_AddOns.GetAddOnMetadata('FarmBuddy', 'Version'))
+    self:Print(C_AddOns.GetAddOnMetadata(FARM_BUDDY_FOLDER, 'Version'))
 end
 
 ---Handles the help chat command.
@@ -195,13 +145,13 @@ end
 function FarmBuddy:GetChatCommandsHelp(printOut)
     local helpStr = ''
 
-    for _, info in ipairs(CHAT_COMMANDS) do
+    for _, info in ipairs(FARM_BUDDY_CHAT_COMMANDS) do
 
         if not printOut then
             helpStr = helpStr .. '   '
         end
 
-        helpStr = helpStr .. self:GetColoredText('/' .. CHAT_COMMAND, FARM_BUDDY_COLOR_GREEN)
+        helpStr = helpStr .. self:GetColoredText('/' .. FARM_BUDDY_CHAT_COMMAND, FARM_BUDDY_COLOR_GREEN)
             .. ' ' .. self:GetColoredText(info.Command, FARM_BUDDY_COLOR_BLUE)
         if info.Args ~= '' then
             helpStr = helpStr .. ' ' .. self:GetColoredText(info.Args, FARM_BUDDY_COLOR_YELLOW)

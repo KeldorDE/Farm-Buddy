@@ -345,23 +345,24 @@ function FarmBuddy:QueueNotification(index, itemInfo, quantity)
     }
 end
 
----Resets the notification trigger state for the given item ID.
+---Sets the notification trigger state for the given item ID.
 ---@param itemID number
 ---@param value boolean
-function FarmBuddy:ResetNotificationTrigger(itemID, value)
+function FarmBuddy:SetNotificationTrigger(itemID, value)
     NOTIFICATION_TRIGGERED[itemID] = value
 end
 
 ---Is called by the timer to handle the next notification.
 function FarmBuddy:NotificationTask()
     if not FarmBuddyNotification_Shown() then
-        local hideInCombat = self.db.profile.settings.hideNotificationsInCombat
+
+        if self.db.profile.settings.hideNotificationsInCombat and PLAYER_IN_COMBAT then
+            return
+        end
+
         for index, notification in pairs(NOTIFICATION_QUEUE) do
-            if not hideInCombat or (hideInCombat and not PLAYER_IN_COMBAT) then
-                self:ShowNotification(notification.Index, notification.ItemInfo, notification.Quantity, false)
-            else
-                NOTIFICATION_TRIGGERED[notification.Index] = true
-            end
+            self:ShowNotification(notification.Index, notification.ItemInfo, notification.Quantity, false)
+            NOTIFICATION_TRIGGERED[notification.Index] = true
             NOTIFICATION_QUEUE[index] = nil
             break
         end
@@ -427,7 +428,6 @@ function FarmBuddy:UpdateGUI(handleNotifications)
                 end
             else
                 local itemCount = tonumber(self:GetCount(itemInfo)) or 0
-                local goalReached
                 local progressBarFrame
 
                 -- Only add new frame if the frame does not already exists
@@ -457,16 +457,18 @@ function FarmBuddy:UpdateGUI(handleNotifications)
 
                 progressBarFrame = curFrame.ProgressBar
 
-                -- Handle notifications
-                if itemStorage.quantity > 0 and itemCount >= itemStorage.quantity and not NOTIFICATION_TRIGGERED[itemInfo.ItemID] then
-                    goalReached = true
+                local goalReached = itemStorage.quantity > 0 and itemCount >= itemStorage.quantity
 
-                    if handleNotifications and ITEM_DATA_INIT_COMPLETE then
-                        self:QueueNotification(itemInfo.ItemID, itemInfo, itemStorage.quantity)
+                if handleNotifications and ITEM_DATA_INIT_COMPLETE then
+                    if goalReached then
+                        if not NOTIFICATION_TRIGGERED[itemInfo.ItemID] then
+                            self:SetNotificationTrigger(itemInfo.ItemID, true)
+                            self:QueueNotification(itemInfo.ItemID, itemInfo, itemStorage.quantity)
+                        end
+                    else
+                        NOTIFICATION_QUEUE[itemInfo.ItemID] = nil
+                        self:SetNotificationTrigger(itemInfo.ItemID, false)
                     end
-                else
-                    NOTIFICATION_QUEUE[itemInfo.ItemID] = nil
-                    goalReached = false
                 end
 
                 curFrame:Show()

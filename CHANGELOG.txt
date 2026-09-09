@@ -1,3 +1,8 @@
+1.2.5
+------------------
+- Fixed the notification not being raised again after the item count dropped below the goal and reached it once more (Thanks Malivil)
+- Optimized various parts of the code
+
 1.2.4
 ------------------
 - Added testNotification chat command

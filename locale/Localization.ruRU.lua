@@ -1,9 +1,5 @@
----@diagnostic disable: undefined-global
+local L = LibStub('AceLocale-3.0'):NewLocale('FarmBuddyStandalone', 'ruRU', false) or {}
 
-local L = LibStub('AceLocale-3.0'):NewLocale('FarmBuddyStandalone', 'ruRU', false)
-if not L then return end
-
-L = L or {}
 L["FARM_BUDDY_ABOUT"] = "О аддоне"
 L["FARM_BUDDY_ACTIONS"] = "Действия"
 L["FARM_BUDDY_ADD_ITEM_DESC"] = "Нажмите кнопку добавления предмета ниже, чтобы добавить новый предмет."
