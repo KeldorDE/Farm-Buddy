@@ -1,3 +1,7 @@
+1.2.6
+------------------
+- Updated API to Patch 12.1.5
+
 1.2.5
 ------------------
 - Fixed the notification not being raised again after the item count dropped below the goal and reached it once more (Thanks Malivil)
